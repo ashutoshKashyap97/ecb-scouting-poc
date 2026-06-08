@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>ECB — Scout Report</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0B1D3A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0B1D3A;
+  --navy-mid: #132B50;
+  --teal: #00857C;
+  --teal-light: #00A99D;
+  --teal-pale: #E8F5F3;
+  --amber: #F59E0B;
+  --red: #EF4444;
+  --green: #10B981;
+  --surface: #F6F8FB;
+  --card: #FFFFFF;
+  --border: #E8ECF1;
+  --border-light: #F0F2F5;
+  --text-primary: #0F1C2E;
+  --text-secondary: #4A5568;
+  --text-muted: #6B7580;
+  --radius: 16px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+  --shadow-card: 0 1px 3px rgba(11,29,58,.04), 0 6px 24px rgba(11,29,58,.06);
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font);
+  background: var(--surface);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+*:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 4px; }
+
+/* Status Bar */
+.status-bar {
+  background: var(--navy);
+  padding: 8px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 13px; font-weight: 600; color: #fff;
+  position: sticky; top: 0; z-index: 100;
+}
+.status-bar-right { display: flex; align-items: center; gap: 6px; }
+.status-bar-right svg { width: 16px; height: 16px; }
+
+/* Report Header */
+.report-header {
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 0 20px 20px;
+}
+.report-header-top {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 0 14px;
+}
+.back-btn {
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: var(--radius-xs);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: rgba(255,255,255,.8);
+  text-decoration: none; flex-shrink: 0;
+  transition: background .2s;
+}
+.back-btn:hover { background: rgba(255,255,255,.14); }
+.back-btn svg { width: 20px; height: 20px; }
+.report-header-title {
+  flex: 1;
+  font-size: 16px; font-weight: 700; color: #fff; letter-spacing: -.3px;
+}
+.save-draft-btn {
+  font-size: 12px; font-weight: 700;
+  color: var(--teal-light);
+  background: rgba(0,169,157,.15);
+  padding: 8px 14px; border-radius: var(--radius-xs);
+  border: none; cursor: pointer; font-family: var(--font);
+  white-space: nowrap; transition: background .2s;
+}
+.save-draft-btn:hover { background: rgba(0,169,157,.25); }
+
+/* Match context card in header */
+.match-ctx {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.ctx-item {}
+.ctx-label {
+  font-size: 10px; font-weight: 600;
+  color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .5px;
+  margin-bottom: 3px;
+}
+.ctx-val {
+  font-size: 13px; font-weight: 600; color: #fff;
+}
+.ctx-badge {
+  display: inline-block;
+  font-size: 9px; font-weight: 700;
+  background: var(--teal); color: #fff;
+  padding: 2px 8px; border-radius: 4px; text-transform: uppercase;
+  letter-spacing: .3px; margin-left: 6px; vertical-align: middle;
+}
+
+/* Progress bar */
+.progress-bar-wrap {
+  background: rgba(255,255,255,.08); height: 4px;
+  border-radius: 2px; margin: 14px 0 4px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--teal-light));
+  border-radius: 2px; transition: width .4s ease;
+}
+.progress-label {
+  display: flex; justify-content: space-between;
+  font-size: 11px; font-weight: 600; color: rgba(255,255,255,.4);
+}
+
+/* Content */
+.content { padding: 16px 16px 110px; }
+
+/* Section cards */
+.section-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+}
+.section-card-header {
+  background: var(--surface);
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex; align-items: center; gap: 10px;
+}
+.section-num {
+  width: 24px; height: 24px;
+  background: var(--teal); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.section-title {
+  font-size: 13px; font-weight: 700; color: var(--text-primary); flex: 1;
+}
+.section-status-done {
+  font-size: 10px; font-weight: 700; color: var(--green);
+  background: rgba(16,185,129,.1); padding: 3px 10px; border-radius: 20px;
+}
+.section-status-empty {
+  font-size: 10px; font-weight: 600; color: var(--text-muted);
+  background: var(--border-light); padding: 3px 10px; border-radius: 20px;
+}
+.section-body { padding: 16px; }
+
+/* Form elements */
+.field { margin-bottom: 16px; }
+.field:last-child { margin-bottom: 0; }
+.field-label {
+  display: block;
+  font-size: 12px; font-weight: 600; color: var(--text-secondary);
+  margin-bottom: 7px; letter-spacing: .1px;
+}
+.field-input {
+  width: 100%;
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 13px 14px;
+  font-size: 14px; font-weight: 500; color: var(--text-primary);
+  font-family: var(--font); outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  min-height: 50px;
+}
+.field-input::placeholder { color: var(--text-muted); font-weight: 400; }
+.field-input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(0,133,124,.1);
+}
+.field-input.prefilled {
+  background: var(--teal-pale);
+  border-color: rgba(0,133,124,.2);
+  color: var(--teal);
+}
+.field-select {
+  width: 100%; appearance: none; -webkit-appearance: none;
+  background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%236B7580' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 14px center;
+  border: 1.5px solid var(--border); border-radius: var(--radius-xs);
+  padding: 13px 40px 13px 14px;
+  font-size: 14px; font-weight: 500; color: var(--text-primary);
+  font-family: var(--font); outline: none;
+  transition: border-color .2s; min-height: 50px;
+}
+.field-select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,133,124,.1); }
+.field-textarea {
+  width: 100%; background: var(--card); border: 1.5px solid var(--border);
+  border-radius: var(--radius-xs); padding: 13px 14px;
+  font-size: 14px; font-weight: 400; color: var(--text-primary);
+  font-family: var(--font); outline: none; resize: none;
+  min-height: 96px; line-height: 1.55;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field-textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,133,124,.1); }
+.field-hint {
+  font-size: 11px; font-weight: 500; color: var(--text-muted); margin-top: 5px;
+}
+
+/* Overall rating pills */
+.rating-pills {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+}
+.rating-pill {
+  padding: 12px 6px;
+  border: 1.5px solid var(--border); border-radius: var(--radius-xs);
+  font-size: 15px; font-weight: 700; text-align: center;
+  cursor: pointer; color: var(--text-muted); background: var(--card);
+  transition: all .15s; min-height: 50px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.rating-pill span { font-size: 9px; font-weight: 600; }
+.rating-pill:active { transform: scale(.95); }
+.rating-pill.r1.sel { background: #FEE2E2; border-color: var(--red); color: var(--red); }
+.rating-pill.r2.sel { background: #FEF3C7; border-color: #F59E0B; color: #D97706; }
+.rating-pill.r3.sel { background: #FEF9C3; border-color: #EAB308; color: #854D0E; }
+.rating-pill.r4.sel { background: var(--teal-pale); border-color: var(--teal); color: var(--teal); }
+.rating-pill.r5.sel { background: #DCFCE7; border-color: var(--green); color: var(--green); }
+
+/* Criteria rows with star ratings */
+.criteria-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.criteria-row:last-child { border-bottom: none; }
+.criteria-name {
+  font-size: 13px; font-weight: 500; color: var(--text-primary); flex: 1;
+}
+.criteria-stars { display: flex; gap: 5px; }
+.star {
+  width: 28px; height: 28px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; transition: background .15s;
+}
+.star svg { width: 18px; height: 18px; }
+.star:hover { background: var(--border-light); }
+.star svg .star-fill { fill: var(--border); stroke: none; }
+.star.filled svg .star-fill { fill: var(--amber); }
+
+/* Attachment row */
+.attach-row { display: flex; gap: 8px; }
+.attach-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 13px 10px;
+  border: 1.5px dashed var(--border); border-radius: var(--radius-xs);
+  font-size: 12px; font-weight: 600; color: var(--text-muted);
+  cursor: pointer; background: var(--surface); min-height: 50px;
+  transition: border-color .2s, color .2s;
+}
+.attach-btn:hover { border-color: var(--teal); color: var(--teal); }
+.attach-btn svg { width: 18px; height: 18px; }
+.voice-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 13px 10px;
+  border: 1.5px dashed rgba(0,133,124,.3); border-radius: var(--radius-xs);
+  font-size: 12px; font-weight: 600; color: var(--teal);
+  cursor: pointer; background: var(--teal-pale); min-height: 50px;
+  transition: all .2s;
+}
+.voice-btn:hover { background: rgba(0,133,124,.12); }
+.voice-btn svg { width: 18px; height: 18px; }
+
+/* Submit area */
+.submit-card {
+  background: var(--card); border-radius: var(--radius);
+  padding: 18px; margin-bottom: 12px;
+  box-shadow: var(--shadow-card); border: 1px solid var(--border-light);
+}
+.btn-submit {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-light));
+  color: #fff; border: none; border-radius: var(--radius-sm);
+  padding: 16px 20px; font-size: 15px; font-weight: 700;
+  cursor: pointer; font-family: var(--font); transition: all .2s;
+  min-height: 56px; margin-bottom: 10px;
+}
+.btn-submit:hover { opacity: .9; }
+.btn-submit:active { transform: scale(.98); }
+.btn-submit svg { width: 20px; height: 20px; }
+.btn-save-draft {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--surface); color: var(--text-secondary);
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: 13px 20px; font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: var(--font); transition: all .2s; min-height: 50px;
+}
+.btn-save-draft svg { width: 18px; height: 18px; }
+.offline-note {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  font-size: 11px; font-weight: 500; color: var(--text-muted); margin-top: 12px;
+}
+.offline-dot { width: 7px; height: 7px; background: var(--amber); border-radius: 50%; }
+
+/* Toast notification */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--navy); color: #fff;
+  padding: 13px 20px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600;
+  box-shadow: 0 8px 32px rgba(0,0,0,.3);
+  transition: transform .3s ease; z-index: 999;
+  white-space: nowrap; display: flex; align-items: center; gap: 8px;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast svg { width: 18px; height: 18px; color: var(--green); }
+
+/* Success overlay */
+.success-overlay {
+  position: fixed; inset: 0; background: rgba(11,29,58,.92);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+  padding: 32px;
+}
+.success-overlay.show { opacity: 1; pointer-events: all; }
+.success-icon {
+  width: 72px; height: 72px;
+  background: rgba(16,185,129,.15); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+}
+.success-icon svg { width: 36px; height: 36px; color: var(--green); }
+.success-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.success-sub { font-size: 14px; color: rgba(255,255,255,.5); text-align: center; line-height: 1.5; margin-bottom: 28px; }
+.success-btn {
+  background: var(--teal); color: #fff; border: none; border-radius: var(--radius-sm);
+  padding: 15px 32px; font-size: 15px; font-weight: 700; cursor: pointer;
+  font-family: var(--font); min-height: 54px;
+}
+
+/* Responsive phone frame */
+@media (min-width: 480px) {
+  body { display: flex; align-items: flex-start; justify-content: center; padding: 32px 20px; }
+  .app-shell {
+    width: 390px; min-height: 100vh; background: var(--surface);
+    border-radius: 40px; overflow: hidden;
+    box-shadow: 0 0 0 8px #1E293B, 0 0 0 10px #334155, 0 32px 80px rgba(0,0,0,.5);
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-bar-right">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 9l4-4 4 4"/><path d="M5 5v14"/><path d="M9 5h2"/><path d="M9 9h4"/><path d="M9 13h6"/><path d="M9 17h8"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="10" x2="23" y2="14"/></svg>
+    </div>
+  </div>
+
+  <!-- Report Header -->
+  <header class="report-header">
+    <div class="report-header-top">
+      <a href="home.html" class="back-btn" aria-label="Back to home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      </a>
+      <div class="report-header-title">Scout Report</div>
+      <button class="save-draft-btn" onclick="saveDraft()">Save Draft</button>
+    </div>
+
+    <!-- Match context — populated from URL params -->
+    <div class="match-ctx" id="matchCtx">
+      <div class="ctx-item">
+        <div class="ctx-label">Player</div>
+        <div class="ctx-val" id="ctxPlayer">—</div>
+      </div>
+      <div class="ctx-item">
+        <div class="ctx-label">Match</div>
+        <div class="ctx-val" id="ctxMatch">—</div>
+      </div>
+      <div class="ctx-item">
+        <div class="ctx-label">Venue</div>
+        <div class="ctx-val" id="ctxVenue">—</div>
+      </div>
+      <div class="ctx-item">
+        <div class="ctx-label">Format / Time</div>
+        <div class="ctx-val" id="ctxFormat">—</div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div style="margin-top:14px">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="progress-label">
+        <span id="progressLabel">0% complete</span>
+        <span id="progressSections">0 of 4 sections</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Form Content -->
+  <main class="content">
+
+    <!-- Section 1: Context -->
+    <div class="section-card" id="sec1">
+      <div class="section-card-header">
+        <div class="section-num">1</div>
+        <div class="section-title">Match Context</div>
+        <div class="section-status-empty" id="sec1-status">Required</div>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label class="field-label" for="innings">Innings / Session</label>
+          <select class="field-select" id="innings" onchange="updateProgress()">
+            <option value="">Select innings…</option>
+            <option>1st Innings</option>
+            <option>2nd Innings</option>
+            <option>1st Session</option>
+            <option>2nd Session</option>
+            <option>3rd Session</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="conditions">Conditions</label>
+          <select class="field-select" id="conditions" onchange="updateProgress()">
+            <option value="">Select conditions…</option>
+            <option>Sunny, dry</option>
+            <option>Overcast, damp</option>
+            <option>Overcast, dry</option>
+            <option>Cloudy, humid</option>
+            <option>Clear, windy</option>
+            <option>Rain-affected</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="opposition">Opposition strength</label>
+          <select class="field-select" id="opposition" onchange="updateProgress()">
+            <option value="">Select…</option>
+            <option>Strong (County 1st XI / Above)</option>
+            <option>Average (County 2nd XI level)</option>
+            <option>Weak (Academy / U19 level)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Overall Assessment -->
+    <div class="section-card" id="sec2">
+      <div class="section-card-header">
+        <div class="section-num">2</div>
+        <div class="section-title">Overall Assessment</div>
+        <div class="section-status-empty" id="sec2-status">Required</div>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label class="field-label">Overall Rating</label>
+          <div class="rating-pills">
+            <div class="rating-pill r1" onclick="setRating(this,1)" tabindex="0">1<span>Below</span></div>
+            <div class="rating-pill r2" onclick="setRating(this,2)" tabindex="0">2<span>Developing</span></div>
+            <div class="rating-pill r3" onclick="setRating(this,3)" tabindex="0">3<span>Progressing</span></div>
+            <div class="rating-pill r4" onclick="setRating(this,4)" tabindex="0">4<span>Ready</span></div>
+            <div class="rating-pill r5" onclick="setRating(this,5)" tabindex="0">5<span>Elite</span></div>
+          </div>
+          <div class="field-hint">1 = Below standard · 3 = Progressing well · 5 = International ready</div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="summary">Summary observation</label>
+          <textarea class="field-textarea" id="summary" rows="3"
+            placeholder="Describe the player's overall performance in this match…"
+            oninput="updateProgress()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Technical Criteria -->
+    <div class="section-card" id="sec3">
+      <div class="section-card-header">
+        <div class="section-num">3</div>
+        <div class="section-title">Technical Criteria</div>
+        <div class="section-status-empty" id="sec3-status">Optional</div>
+      </div>
+      <div class="section-body">
+        <div id="criteriaList">
+          <!-- Criteria rows injected by JS based on player type -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Future Potential -->
+    <div class="section-card" id="sec4">
+      <div class="section-card-header">
+        <div class="section-num">4</div>
+        <div class="section-title">Future Potential</div>
+        <div class="section-status-empty" id="sec4-status">Optional</div>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label class="field-label" for="nextLevel">Next level readiness</label>
+          <select class="field-select" id="nextLevel" onchange="updateProgress()">
+            <option value="">Select…</option>
+            <option>Not ready — needs significant development</option>
+            <option>12–24 months with consistent improvement</option>
+            <option>6–12 months with right environment</option>
+            <option>Ready now for next level</option>
+            <option>Already operating above current level</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="recommendation">Recommendation</label>
+          <select class="field-select" id="recommendation" onchange="updateProgress()">
+            <option value="">Select recommendation…</option>
+            <option>Continue monitoring</option>
+            <option>Add to watchlist</option>
+            <option>Nominate for pathway programme</option>
+            <option>Recommend for central staff review</option>
+            <option>Recommend for squad consideration</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="additionalNotes">Additional notes</label>
+          <textarea class="field-textarea" id="additionalNotes" rows="3"
+            placeholder="Any other observations, context, or follow-up actions…"
+            oninput="updateProgress()"></textarea>
+        </div>
+
+        <!-- Attachments -->
+        <div class="field">
+          <label class="field-label">Attachments</label>
+          <div class="attach-row">
+            <button class="attach-btn" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+              Add Photo
+            </button>
+            <button class="voice-btn" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              Voice Note
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-card">
+      <button class="btn-submit" type="button" onclick="submitReport()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2L11 13"/><polygon points="22,2 15,22 11,13 2,9 22,2"/></svg>
+        Submit Report
+      </button>
+      <button class="btn-save-draft" type="button" onclick="saveDraft()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v14a2 2 0 01-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg>
+        Save as Draft
+      </button>
+      <div class="offline-note">
+        <div class="offline-dot"></div>
+        Report will sync automatically when online
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+  <span id="toastMsg">Draft saved</span>
+</div>
+
+<!-- Success overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+  </div>
+  <div class="success-title">Report Submitted</div>
+  <div class="success-sub" id="successMsg">Your report has been submitted and will sync when you're back online.</div>
+  <button class="success-btn" onclick="window.location.href='home.html'">Back to Home</button>
+</div>
+
+<script>
+// ── Populate from URL params ──
+const params = new URLSearchParams(window.location.search);
+const playerName = params.get('player') || 'Unknown Player';
+const matchName  = params.get('match')  || '—';
+const venueName  = params.get('venue')  || '—';
+const formatVal  = params.get('format') || '—';
+const timeVal    = params.get('time')   || '—';
+const isDraft    = params.get('draft')  === '1';
+
+document.getElementById('ctxPlayer').textContent = playerName;
+document.getElementById('ctxMatch').textContent  = matchName;
+document.getElementById('ctxVenue').textContent  = venueName;
+document.getElementById('ctxFormat').innerHTML   = formatVal + ' <span class="ctx-badge">' + timeVal + '</span>';
+document.title = 'Report — ' + playerName;
+
+// ── Build criteria based on player archetype in name ──
+const BATTING_CRITERIA  = ['Technique & footwork','Temperament & composure','Shot selection','Running between wickets','Attack vs defence balance'];
+const BOWLING_CRITERIA  = ['Action & release point','Control & accuracy','Variation & pace changes','Swing/seam/spin movement','Physical capability'];
+const ALL_ROUND_CRITERIA = ['Batting technique','Bowling effectiveness','Athletic ability','Decision making','Leadership under pressure'];
+
+function isBowler(name) { return /thompson|pace|bowl/i.test(name); }
+function isAllRounder(name) { return /patel|all.round/i.test(name); }
+
+const criteriaSet = isAllRounder(playerName) ? ALL_ROUND_CRITERIA
+                  : isBowler(playerName)      ? BOWLING_CRITERIA
+                  : BATTING_CRITERIA;
+
+const criteriaList = document.getElementById('criteriaList');
+criteriaSet.forEach((c, i) => {
+  criteriaList.innerHTML += `
+    <div class="criteria-row" id="crit${i}">
+      <div class="criteria-name">${c}</div>
+      <div class="criteria-stars" data-idx="${i}">
+        ${[1,2,3,4,5].map(s => `
+          <div class="star" onclick="setStar(${i},${s})" tabindex="0" aria-label="${s} stars for ${c}">
+            <svg viewBox="0 0 24 24"><polygon class="star-fill" points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
+          </div>`).join('')}
+      </div>
+    </div>`;
+});
+
+// If draft, pre-fill a couple of stars as "60% done"
+if (isDraft) {
+  setStar(0,4); setStar(1,3); setStar(2,4);
+  document.getElementById('summary').value = 'Strong showing in the first session. Excellent judgment on line and length.';
+  document.getElementById('innings').value = '1st Innings';
+  document.getElementById('conditions').value = 'Overcast, damp';
+  setTimeout(updateProgress, 100);
+}
+
+// ── Star ratings ──
+const starRatings = {};
+function setStar(criteriaIdx, stars) {
+  starRatings[criteriaIdx] = stars;
+  const row = document.querySelector(`.criteria-stars[data-idx="${criteriaIdx}"]`);
+  row.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('filled', i < stars));
+  updateProgress();
+}
+
+// ── Overall rating pills ──
+let overallRating = 0;
+function setRating(el, val) {
+  overallRating = val;
+  document.querySelectorAll('.rating-pill').forEach(p => p.classList.remove('sel'));
+  el.classList.add('sel');
+  updateProgress();
+}
+
+// ── Progress tracking ──
+function updateProgress() {
+  let filled = 0;
+  // sec1: all 3 selects
+  if (document.getElementById('innings').value)    filled++;
+  if (document.getElementById('conditions').value) filled++;
+  if (document.getElementById('opposition').value) filled++;
+  // sec2: rating + summary
+  if (overallRating > 0)                                           filled++;
+  if (document.getElementById('summary').value.trim().length > 10) filled++;
+  // sec3: at least 2 stars set
+  if (Object.keys(starRatings).length >= 2) filled++;
+  // sec4
+  if (document.getElementById('nextLevel').value)       filled++;
+  if (document.getElementById('recommendation').value)  filled++;
+
+  const total = 8;
+  const pct = Math.round((filled / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = pct + '% complete';
+
+  const secs = [
+    filled >= 3 ? '✓ Done' : 'Required',
+    (overallRating > 0 && document.getElementById('summary').value.trim().length > 10) ? '✓ Done' : 'Required',
+    Object.keys(starRatings).length >= 2 ? '✓ Done' : 'Optional',
+    (document.getElementById('nextLevel').value && document.getElementById('recommendation').value) ? '✓ Done' : 'Optional',
+  ];
+  ['sec1-status','sec2-status','sec3-status','sec4-status'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    const done = secs[i].startsWith('✓');
+    el.textContent = secs[i];
+    el.className = done ? 'section-status-done' : 'section-status-empty';
+  });
+
+  const secsDone = secs.filter(s => s.startsWith('✓')).length;
+  document.getElementById('progressSections').textContent = secsDone + ' of 4 sections';
+}
+
+// ── Toast helper ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// ── Save Draft ──
+function saveDraft() {
+  showToast('Draft saved — will sync when online');
+}
+
+// ── Submit ──
+function submitReport() {
+  if (overallRating === 0) { showToast('Please give an overall rating first'); return; }
+  if (document.getElementById('summary').value.trim().length < 5) { showToast('Please add a summary observation'); return; }
+  document.getElementById('successMsg').textContent =
+    'Report for ' + playerName + ' has been submitted and will sync when you\'re back online.';
+  document.getElementById('successOverlay').classList.add('show');
+}
+</script>
+</body>
+</html>

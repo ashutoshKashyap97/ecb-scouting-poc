@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>ECB — Sign In</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0B1D3A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0B1D3A;
+  --navy-mid: #132B50;
+  --teal: #00857C;
+  --teal-light: #00A99D;
+  --teal-pale: #E8F5F3;
+  --amber: #F59E0B;
+  --red: #EF4444;
+  --green: #10B981;
+
+  --surface: #F6F8FB;
+  --card: #FFFFFF;
+  --border: #E8ECF1;
+  --border-light: #F0F2F5;
+
+  --text-primary: #0F1C2E;
+  --text-secondary: #4A5568;
+  --text-muted: #6B7580;
+
+  --radius: 16px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font);
+  background: var(--surface);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Status Bar ── */
+.status-bar {
+  background: var(--navy);
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+.status-bar-right { display: flex; align-items: center; gap: 6px; }
+.status-bar-right svg { width: 16px; height: 16px; }
+
+/* ── Header ── */
+.login-header {
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 32px 24px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.login-header::after {
+  content: '';
+  position: absolute;
+  right: -40px; top: -40px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(0,169,157,.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.login-header::before {
+  content: '';
+  position: absolute;
+  left: -30px; bottom: -30px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(0,169,157,.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.ecb-logo {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-light));
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 auto 16px;
+  position: relative;
+  z-index: 1;
+}
+.login-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.login-subtitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,.4);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Content ── */
+.login-content {
+  padding: 0 16px 24px;
+}
+
+/* ── Auth Tabs ── */
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background: var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  margin: 20px 0;
+}
+.auth-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: var(--radius-xs);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all .2s;
+  min-height: 48px;
+}
+.auth-tab svg { width: 18px; height: 18px; }
+.auth-tab.active {
+  background: var(--card);
+  color: var(--text-primary);
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+
+/* ── Auth Panels ── */
+.auth-panel { display: none; }
+.auth-panel.active { display: block; }
+
+/* ── Error ── */
+.error-msg {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: rgba(239,68,68,.08);
+  border: 1px solid rgba(239,68,68,.15);
+  border-radius: var(--radius-xs);
+  padding: 12px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--red);
+  margin-bottom: 14px;
+}
+.error-msg.show { display: flex; }
+.error-msg svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* ── Microsoft Button ── */
+.ms-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all .2s;
+  min-height: 56px;
+}
+.ms-btn:hover { background: var(--navy-mid); }
+.ms-btn:active { transform: scale(.98); }
+.ms-logo {
+  width: 20px; height: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.ms-q { border-radius: 2px; }
+.ms-q1 { background: #F25022; }
+.ms-q2 { background: #7FBA00; }
+.ms-q3 { background: #00A4EF; }
+.ms-q4 { background: #FFB900; }
+.auth-hint {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* ── Reference ID Form ── */
+.ref-form { display: flex; flex-direction: column; gap: 14px; }
+.ref-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  display: block;
+}
+.ref-input {
+  width: 100%;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-family: var(--font);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  min-height: 52px;
+}
+.ref-input::placeholder { color: var(--text-muted); font-weight: 400; }
+.ref-input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(0,133,124,.1);
+}
+.ref-input.pin {
+  letter-spacing: 8px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.ref-input-hint {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.ref-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--teal);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all .2s;
+  min-height: 56px;
+  margin-top: 2px;
+}
+.ref-submit:hover { background: var(--teal-light); }
+.ref-submit:active { transform: scale(.98); }
+.ref-submit svg { width: 20px; height: 20px; }
+
+/* ── Info Rows ── */
+.divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 20px 0;
+}
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.info-dot {
+  width: 5px; height: 5px;
+  background: var(--teal);
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: .5;
+}
+
+/* ── Help ── */
+.help-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.help-link a {
+  color: var(--teal);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ── Footer ── */
+.login-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-light);
+  text-align: center;
+}
+.footer-text {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  opacity: .6;
+}
+.trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.trust-badge {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  opacity: .5;
+}
+.trust-badge svg { width: 10px; height: 10px; }
+
+/* ── Animations ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-in { animation: fadeInUp .4s ease-out both; }
+.delay-1 { animation-delay: .1s; }
+.delay-2 { animation-delay: .2s; }
+
+/* ── Responsive: phone frame ── */
+@media (min-width: 480px) {
+  body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 20px;
+  }
+  .app-shell {
+    width: 390px;
+    min-height: 100vh;
+    background: var(--surface);
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 8px #1E293B,
+      0 0 0 10px #334155,
+      0 32px 80px rgba(0,0,0,.5);
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-bar-right">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 9l4-4 4 4"/><path d="M5 5v14"/><path d="M9 5h2"/><path d="M9 9h4"/><path d="M9 13h6"/><path d="M9 17h8"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="10" x2="23" y2="14"/></svg>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="login-header animate-in">
+    <div class="ecb-logo">ECB</div>
+    <div class="login-title">Welcome</div>
+    <div class="login-subtitle">Scouting & Performance Platform</div>
+  </header>
+
+  <!-- Content -->
+  <main class="login-content">
+
+    <!-- Auth Tabs -->
+    <div class="auth-tabs animate-in delay-1" role="tablist" aria-label="Sign in method">
+      <button class="auth-tab active" role="tab" aria-selected="true" aria-controls="panel-ms" id="tab-ms" onclick="switchTab('ms')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Microsoft
+      </button>
+      <button class="auth-tab" role="tab" aria-selected="false" aria-controls="panel-ref" id="tab-ref" onclick="switchTab('ref')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/><path d="M6 16h4"/></svg>
+        Reference ID
+      </button>
+    </div>
+
+    <!-- Panel: Microsoft SSO -->
+    <div class="auth-panel active animate-in delay-2" id="panel-ms" role="tabpanel" aria-labelledby="tab-ms">
+      <div class="error-msg" id="error-ms" role="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        <span>Authentication failed. Try again or contact support.</span>
+      </div>
+      <button class="ms-btn" aria-label="Sign in with Microsoft" onclick="signIn()">
+        <div class="ms-logo">
+          <div class="ms-q ms-q1"></div>
+          <div class="ms-q ms-q2"></div>
+          <div class="ms-q ms-q3"></div>
+          <div class="ms-q ms-q4"></div>
+        </div>
+        Sign in with Microsoft
+      </button>
+      <div class="auth-hint">For scouts and central staff with ECB accounts</div>
+    </div>
+
+    <!-- Panel: Reference ID -->
+    <div class="auth-panel" id="panel-ref" role="tabpanel" aria-labelledby="tab-ref">
+      <div class="error-msg" id="error-ref" role="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        <span>Invalid Reference ID or PIN. Please try again.</span>
+      </div>
+      <form class="ref-form" onsubmit="return false;">
+        <div>
+          <label class="ref-label" for="refId">Reference ID</label>
+          <input class="ref-input" id="refId" type="text" placeholder="e.g. ECB-C-004821" autocomplete="username" autocapitalize="characters" spellcheck="false" aria-required="true">
+          <div class="ref-input-hint">Sent to you via email or SMS</div>
+        </div>
+        <div>
+          <label class="ref-label" for="refPin">6-Digit PIN</label>
+          <input class="ref-input pin" id="refPin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="------" autocomplete="current-password" aria-required="true">
+        </div>
+        <button class="ref-submit" type="submit" onclick="signIn()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10,17 15,12 10,7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          Sign In
+        </button>
+      </form>
+      <div class="auth-hint">For coaches and assessors without Microsoft accounts</div>
+    </div>
+
+    <div class="help-link">
+      Need help? <a href="#">Contact support</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="login-footer">
+    <div class="footer-text">&copy; 2025 England and Wales Cricket Board &middot; v1.0</div>
+    <div class="trust-badges">
+      <div class="trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        TLS 1.3
+      </div>
+      <div class="trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        UK Data
+      </div>
+      <div class="trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+        WCAG AA
+      </div>
+      <div class="trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        GDPR
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+function switchTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('tab-' + tab).setAttribute('aria-selected', 'true');
+
+  document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+
+  if (tab === 'ref') {
+    setTimeout(() => document.getElementById('refId').focus(), 100);
+  }
+}
+
+const pinInput = document.getElementById('refPin');
+if (pinInput) {
+  pinInput.addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6);
+  });
+}
+
+function signIn() {
+  // POC: show loading state then navigate
+  const btns = document.querySelectorAll('.ms-btn, .ref-submit');
+  btns.forEach(b => { b.textContent = 'Signing in…'; b.disabled = true; });
+  setTimeout(() => { window.location.href = 'home.html'; }, 900);
+}
+</script>
+
+</body>
+</html>
