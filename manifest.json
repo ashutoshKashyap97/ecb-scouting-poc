@@ -2,7 +2,7 @@
   "name": "ECB Scouting Platform",
   "short_name": "ECB Scout",
   "description": "England & Wales Cricket Board — Scouting & Performance Platform",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0B1D3A",

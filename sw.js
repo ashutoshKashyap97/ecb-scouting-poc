@@ -1,10 +1,10 @@
 // ECB Scouting POC — Service Worker (offline-first)
 const CACHE = 'ecb-poc-v1';
 const ASSETS = [
-  '/index.html',
-  '/home.html',
-  '/report.html',
-  '/manifest.json',
+  './index.html',
+  './home.html',
+  './report.html',
+  './manifest.json',
   'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap'
 ];
 
