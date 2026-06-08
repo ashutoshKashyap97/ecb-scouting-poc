@@ -148,6 +148,8 @@ body {
   padding: 13px 16px;
   border-bottom: 1px solid var(--border-light);
   display: flex; align-items: center; gap: 10px;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 .section-num {
   width: 24px; height: 24px;
@@ -166,7 +168,52 @@ body {
   font-size: 10px; font-weight: 600; color: var(--text-muted);
   background: var(--border-light); padding: 3px 10px; border-radius: 20px;
 }
-.section-body { padding: 16px; }
+
+/* Section collapse chevron */
+.sec-chevron {
+  width: 28px; height: 28px; flex-shrink: 0;
+  background: none; border: none; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+}
+.sec-chevron svg { width: 16px; height: 16px; transition: transform .25s; }
+.section-card.expanded .sec-chevron svg { transform: rotate(180deg); }
+.section-card:not(.expanded) .section-card-header { border-bottom: none; }
+
+/* Section body collapse */
+.section-body {
+  padding: 16px;
+  max-height: 0; overflow: hidden;
+  transition: max-height .35s ease, opacity .25s ease;
+  opacity: 0;
+}
+.section-card.expanded .section-body {
+  max-height: 1200px; opacity: 1;
+}
+
+/* Video preview */
+.video-preview-wrap {
+  display: none;
+  margin-top: 10px;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  background: #000;
+  position: relative;
+}
+.video-preview-wrap.visible { display: block; }
+.video-preview-wrap video {
+  width: 100%; max-height: 200px;
+  display: block; object-fit: contain;
+  background: #000;
+}
+.video-preview-label {
+  font-size: 11px; font-weight: 600; color: var(--teal);
+  padding: 6px 10px;
+  background: var(--teal-pale);
+  display: flex; align-items: center; gap: 5px;
+}
+.video-preview-label svg { width: 12px; height: 12px; }
 
 /* Form elements */
 .field { margin-bottom: 16px; }
@@ -422,11 +469,14 @@ body {
   <main class="content">
 
     <!-- Section 1: Context -->
-    <div class="section-card" id="sec1">
-      <div class="section-card-header">
+    <div class="section-card expanded" id="sec1">
+      <div class="section-card-header" onclick="toggleSection('sec1')" aria-expanded="true" role="button">
         <div class="section-num">1</div>
         <div class="section-title">Match Context</div>
         <div class="section-status-empty" id="sec1-status">Required</div>
+        <button class="sec-chevron" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
       </div>
       <div class="section-body">
         <div class="field">
@@ -465,11 +515,14 @@ body {
     </div>
 
     <!-- Section 2: Overall Assessment -->
-    <div class="section-card" id="sec2">
-      <div class="section-card-header">
+    <div class="section-card expanded" id="sec2">
+      <div class="section-card-header" onclick="toggleSection('sec2')" aria-expanded="true" role="button">
         <div class="section-num">2</div>
         <div class="section-title">Overall Assessment</div>
         <div class="section-status-empty" id="sec2-status">Required</div>
+        <button class="sec-chevron" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
       </div>
       <div class="section-body">
         <div class="field">
@@ -494,10 +547,13 @@ body {
 
     <!-- Section 3: Technical Criteria -->
     <div class="section-card" id="sec3">
-      <div class="section-card-header">
+      <div class="section-card-header" onclick="toggleSection('sec3')" aria-expanded="false" role="button">
         <div class="section-num">3</div>
         <div class="section-title">Technical Criteria</div>
         <div class="section-status-empty" id="sec3-status">Optional</div>
+        <button class="sec-chevron" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
       </div>
       <div class="section-body">
         <div id="criteriaList">
@@ -508,10 +564,13 @@ body {
 
     <!-- Section 4: Future Potential -->
     <div class="section-card" id="sec4">
-      <div class="section-card-header">
+      <div class="section-card-header" onclick="toggleSection('sec4')" aria-expanded="false" role="button">
         <div class="section-num">4</div>
         <div class="section-title">Future Potential</div>
         <div class="section-status-empty" id="sec4-status">Optional</div>
+        <button class="sec-chevron" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
       </div>
       <div class="section-body">
         <div class="field">
@@ -547,14 +606,24 @@ body {
         <div class="field">
           <label class="field-label">Attachments</label>
           <div class="attach-row">
-            <button class="attach-btn" type="button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
-              Add Photo
+            <button class="attach-btn" type="button" onclick="document.getElementById('videoInput').click()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="23,7 16,12 23,17 23,7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              Add Video
             </button>
+            <input type="file" id="videoInput" accept="video/*" capture="environment"
+              style="display:none" onchange="handleVideoSelect(this)">
             <button class="voice-btn" type="button">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
               Voice Note
             </button>
+          </div>
+          <!-- Video preview appears here after file selected -->
+          <div class="video-preview-wrap" id="videoPreviewWrap">
+            <video id="videoPreview" controls playsinline></video>
+            <div class="video-preview-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="23,7 16,12 23,17 23,7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              <span id="videoFileName">Video attached</span>
+            </div>
           </div>
         </div>
       </div>
@@ -714,6 +783,30 @@ function showToast(msg) {
 // ── Save Draft ──
 function saveDraft() {
   showToast('Draft saved — will sync when online');
+}
+
+// ── Section collapse toggle ──
+function toggleSection(id) {
+  const card = document.getElementById(id);
+  const header = card.querySelector('.section-card-header');
+  const expanded = card.classList.toggle('expanded');
+  header.setAttribute('aria-expanded', expanded);
+}
+
+// ── Video file select + preview ──
+function handleVideoSelect(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const wrap  = document.getElementById('videoPreviewWrap');
+  const video = document.getElementById('videoPreview');
+  const label = document.getElementById('videoFileName');
+  const url = URL.createObjectURL(file);
+  video.src = url;
+  label.textContent = file.name;
+  wrap.classList.add('visible');
+  // Open section 4 if it's still collapsed
+  const sec4 = document.getElementById('sec4');
+  if (!sec4.classList.contains('expanded')) toggleSection('sec4');
 }
 
 // ── Submit ──
