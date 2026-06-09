@@ -469,19 +469,57 @@ button:focus-visible, a:focus-visible {
   color: #fff;
   flex-shrink: 0;
   cursor: pointer;
+  overflow: hidden;
+}
+.player-avatar .avatar-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
 }
 .player-avatar.blue { background: linear-gradient(135deg, #3B82F6, #6366F1); }
 .player-avatar.green { background: linear-gradient(135deg, #10B981, #059669); }
 .player-avatar.amber { background: linear-gradient(135deg, #F59E0B, #D97706); }
+
+/* ── Discipline icon badge on avatar (bat / ball / both) ── */
+.avatar-wrap { position: relative; flex-shrink: 0; }
+.discipline-icon {
+  position: absolute; bottom: -5px; right: -5px;
+  min-width: 22px; height: 22px; padding: 0 3px;
+  border-radius: 11px; background: #fff;
+  border: 2px solid var(--card);
+  box-shadow: 0 1px 4px rgba(11,29,58,.18);
+  display: flex; align-items: center; justify-content: center; gap: 1px;
+}
+.discipline-icon svg { width: 13px; height: 13px; }
+.discipline-icon.allround svg { width: 11px; height: 11px; }
+.discipline-icon.bat { color: #2563EB; }
+.discipline-icon.ball { color: #DC2626; }
+.discipline-icon.allround { color: var(--navy); }
+
+/* ── Player stats grid (shown when card expanded) ── */
+.player-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+  margin-top: 14px; padding: 12px 8px;
+  background: var(--surface); border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+.pstat { text-align: center; }
+.pstat-num {
+  font-size: 16px; font-weight: 800; color: var(--navy);
+  letter-spacing: -.4px; line-height: 1;
+}
+.pstat-label {
+  font-size: 8.5px; font-weight: 600; color: var(--text-muted);
+  margin-top: 4px; text-transform: uppercase; letter-spacing: .3px;
+}
+
 .player-info { flex: 1; min-width: 0; }
 .player-name-link {
   font-size: 15px;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   cursor: pointer;
   text-decoration: none;
   display: block;
@@ -495,6 +533,8 @@ button:focus-visible, a:focus-visible {
   margin-top: 2px;
 }
 .archetype-badge {
+  display: inline-block;
+  margin-top: 7px;
   font-size: 11px;
   font-weight: 600;
   color: var(--teal);
@@ -502,7 +542,6 @@ button:focus-visible, a:focus-visible {
   padding: 4px 10px;
   border-radius: 20px;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 .watchlist-btn {
   width: 36px;
@@ -555,9 +594,6 @@ button:focus-visible, a:focus-visible {
   font-size: 12px;
   font-weight: 600;
   color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .match-format {
   font-size: 9px;
@@ -679,9 +715,6 @@ button:focus-visible, a:focus-visible {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .draft-meta {
   font-size: 12px;
@@ -1057,12 +1090,17 @@ button:focus-visible, a:focus-visible {
           Next Up &mdash; Today
         </div>
         <div class="card-top">
-          <a href="#" class="player-avatar blue" aria-label="View Ben Carter profile">BC</a>
+          <div class="avatar-wrap">
+            <a href="#" class="player-avatar blue" aria-label="View Ben Carter profile"><img class="avatar-img" src="avatar-bc.png" alt="Ben Carter"></a>
+            <span class="discipline-icon bat" title="Batsman" aria-label="Batsman">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><line x1="4" y1="20" x2="13" y2="11" stroke-width="5"/><line x1="13" y1="11" x2="19.5" y2="4.5" stroke-width="2"/></svg>
+            </span>
+          </div>
           <div class="player-info">
             <a href="#" class="player-name-link">Ben Carter</a>
             <div class="player-meta">Yorkshire &middot; Age 19 &middot; RHB</div>
+            <div class="archetype-badge">Top Order</div>
           </div>
-          <div class="archetype-badge">Top Order</div>
           <button class="watchlist-btn" aria-label="Add Ben Carter to watchlist" onclick="this.classList.toggle('active')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
           </button>
@@ -1071,6 +1109,12 @@ button:focus-visible, a:focus-visible {
           </button>
         </div>
         <div class="card-collapsible">
+          <div class="player-stats">
+            <div class="pstat"><div class="pstat-num">842</div><div class="pstat-label">Runs</div></div>
+            <div class="pstat"><div class="pstat-num">48.2</div><div class="pstat-label">Average</div></div>
+            <div class="pstat"><div class="pstat-num">89.5</div><div class="pstat-label">Strike Rate</div></div>
+            <div class="pstat"><div class="pstat-num">134</div><div class="pstat-label">High Score</div></div>
+          </div>
           <div class="match-info">
             <div class="match-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
@@ -1111,12 +1155,17 @@ button:focus-visible, a:focus-visible {
       <div class="card-body">
         <div class="urgency-label later">Tomorrow</div>
         <div class="card-top">
-          <a href="#" class="player-avatar green" aria-label="View Liam Thompson profile">LT</a>
+          <div class="avatar-wrap">
+            <a href="#" class="player-avatar green" aria-label="View Liam Thompson profile"><img class="avatar-img" src="avatar-lt.png" alt="Liam Thompson"></a>
+            <span class="discipline-icon ball" title="Bowler" aria-label="Bowler">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 4c2.5 5 2.5 11 0 16" stroke-width="1.6"/></svg>
+            </span>
+          </div>
           <div class="player-info">
             <a href="#" class="player-name-link">Liam Thompson</a>
             <div class="player-meta">Surrey &middot; Age 22 &middot; Right-arm fast</div>
+            <div class="archetype-badge">Pace Bowler</div>
           </div>
-          <div class="archetype-badge">Pace Bowler</div>
           <button class="watchlist-btn" aria-label="Add Liam Thompson to watchlist" onclick="this.classList.toggle('active')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
           </button>
@@ -1125,6 +1174,12 @@ button:focus-visible, a:focus-visible {
           </button>
         </div>
         <div class="card-collapsible">
+          <div class="player-stats">
+            <div class="pstat"><div class="pstat-num">31</div><div class="pstat-label">Wickets</div></div>
+            <div class="pstat"><div class="pstat-num">21.4</div><div class="pstat-label">Average</div></div>
+            <div class="pstat"><div class="pstat-num">4.8</div><div class="pstat-label">Economy</div></div>
+            <div class="pstat"><div class="pstat-num">5/27</div><div class="pstat-label">Best</div></div>
+          </div>
           <div class="match-info">
             <div class="match-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
@@ -1165,12 +1220,18 @@ button:focus-visible, a:focus-visible {
       <div class="card-body">
         <div class="urgency-label later">Fri 13 Jun</div>
         <div class="card-top">
-          <a href="#" class="player-avatar amber" aria-label="View Ravi Patel profile">RP</a>
+          <div class="avatar-wrap">
+            <a href="#" class="player-avatar amber" aria-label="View Ravi Patel profile"><img class="avatar-img" src="avatar-rp.png" alt="Ravi Patel"></a>
+            <span class="discipline-icon allround" title="All-Rounder" aria-label="All-Rounder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><line x1="4" y1="20" x2="13" y2="11" stroke-width="5"/><line x1="13" y1="11" x2="19.5" y2="4.5" stroke-width="2"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 4c2.5 5 2.5 11 0 16" stroke-width="1.6"/></svg>
+            </span>
+          </div>
           <div class="player-info">
             <a href="#" class="player-name-link">Ravi Patel</a>
             <div class="player-meta">Nottinghamshire &middot; Age 20 &middot; All-rounder</div>
+            <div class="archetype-badge">All-Rounder</div>
           </div>
-          <div class="archetype-badge">All-Rounder</div>
           <button class="watchlist-btn" aria-label="Add Ravi Patel to watchlist" onclick="this.classList.toggle('active')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
           </button>
@@ -1179,6 +1240,12 @@ button:focus-visible, a:focus-visible {
           </button>
         </div>
         <div class="card-collapsible">
+          <div class="player-stats">
+            <div class="pstat"><div class="pstat-num">514</div><div class="pstat-label">Runs</div></div>
+            <div class="pstat"><div class="pstat-num">22</div><div class="pstat-label">Wickets</div></div>
+            <div class="pstat"><div class="pstat-num">34.2</div><div class="pstat-label">Bat Avg</div></div>
+            <div class="pstat"><div class="pstat-num">5.1</div><div class="pstat-label">Economy</div></div>
+          </div>
           <div class="match-info">
             <div class="match-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
