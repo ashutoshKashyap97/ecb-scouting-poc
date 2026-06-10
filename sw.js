@@ -1,5 +1,7 @@
-// ECB Scouting POC — Service Worker (offline-first)
-const CACHE = 'ecb-poc-v7';
+// ECB Scouting POC — Service Worker
+// Pages: network-first (always fresh when online, cache fallback offline).
+// Assets (images/fonts): cache-first for speed.
+const CACHE = 'ecb-poc-v8';
 const ASSETS = [
   './install.html',
   './index.html',
@@ -27,7 +29,30 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  // HTML navigations: network-first so updates appear on next open
+  if (e.request.mode === 'navigate' || e.request.destination === 'document') {
+    e.respondWith(
+      fetch(e.request)
+        .then(res => {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put(e.request, copy));
+          return res;
+        })
+        .catch(() =>
+          caches.match(e.request).then(m => m || caches.match('./index.html'))
+        )
+    );
+    return;
+  }
+  // Everything else: cache-first, then network (cached for next time)
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => cached))
+    caches.match(e.request).then(cached =>
+      cached ||
+      fetch(e.request).then(res => {
+        const copy = res.clone();
+        caches.open(CACHE).then(c => c.put(e.request, copy));
+        return res;
+      }).catch(() => cached)
+    )
   );
 });
