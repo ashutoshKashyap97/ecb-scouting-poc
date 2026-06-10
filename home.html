@@ -405,6 +405,34 @@ button:focus-visible, a:focus-visible {
 /* Urgency left accent strip */
 .assignment-card.urgent { border-left: 4px solid var(--teal); }
 .assignment-card.scheduled { border-left: 4px solid var(--border); }
+/* Card flagged by an external Scouting Alert */
+.assignment-card.has-alert { border-left: 4px solid var(--red); }
+
+/* ── Scouting Alert banner (cross-app integration — mock) ── */
+.scout-alert {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--red); color: #fff;
+  padding: 9px 14px;
+}
+.scout-alert > svg { width: 18px; height: 18px; flex-shrink: 0; }
+.scout-alert-body { flex: 1; min-width: 0; }
+.scout-alert-title {
+  font-size: 10px; font-weight: 800; letter-spacing: .6px;
+  display: flex; align-items: center; gap: 6px;
+}
+.scout-alert-desc {
+  font-size: 11px; font-weight: 500; opacity: .95;
+  margin-top: 1px; line-height: 1.25;
+}
+.scout-alert-tag {
+  font-size: 9px; font-weight: 800; letter-spacing: .5px;
+  background: rgba(255,255,255,.22); color: #fff;
+  padding: 3px 7px; flex-shrink: 0;
+}
+.scout-alert-src {
+  font-size: 8.5px; font-weight: 700; letter-spacing: .3px;
+  background: rgba(0,0,0,.18); padding: 1px 6px; margin-left: 2px;
+}
 
 .card-body { padding: 18px; }
 
@@ -1085,8 +1113,16 @@ button:focus-visible, a:focus-visible {
       </a>
     </div>
 
-    <!-- Card 1 — Ben Carter (URGENT: today) -->
-    <div class="assignment-card urgent animate-in delay-2 expanded" id="card1">
+    <!-- Card 1 — Ben Carter (MEN'S · flagged by external Scouting Alert) -->
+    <div class="assignment-card urgent has-alert animate-in delay-2 expanded" id="card1">
+      <div class="scout-alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <div class="scout-alert-body">
+          <div class="scout-alert-title">SCOUTING ALERT <span class="scout-alert-src">via ECB PerformanceIQ</span></div>
+          <div class="scout-alert-desc">In-form &mdash; 132 (94b) vs Durham, flagged as one to watch</div>
+        </div>
+        <span class="scout-alert-tag">SA</span>
+      </div>
       <div class="card-body">
         <div class="urgency-label next-up">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -1101,7 +1137,7 @@ button:focus-visible, a:focus-visible {
           </div>
           <div class="player-info">
             <a href="#" class="player-name-link">Ben Carter</a>
-            <div class="player-meta">Yorkshire &middot; Age 19 &middot; RHB</div>
+            <div class="player-meta">Yorkshire &middot; Age 23 &middot; RHB &middot; Men's</div>
             <div class="archetype-badge">Top Order</div>
           </div>
           <button class="watchlist-btn" aria-label="Add Ben Carter to watchlist" onclick="this.classList.toggle('active')">
@@ -1124,8 +1160,8 @@ button:focus-visible, a:focus-visible {
             </div>
             <div class="match-details">
               <div class="match-teams-row">
-                <span class="match-teams">Yorkshire U19 vs Lancashire</span>
-                <span class="match-format">50-Over</span>
+                <span class="match-teams">Yorkshire vs Lancashire</span>
+                <span class="match-format">CC D1</span>
               </div>
               <div class="match-venue-row">
                 Old Trafford, Manchester
@@ -1146,30 +1182,30 @@ button:focus-visible, a:focus-visible {
         </div>
       </div>
       <div class="card-collapsible card-action-primary">
-        <button class="btn btn-primary" aria-label="Start new report for Ben Carter" onclick="startReport('Ben Carter','Yorkshire U19 vs Lancashire','Old Trafford, Manchester','50-Over','Today 2pm')">
+        <button class="btn btn-primary" aria-label="Start new report for Ben Carter" onclick="startReport('Ben Carter','Yorkshire vs Lancashire','Old Trafford, Manchester','CC D1','Today 2pm','batsman')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>
           Start Report
         </button>
       </div>
     </div>
 
-    <!-- Card 2 — Liam Thompson (Tomorrow) -->
+    <!-- Card 2 — Grace Harper (Tomorrow) -->
     <div class="assignment-card scheduled animate-in delay-3" id="card2">
       <div class="card-body">
         <div class="urgency-label later">Tomorrow</div>
         <div class="card-top">
           <div class="avatar-wrap">
-            <a href="#" class="player-avatar green" aria-label="View Liam Thompson profile"><img class="avatar-img" src="avatar-lt.png" alt="Liam Thompson"></a>
+            <a href="#" class="player-avatar green" aria-label="View Grace Harper profile"><img class="avatar-img" src="avatar-women.png" alt="Grace Harper"></a>
             <span class="discipline-icon ball" title="Bowler" aria-label="Bowler">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 4c2.5 5 2.5 11 0 16" stroke-width="1.6"/></svg>
             </span>
           </div>
           <div class="player-info">
-            <a href="#" class="player-name-link">Liam Thompson</a>
-            <div class="player-meta">Surrey &middot; Age 22 &middot; Right-arm fast</div>
+            <a href="#" class="player-name-link">Grace Harper</a>
+            <div class="player-meta">Surrey Women &middot; Age 24 &middot; Right-arm fast</div>
             <div class="archetype-badge">Pace Bowler</div>
           </div>
-          <button class="watchlist-btn" aria-label="Add Liam Thompson to watchlist" onclick="this.classList.toggle('active')">
+          <button class="watchlist-btn" aria-label="Add Grace Harper to watchlist" onclick="this.classList.toggle('active')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
           </button>
           <button class="card-chevron" onclick="toggleCard('card2')" aria-label="Toggle match details">
@@ -1189,8 +1225,8 @@ button:focus-visible, a:focus-visible {
             </div>
             <div class="match-details">
               <div class="match-teams-row">
-                <span class="match-teams">Surrey 2nd XI vs Middlesex</span>
-                <span class="match-format">CC D2</span>
+                <span class="match-teams">Surrey Women vs Sussex</span>
+                <span class="match-format">RHF</span>
               </div>
               <div class="match-venue-row">
                 The Oval, London
@@ -1211,30 +1247,30 @@ button:focus-visible, a:focus-visible {
         </div>
       </div>
       <div class="card-collapsible card-action-primary">
-        <button class="btn btn-primary" aria-label="Start new report for Liam Thompson" onclick="startReport('Liam Thompson','Surrey 2nd XI vs Middlesex','The Oval, London','CC D2','Sat 10:30')">
+        <button class="btn btn-primary" aria-label="Start new report for Grace Harper" onclick="startReport('Grace Harper','Surrey Women vs Sussex','The Oval, London','RHF','Sat 10:30','bowler')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>
           Start Report
         </button>
       </div>
     </div>
 
-    <!-- Card 3 — Ravi Patel (Friday) -->
+    <!-- Card 3 — Arjun Sharma (Friday) -->
     <div class="assignment-card scheduled animate-in delay-4" id="card3">
       <div class="card-body">
         <div class="urgency-label later">Fri 13 Jun</div>
         <div class="card-top">
           <div class="avatar-wrap">
-            <a href="#" class="player-avatar amber" aria-label="View Ravi Patel profile"><img class="avatar-img" src="avatar-rp.png" alt="Ravi Patel"></a>
+            <a href="#" class="player-avatar amber" aria-label="View Arjun Sharma profile"><img class="avatar-img" src="avatar-teen.png" alt="Arjun Sharma"></a>
             <span class="discipline-icon allround" title="All-Rounder" aria-label="All-Rounder">
               <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><line x1="3" y1="21" x2="10.5" y2="13.5" stroke-width="3.6" style="stroke:var(--teal)"/><line x1="10.5" y1="13.5" x2="13.5" y2="10.5" stroke-width="1.7" style="stroke:var(--teal)"/><circle cx="18" cy="6.5" r="3.4" stroke-width="2" style="stroke:var(--red)"/></svg>
             </span>
           </div>
           <div class="player-info">
-            <a href="#" class="player-name-link">Ravi Patel</a>
-            <div class="player-meta">Nottinghamshire &middot; Age 20 &middot; All-rounder</div>
+            <a href="#" class="player-name-link">Arjun Sharma</a>
+            <div class="player-meta">England U17 &middot; Age 16 &middot; All-rounder</div>
             <div class="archetype-badge">All-Rounder</div>
           </div>
-          <button class="watchlist-btn" aria-label="Add Ravi Patel to watchlist" onclick="this.classList.toggle('active')">
+          <button class="watchlist-btn" aria-label="Add Arjun Sharma to watchlist" onclick="this.classList.toggle('active')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
           </button>
           <button class="card-chevron" onclick="toggleCard('card3')" aria-label="Toggle match details">
@@ -1254,8 +1290,8 @@ button:focus-visible, a:focus-visible {
             </div>
             <div class="match-details">
               <div class="match-teams-row">
-                <span class="match-teams">Notts vs Yorkshire</span>
-                <span class="match-format">T20</span>
+                <span class="match-teams">England U17 vs India</span>
+                <span class="match-format">Youth ODI</span>
               </div>
               <div class="match-venue-row">
                 Trent Bridge, Nottingham
@@ -1276,7 +1312,7 @@ button:focus-visible, a:focus-visible {
         </div>
       </div>
       <div class="card-collapsible card-action-primary">
-        <button class="btn btn-primary" aria-label="Start new report for Ravi Patel" onclick="startReport('Ravi Patel','Notts vs Yorkshire','Trent Bridge, Nottingham','T20','Fri 10:00')">
+        <button class="btn btn-primary" aria-label="Start new report for Arjun Sharma" onclick="startReport('Arjun Sharma','England U17 vs India','Trent Bridge, Nottingham','Youth ODI','Fri 10:00','allround')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>
           Start Report
         </button>
@@ -1406,8 +1442,8 @@ function toggleCard(id) {
   document.getElementById(id).classList.toggle('expanded');
 }
 
-function startReport(player, match, venue, format, time) {
-  const params = new URLSearchParams({ player, match, venue, format, time });
+function startReport(player, match, venue, format, time, type) {
+  const params = new URLSearchParams({ player, match, venue, format, time, type: type || '' });
   window.location.href = 'report.html?' + params.toString();
 }
 </script>

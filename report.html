@@ -688,11 +688,13 @@ const BATTING_CRITERIA  = ['Technique & footwork','Temperament & composure','Sho
 const BOWLING_CRITERIA  = ['Action & release point','Control & accuracy','Variation & pace changes','Swing/seam/spin movement','Physical capability'];
 const ALL_ROUND_CRITERIA = ['Batting technique','Bowling effectiveness','Athletic ability','Decision making','Leadership under pressure'];
 
+// Prefer the explicit discipline passed from the home card; fall back to name heuristics.
+const playerType = (params.get('type') || '').toLowerCase();
 function isBowler(name) { return /thompson|pace|bowl/i.test(name); }
 function isAllRounder(name) { return /patel|all.round/i.test(name); }
 
-const criteriaSet = isAllRounder(playerName) ? ALL_ROUND_CRITERIA
-                  : isBowler(playerName)      ? BOWLING_CRITERIA
+const criteriaSet = (playerType.includes('all') || isAllRounder(playerName)) ? ALL_ROUND_CRITERIA
+                  : (playerType.includes('bowl') || isBowler(playerName))    ? BOWLING_CRITERIA
                   : BATTING_CRITERIA;
 
 const criteriaList = document.getElementById('criteriaList');
