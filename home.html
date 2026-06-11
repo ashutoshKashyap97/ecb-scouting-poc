@@ -154,7 +154,7 @@ button:focus-visible, a:focus-visible {
 /* ── Header ── */
 .header {
   background: var(--navy);
-  padding: 20px 20px 24px;
+  padding: 12px 20px 14px;
   position: relative;
   overflow: hidden;
 }
@@ -240,15 +240,15 @@ button:focus-visible, a:focus-visible {
 
 /* ── Sync Bar ── */
 .sync-bar {
-  display: flex;
+  display: none; /* hidden for compact view — markup kept for later */
   align-items: center;
   gap: 10px;
   background: rgba(0,0,0,.25);
   border-radius: var(--radius-xs);
-  padding: 10px 14px;
+  padding: 8px 12px;
   position: relative;
   z-index: 1;
-  margin-top: 14px;
+  margin-top: 8px;
 }
 .sync-pulse {
   width: 8px; height: 8px;
@@ -287,23 +287,12 @@ button:focus-visible, a:focus-visible {
 .content { padding: 0 16px 110px; }
 
 /* ── Pull-to-refresh hint ── */
-.pull-hint {
-  text-align: center;
-  padding: 14px 0 2px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  opacity: .7;
-}
+.pull-hint { display: none; }
 .pull-hint svg { width: 14px; height: 14px; }
 
 /* ── Search Bar ── */
 .search-bar {
-  margin-top: 16px;
+  margin-top: 10px;
   position: relative;
 }
 .search-input {
@@ -353,7 +342,7 @@ button:focus-visible, a:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 0 14px;
+  padding: 12px 0 8px;
 }
 .section-title {
   font-size: 15px;
@@ -390,7 +379,7 @@ button:focus-visible, a:focus-visible {
 .assignment-card {
   background: var(--card);
   border-radius: var(--radius);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   box-shadow: var(--shadow-card);
   border: 1px solid var(--border-light);
   transition: transform .15s, box-shadow .15s;
@@ -412,7 +401,7 @@ button:focus-visible, a:focus-visible {
 .scout-alert {
   display: flex; align-items: center; gap: 10px;
   background: var(--red); color: #fff;
-  padding: 9px 14px;
+  padding: 7px 12px;
 }
 .scout-alert > svg { width: 18px; height: 18px; flex-shrink: 0; }
 .scout-alert-body { flex: 1; min-width: 0; }
@@ -434,7 +423,7 @@ button:focus-visible, a:focus-visible {
   background: rgba(0,0,0,.18); padding: 1px 6px; margin-left: 2px;
 }
 
-.card-body { padding: 18px; }
+.card-body { padding: 8px 14px 8px; }
 
 /* Urgency label */
 .urgency-label {
@@ -445,9 +434,9 @@ button:focus-visible, a:focus-visible {
   font-weight: 700;
   letter-spacing: .5px;
   text-transform: uppercase;
-  padding: 3px 10px;
+  padding: 2px 8px;
   border-radius: 0;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 .urgency-label.next-up {
   color: var(--teal);
@@ -461,7 +450,7 @@ button:focus-visible, a:focus-visible {
 
 /* ── Card collapse chevron ── */
 .card-chevron {
-  width: 32px; height: 32px; flex-shrink: 0;
+  width: 28px; height: 28px; flex-shrink: 0;
   border-radius: 0; background: var(--border-light);
   border: none; display: flex; align-items: center; justify-content: center;
   cursor: pointer; color: var(--text-muted);
@@ -486,12 +475,12 @@ button:focus-visible, a:focus-visible {
 .card-top {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 0;
 }
 .player-avatar {
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
@@ -546,8 +535,9 @@ button:focus-visible, a:focus-visible {
 }
 
 .player-info { flex: 1; min-width: 0; }
+.name-row { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .player-name-link {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.2px;
@@ -558,25 +548,25 @@ button:focus-visible, a:focus-visible {
 }
 .player-name-link:hover { color: var(--teal); }
 .player-meta {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--text-muted);
-  margin-top: 2px;
+  margin-top: 1px;
 }
 .archetype-badge {
   display: inline-block;
-  margin-top: 7px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--teal);
   background: var(--teal-pale);
-  padding: 4px 10px;
+  padding: 2px 7px;
   border-radius: 0;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .watchlist-btn {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: none;
   border: none;
@@ -1114,7 +1104,7 @@ button:focus-visible, a:focus-visible {
     </div>
 
     <!-- Card 1 — Ben Carter (MEN'S) -->
-    <div class="assignment-card urgent animate-in delay-2 expanded" id="card1">
+    <div class="assignment-card urgent animate-in delay-2" id="card1">
       <div class="card-body">
         <div class="urgency-label next-up">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -1128,9 +1118,11 @@ button:focus-visible, a:focus-visible {
             </span>
           </div>
           <div class="player-info">
-            <a href="#" class="player-name-link">Ben Carter</a>
+            <div class="name-row">
+              <a href="#" class="player-name-link">Ben Carter</a>
+              <div class="archetype-badge">Top Order</div>
+            </div>
             <div class="player-meta">Yorkshire &middot; Age 23 &middot; RHB &middot; Men's</div>
-            <div class="archetype-badge">Top Order</div>
           </div>
           <button class="watchlist-btn" aria-label="Add Ben Carter to watchlist" onclick="this.classList.toggle('active')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
@@ -1193,9 +1185,11 @@ button:focus-visible, a:focus-visible {
             </span>
           </div>
           <div class="player-info">
-            <a href="#" class="player-name-link">Grace Harper</a>
+            <div class="name-row">
+              <a href="#" class="player-name-link">Grace Harper</a>
+              <div class="archetype-badge">Pace Bowler</div>
+            </div>
             <div class="player-meta">Surrey Women &middot; Age 24 &middot; Right-arm fast</div>
-            <div class="archetype-badge">Pace Bowler</div>
           </div>
           <button class="watchlist-btn" aria-label="Add Grace Harper to watchlist" onclick="this.classList.toggle('active')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
@@ -1258,9 +1252,11 @@ button:focus-visible, a:focus-visible {
             </span>
           </div>
           <div class="player-info">
-            <a href="#" class="player-name-link">Arjun Sharma</a>
+            <div class="name-row">
+              <a href="#" class="player-name-link">Arjun Sharma</a>
+              <div class="archetype-badge">All-Rounder</div>
+            </div>
             <div class="player-meta">England U17 &middot; Age 16 &middot; All-rounder</div>
-            <div class="archetype-badge">All-Rounder</div>
           </div>
           <button class="watchlist-btn" aria-label="Add Arjun Sharma to watchlist" onclick="this.classList.toggle('active')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
@@ -1331,9 +1327,11 @@ button:focus-visible, a:focus-visible {
             </span>
           </div>
           <div class="player-info">
-            <a href="#" class="player-name-link">Imani Clarke</a>
+            <div class="name-row">
+              <a href="#" class="player-name-link">Imani Clarke</a>
+              <div class="archetype-badge">Top Order</div>
+            </div>
             <div class="player-meta">Hampshire Women &middot; Age 22 &middot; RHB</div>
-            <div class="archetype-badge">Top Order</div>
           </div>
           <button class="watchlist-btn" aria-label="Add Imani Clarke to watchlist" onclick="this.classList.toggle('active')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
