@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>ECB — Player Comparison</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0A1B3D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* England Cricket brand: navy + ECB blue + red + stone. Sharp, block colour.
+     green/amber are STATUS-ONLY. */
+  --navy: #0A1B3D;
+  --navy-mid: #102A52;
+  --teal: #0072CE;
+  --teal-light: #00A3E0;
+  --teal-pale: #E4EFFA;
+  --amber: #E8A100;
+  --red: #E4002B;
+  --green: #1F9D55;
+  --surface: #ECEAE4;
+  --card: #FFFFFF;
+  --border: #D7D2CB;
+  --border-light: #E7E3DC;
+  --text-primary: #0A1B3D;
+  --text-secondary: #3F4A5A;
+  --text-muted: #6B7580;
+  --radius: 0px;
+  --shadow-card: 0 1px 0 rgba(10,27,61,.05), 0 2px 8px rgba(10,27,61,.06);
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* player series colours (brand: blue / navy / red) */
+  --p1: #00A3E0;
+  --p2: #0A1B3D;
+  --p3: #E4002B;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font); background: var(--surface); color: var(--text-primary);
+  -webkit-font-smoothing: antialiased; min-height: 100vh; min-height: 100dvh;
+}
+*:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Status bar */
+.status-bar {
+  background: var(--navy); padding: 8px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 13px; font-weight: 600; color: #fff; position: sticky; top: 0; z-index: 100;
+}
+.status-bar-right { display: flex; align-items: center; gap: 6px; }
+.status-bar-right svg { width: 16px; height: 16px; }
+
+/* Header */
+.cmp-header { background: var(--navy); padding: 0 18px 16px; }
+.cmp-header-top { display: flex; align-items: center; gap: 12px; padding: 14px 0 14px; }
+.back-btn {
+  width: 40px; height: 40px; background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.06); display: flex; align-items: center;
+  justify-content: center; color: rgba(255,255,255,.85); text-decoration: none; flex-shrink: 0;
+}
+.back-btn svg { width: 20px; height: 20px; }
+.cmp-header-title { flex: 1; }
+.cmp-header-title h1 { font-size: 17px; font-weight: 800; color: #fff; letter-spacing: -.3px; }
+.cmp-header-title p { font-size: 11.5px; font-weight: 500; color: rgba(255,255,255,.45); margin-top: 1px; }
+.ai-pill {
+  display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;
+  background: rgba(0,163,224,.18); border: 1px solid rgba(0,163,224,.4);
+  color: var(--teal-light); font-size: 11px; font-weight: 800; padding: 5px 10px; letter-spacing: .3px;
+}
+.ai-pill svg { width: 13px; height: 13px; }
+
+/* Player selector chips */
+.chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; }
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  display: flex; align-items: center; gap: 9px; flex-shrink: 0; cursor: pointer;
+  background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.12);
+  padding: 8px 12px 8px 8px; transition: border-color .15s, opacity .15s; user-select: none;
+}
+.chip.off { opacity: .4; }
+.chip-av {
+  width: 30px; height: 30px; flex-shrink: 0; color: #fff; font-size: 11px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.chip-info { line-height: 1.2; }
+.chip-name { font-size: 13px; font-weight: 700; color: #fff; }
+.chip-sub { font-size: 10px; font-weight: 500; color: rgba(255,255,255,.5); }
+.chip-dot { width: 9px; height: 9px; flex-shrink: 0; border-radius: 50%; }
+
+/* Content */
+.content { padding: 16px 14px 96px; }
+.card {
+  background: var(--card); border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card); padding: 16px; margin-bottom: 12px;
+}
+.card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.card-title { font-size: 14px; font-weight: 800; color: var(--text-primary); }
+.card-tag {
+  font-size: 10px; font-weight: 700; color: var(--text-muted);
+  background: var(--surface); border: 1px solid var(--border); padding: 3px 9px;
+}
+.card-sub { font-size: 11.5px; color: var(--text-muted); font-weight: 500; margin-bottom: 6px; }
+
+/* Radar */
+.radar-wrap { display: flex; justify-content: center; padding: 6px 0 2px; }
+.radar-wrap svg { width: 100%; max-width: 340px; height: auto; }
+.radar-grid { fill: none; stroke: var(--border); stroke-width: 1; }
+.radar-axis { stroke: var(--border); stroke-width: 1; }
+.radar-label { font-size: 10px; font-weight: 700; fill: var(--text-secondary); font-family: var(--font); }
+.radar-poly { fill-opacity: .12; stroke-width: 2; }
+.radar-dot { stroke: #fff; stroke-width: 1; }
+.legend { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: var(--text-secondary); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* Overall scores */
+.scores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.score-tile { background: var(--surface); border: 1px solid var(--border-light); padding: 14px 6px; text-align: center; }
+.score-name { font-size: 10.5px; font-weight: 700; color: var(--text-muted); }
+.score-num { font-size: 30px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-top: 4px; }
+.score-status { font-size: 10px; font-weight: 700; margin-top: 3px; }
+
+/* Tabs + stats table */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.tab {
+  flex: 1; text-align: center; padding: 11px 6px; font-size: 13px; font-weight: 700;
+  color: var(--text-muted); cursor: pointer; background: none; border: none; font-family: var(--font);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+.stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--border-light); }
+.stat-row:last-child { border-bottom: none; }
+.stat-cell { text-align: center; padding: 12px 4px; }
+.stat-cell .sv { font-size: 18px; font-weight: 800; color: var(--text-primary); }
+.stat-cell .sl { font-size: 9.5px; font-weight: 700; color: var(--text-muted); letter-spacing: .5px; margin-top: 2px; }
+.stat-foot { display: grid; grid-template-columns: 1fr 1fr 1fr; padding-top: 10px; }
+.stat-foot .sf { text-align: center; font-size: 11px; font-weight: 700; }
+
+/* Attribute bars */
+.bars { display: none; }
+.bars.show { display: block; }
+.bar-group { margin-bottom: 13px; }
+.bar-group:last-child { margin-bottom: 2px; }
+.bar-name { font-size: 11.5px; font-weight: 700; color: var(--text-secondary); margin-bottom: 5px; }
+.bar-line { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.bar-track { flex: 1; height: 8px; background: var(--surface); border: 1px solid var(--border-light); }
+.bar-fill { height: 100%; }
+.bar-val { font-size: 10.5px; font-weight: 700; color: var(--text-muted); width: 26px; text-align: right; }
+.keystats.hide { display: none; }
+
+/* AI analysis */
+.ai-card { background: var(--card); border: 1px solid var(--border-light); box-shadow: var(--shadow-card); margin-bottom: 12px; overflow: hidden; }
+.ai-card-head {
+  background: var(--navy); padding: 13px 16px; display: flex; align-items: center; gap: 9px;
+}
+.ai-card-head .spark { width: 18px; height: 18px; color: var(--teal-light); }
+.ai-card-head h3 { font-size: 14px; font-weight: 800; color: #fff; flex: 1; }
+.gemini-badge {
+  font-size: 10px; font-weight: 700; color: rgba(255,255,255,.7);
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); padding: 3px 9px;
+}
+.ai-body { padding: 16px; }
+.ai-summary {
+  display: flex; gap: 11px; background: var(--teal-pale); border-left: 3px solid var(--teal);
+  padding: 13px; margin-bottom: 14px;
+}
+.ai-summary svg { width: 20px; height: 20px; color: var(--teal); flex-shrink: 0; margin-top: 1px; }
+.ai-summary p { font-size: 12.5px; line-height: 1.5; color: var(--text-secondary); }
+.ai-summary b { color: var(--text-primary); font-weight: 700; }
+.insight { display: flex; gap: 11px; padding: 13px 0; border-top: 1px solid var(--border-light); }
+.insight-icon { width: 30px; height: 30px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.insight-icon svg { width: 16px; height: 16px; }
+.ic-blue { background: rgba(0,114,206,.1); color: var(--teal); }
+.ic-amber { background: rgba(232,161,0,.12); color: var(--amber); }
+.ic-green { background: rgba(31,157,85,.1); color: var(--green); }
+.insight-body h4 { font-size: 12.5px; font-weight: 800; margin-bottom: 3px; }
+.insight-body.blue h4 { color: var(--teal); }
+.insight-body.amber h4 { color: var(--amber); }
+.insight-body.green h4 { color: var(--green); }
+.insight-body p { font-size: 12px; line-height: 1.5; color: var(--text-secondary); }
+
+/* Bottom nav */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; background: var(--card);
+  border-top: 1px solid var(--border); display: grid; grid-template-columns: repeat(4, 1fr);
+  padding-bottom: env(safe-area-inset-bottom); z-index: 100; box-shadow: 0 -2px 12px rgba(0,0,0,.04);
+}
+.nav-item {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  padding: 10px 0 8px; cursor: pointer; position: relative; text-decoration: none; min-height: 56px;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-item svg { width: 22px; height: 22px; }
+.nav-label { font-size: 10px; font-weight: 600; }
+.nav-item.active { color: var(--teal); }
+.nav-item.inactive { color: var(--text-muted); }
+.nav-item.active::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 28px; height: 3px; background: var(--teal); border-radius: 0 0 3px 3px;
+}
+
+@media (min-width: 480px) {
+  body { display: flex; align-items: flex-start; justify-content: center; padding: 32px 20px; }
+  .app-shell {
+    width: 390px; min-height: 100vh; background: var(--surface); border-radius: 40px;
+    overflow: hidden; box-shadow: 0 0 0 8px #1E293B, 0 0 0 10px #334155, 0 32px 80px rgba(0,0,0,.5);
+    position: relative;
+  }
+  .bottom-nav { position: sticky; border-radius: 0 0 40px 40px; }
+}
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-bar-right">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 9l4-4 4 4"/><path d="M5 5v14"/><path d="M9 5h2"/><path d="M9 9h4"/><path d="M9 13h6"/><path d="M9 17h8"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="10" x2="23" y2="14"/></svg>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="cmp-header">
+    <div class="cmp-header-top">
+      <a href="home.html" class="back-btn" aria-label="Back to home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      </a>
+      <div class="cmp-header-title">
+        <h1>Player Comparison</h1>
+        <p>AI-powered similarity analysis</p>
+      </div>
+      <span class="ai-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>
+        AI
+      </span>
+    </div>
+    <div class="chips" id="chips"></div>
+  </header>
+
+  <main class="content">
+
+    <!-- Performance radar -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Performance radar</div>
+        <span class="card-tag">This season</span>
+      </div>
+      <div class="card-sub">6 dimensions · scout assessments · tap a player to toggle</div>
+      <div class="radar-wrap"><svg id="radar" viewBox="0 0 320 300" role="img" aria-label="Player performance radar"></svg></div>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <!-- Overall scores -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Overall scores</div>
+        <span class="card-tag">Composite · all dimensions</span>
+      </div>
+      <div class="scores" id="scores"></div>
+    </div>
+
+    <!-- Stats -->
+    <div class="card">
+      <div class="tabs">
+        <button class="tab active" id="tabKey" onclick="showTab('key')">Key stats</button>
+        <button class="tab" id="tabBars" onclick="showTab('bars')">Attribute bars</button>
+      </div>
+      <div class="keystats" id="keystats"></div>
+      <div class="bars" id="bars"></div>
+    </div>
+
+    <!-- AI analysis -->
+    <div class="ai-card">
+      <div class="ai-card-head">
+        <svg class="spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>
+        <h3>AI analysis</h3>
+        <span class="gemini-badge">Gemini</span>
+      </div>
+      <div class="ai-body">
+        <div class="ai-summary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+          <p><b>Ben Carter</b> is the strongest match for the top-order brief. His technique and shot-selection scores are the highest in this cohort and his average has improved <b>12% season-on-season</b>.</p>
+        </div>
+        <div class="insight">
+          <div class="insight-icon ic-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></div>
+          <div class="insight-body blue">
+            <h4>Trajectory gap</h4>
+            <p>Josh Archer's future-potential score (4.3) exceeds Carter's (3.8), suggesting a higher development ceiling despite a lower current composite.</p>
+          </div>
+        </div>
+        <div class="insight">
+          <div class="insight-icon ic-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.3 3.9 1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="insight-body amber">
+            <h4>Pressure gap</h4>
+            <p>Hargreaves' temperament &amp; composure score (2.9) is well below the cohort average (3.7). Recommend exposure to higher-pressure formats before senior selection.</p>
+          </div>
+        </div>
+        <div class="insight">
+          <div class="insight-icon ic-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></div>
+          <div class="insight-body green">
+            <h4>Similarity index</h4>
+            <p>Carter and Archer share <b>84% profile overlap</b> across technical criteria — strong candidates for the same squad slot. Recommend side-by-side trial-match observation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <a class="nav-item inactive" href="home.html" aria-label="Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+      <span class="nav-label">Home</span>
+    </a>
+    <a class="nav-item inactive" href="#" aria-label="Reports">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span class="nav-label">Reports</span>
+    </a>
+    <a class="nav-item active" href="#" aria-label="Players" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <span class="nav-label">Players</span>
+    </a>
+    <a class="nav-item inactive" href="#" aria-label="Profile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="nav-label">Profile</span>
+    </a>
+  </nav>
+
+</div>
+
+<script>
+const AXES = ['Technique', 'Temperament', 'Shot Select.', 'Running', 'Atk/Def', 'Potential'];
+const PLAYERS = [
+  { id:'BC', name:'Ben Carter',     sub:'Top Order · Men’s', color:'var(--p1)', score:78, status:'★ Primary',    statusColor:'var(--teal)',
+    vals:[4.6,4.2,4.4,3.7,4.0,3.8], stats:{Runs:842, Average:'48.2', 'Strike Rate':'89.5'} },
+  { id:'JA', name:'Josh Archer',    sub:'Top Order · Men’s', color:'var(--p2)', score:74, status:'↑ Trending',   statusColor:'var(--green)',
+    vals:[4.0,3.9,3.7,4.2,3.6,4.3], stats:{Runs:611, Average:'39.4', 'Strike Rate':'82.1'} },
+  { id:'TH', name:'Tom Hargreaves', sub:'Top Order · Men’s', color:'var(--p3)', score:69, status:'Developing',      statusColor:'var(--amber)',
+    vals:[3.6,2.9,3.5,3.4,3.3,3.6], stats:{Runs:523, Average:'34.8', 'Strike Rate':'76.3'} },
+];
+const active = new Set(PLAYERS.map(p => p.id));
+
+const CX = 160, CY = 142, R = 84, LEVELS = 5;
+function pt(i, value) {
+  const ang = (Math.PI / 180) * (i * 60 - 90);
+  const r = R * (value / 5);
+  return [CX + r * Math.cos(ang), CY + r * Math.sin(ang)];
+}
+function poly(values) { return values.map((v, i) => pt(i, v).map(n => n.toFixed(1)).join(',')).join(' '); }
+
+function renderRadar() {
+  let s = '';
+  // grid rings
+  for (let L = 1; L <= LEVELS; L++) {
+    s += '<polygon class="radar-grid" points="' + poly(AXES.map(() => L)) + '"/>';
+  }
+  // axes + labels
+  AXES.forEach((ax, i) => {
+    const [ox, oy] = pt(i, 5);
+    s += '<line class="radar-axis" x1="' + CX + '" y1="' + CY + '" x2="' + ox.toFixed(1) + '" y2="' + oy.toFixed(1) + '"/>';
+    const [lx, ly] = pt(i, 6.05);
+    let anchor = 'middle';
+    if (lx > CX + 6) anchor = 'start';
+    else if (lx < CX - 6) anchor = 'end';
+    s += '<text class="radar-label" x="' + lx.toFixed(1) + '" y="' + (ly + 3).toFixed(1) + '" text-anchor="' + anchor + '">' + ax + '</text>';
+  });
+  // data polygons (active players)
+  PLAYERS.filter(p => active.has(p.id)).forEach(p => {
+    s += '<polygon class="radar-poly" points="' + poly(p.vals) + '" style="fill:' + p.color + ';stroke:' + p.color + '"/>';
+  });
+  // dots on top
+  PLAYERS.filter(p => active.has(p.id)).forEach(p => {
+    p.vals.forEach((v, i) => {
+      const [x, y] = pt(i, v);
+      s += '<circle class="radar-dot" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="3" style="fill:' + p.color + '"/>';
+    });
+  });
+  document.getElementById('radar').innerHTML = s;
+}
+
+function renderChips() {
+  document.getElementById('chips').innerHTML = PLAYERS.map(p =>
+    '<div class="chip' + (active.has(p.id) ? '' : ' off') + '" onclick="toggle(\'' + p.id + '\')">' +
+      '<span class="chip-av" style="background:' + p.color + '">' + p.id + '</span>' +
+      '<span class="chip-info"><span class="chip-name">' + p.name + '</span><br><span class="chip-sub">' + p.sub + '</span></span>' +
+      '<span class="chip-dot" style="background:' + p.color + '"></span>' +
+    '</div>'
+  ).join('');
+}
+
+function renderLegend() {
+  document.getElementById('legend').innerHTML = PLAYERS.filter(p => active.has(p.id)).map(p =>
+    '<span class="legend-item"><span class="legend-dot" style="background:' + p.color + '"></span>' + p.name + '</span>'
+  ).join('');
+}
+
+function renderScores() {
+  document.getElementById('scores').innerHTML = PLAYERS.map(p =>
+    '<div class="score-tile">' +
+      '<div class="score-name">' + p.name + '</div>' +
+      '<div class="score-num" style="color:' + p.color + '">' + p.score + '</div>' +
+      '<div class="score-status" style="color:' + p.statusColor + '">' + p.status + '</div>' +
+    '</div>'
+  ).join('');
+}
+
+function renderKeyStats() {
+  const keys = ['Runs', 'Average', 'Strike Rate'];
+  let s = '';
+  keys.forEach(k => {
+    s += '<div class="stat-row">' + PLAYERS.map(p =>
+      '<div class="stat-cell"><div class="sv">' + p.stats[k] + '</div><div class="sl">' + k.toUpperCase() + '</div></div>'
+    ).join('') + '</div>';
+  });
+  s += '<div class="stat-foot">' + PLAYERS.map(p =>
+    '<div class="sf" style="color:' + p.color + '">' + p.name.split(' ')[0][0] + '. ' + p.name.split(' ')[1] + '</div>'
+  ).join('') + '</div>';
+  document.getElementById('keystats').innerHTML = s;
+}
+
+function renderBars() {
+  let s = '';
+  AXES.forEach((ax, i) => {
+    s += '<div class="bar-group"><div class="bar-name">' + ax + '</div>' +
+      PLAYERS.map(p =>
+        '<div class="bar-line"><div class="bar-track"><div class="bar-fill" style="width:' + (p.vals[i] / 5 * 100) + '%;background:' + p.color + '"></div></div>' +
+        '<span class="bar-val">' + p.vals[i].toFixed(1) + '</span></div>'
+      ).join('') +
+    '</div>';
+  });
+  document.getElementById('bars').innerHTML = s;
+}
+
+function toggle(id) {
+  if (active.has(id)) { if (active.size > 1) active.delete(id); }
+  else active.add(id);
+  renderChips(); renderRadar(); renderLegend();
+}
+function showTab(which) {
+  document.getElementById('tabKey').classList.toggle('active', which === 'key');
+  document.getElementById('tabBars').classList.toggle('active', which === 'bars');
+  document.getElementById('keystats').classList.toggle('hide', which !== 'key');
+  document.getElementById('bars').classList.toggle('show', which === 'bars');
+}
+
+renderChips(); renderRadar(); renderLegend(); renderScores(); renderKeyStats(); renderBars();
+if ('serviceWorker' in navigator) {
+  const had = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' });
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!had || reloaded) return; reloaded = true; location.reload();
+  });
+}
+</script>
+</body>
+</html>
