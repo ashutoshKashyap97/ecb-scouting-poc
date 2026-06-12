@@ -3,3 +3,8 @@ players.png
 teen.png
 women.png
 women2.png
+
+# stray source images (only cropped avatar-*.png are used)
+teen*.png
+women*.png
+*.jpeg
