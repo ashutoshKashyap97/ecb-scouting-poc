@@ -322,9 +322,10 @@ button:focus-visible, a:focus-visible {
   color: var(--text-muted);
   pointer-events: none;
 }
+.search-input { padding-right: 96px; }
 .search-offline-tag {
   position: absolute;
-  right: 12px;
+  right: 52px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 9px;
@@ -335,6 +336,27 @@ button:focus-visible, a:focus-visible {
   border-radius: 0;
   letter-spacing: .3px;
   text-transform: uppercase;
+}
+.search-mic {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--teal-pale);
+  border: none; cursor: pointer; color: var(--teal);
+  -webkit-tap-highlight-color: transparent; padding: 0;
+}
+.search-mic svg { width: 17px; height: 17px; }
+.search-mic:active { transform: translateY(-50%) scale(.92); }
+.search-mic.listening {
+  background: var(--red); color: #fff;
+  animation: micPulse 1.2s ease-in-out infinite;
+}
+@keyframes micPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(228,0,43,.45); }
+  50% { box-shadow: 0 0 0 7px rgba(228,0,43,0); }
 }
 
 /* ── Section Header ── */
@@ -1099,6 +1121,9 @@ button:focus-visible, a:focus-visible {
       <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
       <input type="search" class="search-input" placeholder="Search players, matches, reports..." aria-label="Search players, matches, or reports">
       <span class="search-offline-tag">Offline OK</span>
+      <button class="search-mic" id="searchMic" type="button" aria-label="Search by voice" onclick="startVoiceSearch(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      </button>
     </div>
 
     <!-- Today's Assignments -->
@@ -1548,6 +1573,41 @@ function startReport(player, match, venue, format, time, type) {
 
 function startCompare(player) {
   window.location.href = 'compare.html?player=' + encodeURIComponent(player);
+}
+
+// ── Voice search (Web Speech API — native, free) ──
+let voiceRec = null;
+function startVoiceSearch(btn) {
+  const input = document.querySelector('.search-input');
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    input.placeholder = 'Voice search needs Chrome or Safari';
+    setTimeout(() => { input.placeholder = 'Search players, matches, reports...'; }, 2500);
+    return;
+  }
+  if (btn.classList.contains('listening')) { try { voiceRec && voiceRec.stop(); } catch (e) {} return; }
+  voiceRec = new SR();
+  voiceRec.lang = 'en-GB';
+  voiceRec.interimResults = true;
+  voiceRec.maxAlternatives = 1;
+  btn.classList.add('listening');
+  input.placeholder = 'Listening…';
+  voiceRec.onresult = (e) => {
+    let txt = '';
+    for (const r of e.results) txt += r[0].transcript;
+    input.value = txt;
+  };
+  voiceRec.onerror = (e) => {
+    input.placeholder = e.error === 'not-allowed'
+      ? 'Microphone blocked — allow access to search by voice'
+      : 'Search players, matches, reports...';
+  };
+  voiceRec.onend = () => {
+    btn.classList.remove('listening');
+    if (input.placeholder === 'Listening…') input.placeholder = 'Search players, matches, reports...';
+    input.focus();
+  };
+  try { voiceRec.start(); } catch (e) { btn.classList.remove('listening'); }
 }
 </script>
 
