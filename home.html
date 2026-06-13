@@ -322,7 +322,7 @@ button:focus-visible, a:focus-visible {
   color: var(--text-muted);
   pointer-events: none;
 }
-.search-input { padding-right: 96px; }
+.search-input { padding-right: 52px; }
 .search-offline-tag {
   position: absolute;
   right: 52px;
@@ -1120,7 +1120,6 @@ button:focus-visible, a:focus-visible {
     <div class="search-bar animate-in delay-1">
       <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
       <input type="search" class="search-input" placeholder="Search players, matches, reports..." aria-label="Search players, matches, or reports">
-      <span class="search-offline-tag">Offline OK</span>
       <button class="search-mic" id="searchMic" type="button" aria-label="Search by voice" onclick="startVoiceSearch(this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
       </button>
