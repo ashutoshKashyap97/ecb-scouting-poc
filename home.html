@@ -488,9 +488,11 @@ button:focus-visible, a:focus-visible {
   max-height: 0; overflow: hidden;
   transition: max-height .3s ease, opacity .25s ease;
   opacity: 0;
+  pointer-events: none;   /* collapsed content (incl. Report/Compare) not tappable */
 }
 .assignment-card.expanded .card-collapsible {
   max-height: 400px; opacity: 1;
+  pointer-events: auto;   /* only interactive once expanded */
 }
 .card-collapsible .match-info { margin-top: 14px; }
 
