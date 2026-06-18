@@ -454,7 +454,7 @@ function showTab(which) {
 renderChips(); renderRadar(); renderLegend(); renderScores(); renderKeyStats(); renderBars();
 if ('serviceWorker' in navigator) {
   const had = !!navigator.serviceWorker.controller;
-  navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' });
+  navigator.serviceWorker.register('../sw.js', { updateViaCache: 'none' });
   let reloaded = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (!had || reloaded) return; reloaded = true; location.reload();

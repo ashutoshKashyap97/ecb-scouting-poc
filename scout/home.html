@@ -1148,7 +1148,7 @@ button:focus-visible, a:focus-visible {
         </div>
         <div class="card-top">
           <div class="avatar-wrap">
-            <a href="#" class="player-avatar blue" aria-label="View Ben Carter profile"><img class="avatar-img" src="avatar-bc.png" alt="Ben Carter"></a>
+            <a href="#" class="player-avatar blue" aria-label="View Ben Carter profile"><img class="avatar-img" src="../assets/avatar-bc.png" alt="Ben Carter"></a>
             <span class="discipline-icon bat" title="Batsman" aria-label="Batsman">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><line x1="4" y1="20" x2="13" y2="11" stroke-width="5"/><line x1="13" y1="11" x2="19.5" y2="4.5" stroke-width="2"/></svg>
             </span>
@@ -1219,7 +1219,7 @@ button:focus-visible, a:focus-visible {
         <div class="urgency-label later">Tomorrow</div>
         <div class="card-top">
           <div class="avatar-wrap">
-            <a href="#" class="player-avatar green" aria-label="View Grace Harper profile"><img class="avatar-img" src="avatar-women.png" alt="Grace Harper"></a>
+            <a href="#" class="player-avatar green" aria-label="View Grace Harper profile"><img class="avatar-img" src="../assets/avatar-women.png" alt="Grace Harper"></a>
             <span class="discipline-icon ball" title="Bowler" aria-label="Bowler">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 4c2.5 5 2.5 11 0 16" stroke-width="1.6"/></svg>
             </span>
@@ -1290,7 +1290,7 @@ button:focus-visible, a:focus-visible {
         <div class="urgency-label later">Wed 17 Jun</div>
         <div class="card-top">
           <div class="avatar-wrap">
-            <a href="#" class="player-avatar amber" aria-label="View Arjun Sharma profile"><img class="avatar-img" src="avatar-teen.png" alt="Arjun Sharma"></a>
+            <a href="#" class="player-avatar amber" aria-label="View Arjun Sharma profile"><img class="avatar-img" src="../assets/avatar-teen.png" alt="Arjun Sharma"></a>
             <span class="discipline-icon allround" title="All-Rounder" aria-label="All-Rounder">
               <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><line x1="3" y1="21" x2="10.5" y2="13.5" stroke-width="3.6" style="stroke:var(--teal)"/><line x1="10.5" y1="13.5" x2="13.5" y2="10.5" stroke-width="1.7" style="stroke:var(--teal)"/><circle cx="18" cy="6.5" r="3.4" stroke-width="2" style="stroke:var(--red)"/></svg>
             </span>
@@ -1369,7 +1369,7 @@ button:focus-visible, a:focus-visible {
         <div class="urgency-label later">Fri 19 Jun</div>
         <div class="card-top">
           <div class="avatar-wrap">
-            <a href="#" class="player-avatar blue" aria-label="View Imani Clarke profile"><img class="avatar-img" src="avatar-women2.png" alt="Imani Clarke"></a>
+            <a href="#" class="player-avatar blue" aria-label="View Imani Clarke profile"><img class="avatar-img" src="../assets/avatar-women2.png" alt="Imani Clarke"></a>
             <span class="discipline-icon bat" title="Batter" aria-label="Batter">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><line x1="4" y1="20" x2="13" y2="11" stroke-width="5"/><line x1="13" y1="11" x2="19.5" y2="4.5" stroke-width="2"/></svg>
             </span>
@@ -1547,7 +1547,7 @@ button:focus-visible, a:focus-visible {
 <script>
 if ('serviceWorker' in navigator) {
   const hadController = !!navigator.serviceWorker.controller;
-  navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' });
+  navigator.serviceWorker.register('../sw.js', { updateViaCache: 'none' });
   let reloaded = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     // a new version just took over — reload once to show it (skip on first install)
