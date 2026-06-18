@@ -494,6 +494,106 @@ button { font-family: var(--font); cursor: pointer; }
 .fix-comp  { font-size: 11px; color: var(--text-sec); }
 
 /* ══════════════════════════════════════
+   SCOUT REPORTS
+══════════════════════════════════════ */
+.sr-controls {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px;
+}
+.sr-search-wrap { position: relative; flex: 1; min-width: 200px; }
+.sr-search {
+  width: 100%; background: var(--card); border: 1.5px solid var(--border);
+  padding: 9px 14px 9px 34px; font-size: 13px; font-weight: 500;
+  color: var(--text-primary); font-family: var(--font); outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.sr-search:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,114,206,.1); }
+.sr-search::placeholder { color: var(--text-muted); font-weight: 400; }
+.sr-search-icon {
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  width: 14px; height: 14px; color: var(--text-muted); pointer-events: none;
+}
+.sr-rec-chips { display: flex; gap: 5px; }
+.sr-rec-chip {
+  font-size: 10px; font-weight: 700; padding: 5px 11px;
+  border: 1px solid var(--border); background: var(--card); color: var(--text-muted);
+  cursor: pointer; transition: all .15s;
+}
+.sr-rec-chip:hover { border-color: var(--navy); color: var(--navy); }
+.sr-rec-chip.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+.sr-stats {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 14px;
+}
+.sr-stat {
+  background: var(--card); border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card); padding: 12px 14px;
+}
+.sr-stat-val { font-size: 24px; font-weight: 800; color: var(--text-primary); line-height: 1; }
+.sr-stat-val.green { color: var(--green); }
+.sr-stat-val.blue  { color: var(--teal); }
+.sr-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+.sr-list-header {
+  display: grid;
+  grid-template-columns: 2fr 1.4fr 1.8fr 1fr 80px 90px 70px 28px;
+  padding: 7px 14px; background: var(--surface);
+  border: 1px solid var(--border-light); border-bottom: none;
+  font-size: 10px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .4px;
+}
+
+.sr-item { border: 1px solid var(--border-light); margin-bottom: 4px; background: var(--card); box-shadow: var(--shadow-card); }
+.sr-item-header {
+  display: grid;
+  grid-template-columns: 2fr 1.4fr 1.8fr 1fr 80px 90px 70px 28px;
+  align-items: center; padding: 10px 14px; cursor: pointer;
+  transition: background .15s; gap: 4px;
+}
+.sr-item-header:hover { background: var(--surface); }
+.sr-item.expanded .sr-item-header { background: var(--teal-pale); border-bottom: 1px solid var(--border-light); }
+
+.sr-player { display: flex; align-items: center; gap: 8px; }
+.sr-player-init {
+  width: 28px; height: 28px; background: var(--teal-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 800; color: var(--teal); flex-shrink: 0;
+}
+.sr-player-name  { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+.sr-player-meta  { font-size: 10px; color: var(--text-muted); }
+.sr-scout-name   { font-size: 12px; font-weight: 600; color: var(--text-sec); }
+.sr-scout-region { font-size: 10px; color: var(--text-muted); }
+.sr-match-name   { font-size: 11px; font-weight: 600; color: var(--text-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sr-match-date   { font-size: 10px; color: var(--text-muted); }
+.sr-role-chip    { font-size: 10px; font-weight: 600; padding: 2px 7px; background: var(--surface); color: var(--text-sec); border: 1px solid var(--border); }
+.sr-stars        { font-size: 13px; letter-spacing: 1px; }
+.sr-date         { font-size: 11px; color: var(--text-muted); }
+.sr-chevron      { width: 20px; height: 20px; color: var(--text-muted); transition: transform .25s; }
+.sr-item.expanded .sr-chevron { transform: rotate(180deg); }
+
+/* Expanded detail */
+.sr-item-detail {
+  display: none; padding: 16px; border-top: 1px solid var(--border-light);
+  background: var(--card); animation: fadeInUp .2s ease-out;
+}
+.sr-item.expanded .sr-item-detail { display: block; }
+.sr-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.sr-detail-section { background: var(--surface); border: 1px solid var(--border-light); padding: 12px 14px; }
+.sr-detail-title {
+  font-size: 10px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px;
+  padding-bottom: 7px; border-bottom: 1px solid var(--border-light);
+}
+.sr-detail-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid var(--border-light); }
+.sr-detail-row:last-child { border-bottom: none; }
+.sr-detail-key   { font-size: 11px; color: var(--text-sec); font-weight: 500; }
+.sr-detail-val   { font-size: 11px; color: var(--text-primary); font-weight: 600; text-align: right; max-width: 60%; }
+.sr-summary-text { font-size: 12px; color: var(--text-sec); line-height: 1.6; margin-top: 4px; font-style: italic; }
+.sr-crit-row     { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border-light); }
+.sr-crit-row:last-child { border-bottom: none; }
+.sr-crit-name    { font-size: 11px; color: var(--text-sec); }
+.sr-crit-stars   { font-size: 12px; }
+
+/* ══════════════════════════════════════
    SQUAD SELECTION
 ══════════════════════════════════════ */
 .squad-top-bar {
@@ -1024,7 +1124,7 @@ button { font-family: var(--font); cursor: pointer; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
         Squad Selection
       </div>
-      <div class="nav-item">
+      <div class="nav-item" id="nav-scout-reports" onclick="showPanel('scout-reports')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
         Scout Reports
         <span class="nav-badge">7</span>
@@ -1844,6 +1944,341 @@ button { font-family: var(--font); cursor: pointer; }
 
       </div>
 
+      <!-- ══ SCOUT REPORTS ══ -->
+      <div class="content-panel" id="panel-scout-reports">
+
+        <!-- Controls -->
+        <div class="sr-controls">
+          <div class="sr-search-wrap">
+            <svg class="sr-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input class="sr-search" id="srSearch" type="search" placeholder="Search by player or scout…" oninput="filterReports()">
+          </div>
+          <div class="sr-rec-chips">
+            <button class="sr-rec-chip active" data-rec="all"     onclick="setSrFilter(this)">All (7)</button>
+            <button class="sr-rec-chip"        data-rec="promote" onclick="setSrFilter(this)">&#8593; Promote (2)</button>
+            <button class="sr-rec-chip"        data-rec="retain"  onclick="setSrFilter(this)">Retain (2)</button>
+            <button class="sr-rec-chip"        data-rec="monitor" onclick="setSrFilter(this)">Monitor (3)</button>
+          </div>
+          <select style="font-size:12px;font-weight:600;color:var(--text-sec);background:var(--card);border:1px solid var(--border);padding:7px 10px;font-family:var(--font);outline:none">
+            <option>Last 30 days</option>
+            <option>Last 7 days</option>
+            <option>This season</option>
+            <option>All time</option>
+          </select>
+          <button class="btn-outline" style="margin-left:auto">Export CSV</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="sr-stats">
+          <div class="sr-stat"><div class="sr-stat-val">47</div><div class="sr-stat-label">Reports this season</div></div>
+          <div class="sr-stat"><div class="sr-stat-val blue">7</div><div class="sr-stat-label">This month</div></div>
+          <div class="sr-stat"><div class="sr-stat-val">4</div><div class="sr-stat-label">This week</div></div>
+          <div class="sr-stat"><div class="sr-stat-val green">91%</div><div class="sr-stat-label">Scout accuracy rate</div></div>
+        </div>
+
+        <!-- Column headers -->
+        <div class="sr-list-header">
+          <div>Player</div><div>Scout</div><div>Match</div><div>Role</div>
+          <div>Rating</div><div>Recommendation</div><div>Date</div><div></div>
+        </div>
+
+        <!-- Report 1: Sam Hartley — pre-expanded -->
+        <div class="sr-item expanded" id="sri-1" data-player="sam hartley" data-scout="j. clarke" data-rec="promote">
+          <div class="sr-item-header" onclick="toggleReport('sri-1')">
+            <div class="sr-player"><div class="sr-player-init">SH</div><div><div class="sr-player-name">Sam Hartley</div><div class="sr-player-meta">Lancashire</div></div></div>
+            <div><div class="sr-scout-name">J. Clarke</div><div class="sr-scout-region">North Region</div></div>
+            <div><div class="sr-match-name">Lancashire vs Surrey &middot; T20 Blast</div><div class="sr-match-date">Old Trafford &middot; 12 Jun 2026</div></div>
+            <div><span class="sr-role-chip">Death Seamer</span></div>
+            <div class="sr-stars" style="color:var(--green)">★★★★★</div>
+            <div><span class="badge badge-green">&#8593; Promote</span></div>
+            <div class="sr-date">12 Jun</div>
+            <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="sr-item-detail">
+            <div class="sr-detail-grid">
+              <div>
+                <div class="sr-detail-section" style="margin-bottom:10px">
+                  <div class="sr-detail-title">Match Context</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Innings</span><span class="sr-detail-val">2nd Innings</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Conditions</span><span class="sr-detail-val">Sunny, dry</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Opposition</span><span class="sr-detail-val">Strong (County 1st XI)</span></div>
+                </div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Overall Assessment</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--green)">★★★★★ Outstanding</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Next level</span><span class="sr-detail-val">Ready now</span></div>
+                  <p class="sr-summary-text">"Outstanding at the death. Yorker to dismiss top-order batter on 38 was the best I've seen from a U21 bowler this season. Composure under pressure is elite for his age."</p>
+                </div>
+              </div>
+              <div>
+                <div class="sr-detail-section" style="margin-bottom:10px">
+                  <div class="sr-detail-title">Technical Criteria</div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Action &amp; release point</span><span class="sr-crit-stars" style="color:var(--green)">★★★★★</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Control &amp; accuracy</span><span class="sr-crit-stars" style="color:var(--green)">★★★★★</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Variation &amp; pace changes</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Swing / seam movement</span><span class="sr-crit-stars" style="color:var(--green)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Physical capability</span><span class="sr-crit-stars" style="color:var(--green)">★★★★☆</span></div>
+                </div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Future Potential</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Recommendation</span><span class="sr-detail-val" style="color:var(--green)">Recommend for squad</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Attachments</span><span class="sr-detail-val">1 voice note</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report 2: Oliver Webb -->
+        <div class="sr-item" id="sri-2" data-player="oliver webb" data-scout="m. davis" data-rec="promote">
+          <div class="sr-item-header" onclick="toggleReport('sri-2')">
+            <div class="sr-player"><div class="sr-player-init">OW</div><div><div class="sr-player-name">Oliver Webb</div><div class="sr-player-meta">Surrey</div></div></div>
+            <div><div class="sr-scout-name">M. Davis</div><div class="sr-scout-region">Central</div></div>
+            <div><div class="sr-match-name">Surrey vs Hampshire &middot; CC D1</div><div class="sr-match-date">The Oval &middot; 10 Jun 2026</div></div>
+            <div><span class="sr-role-chip">Top-order Bat</span></div>
+            <div class="sr-stars" style="color:var(--teal)">★★★★☆</div>
+            <div><span class="badge badge-green">&#8593; Promote</span></div>
+            <div class="sr-date">10 Jun</div>
+            <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="sr-item-detail">
+            <div class="sr-detail-grid">
+              <div>
+                <div class="sr-detail-section" style="margin-bottom:10px">
+                  <div class="sr-detail-title">Match Context</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Innings</span><span class="sr-detail-val">1st Innings</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Conditions</span><span class="sr-detail-val">Overcast, damp</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Opposition</span><span class="sr-detail-val">Strong (County 1st XI)</span></div>
+                </div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Overall Assessment</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--teal)">★★★★☆ Excellent</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Next level</span><span class="sr-detail-val">6–12 months</span></div>
+                  <p class="sr-summary-text">"Webb's footwork against seam movement in helpful conditions was impressive. Made 68 from 82 balls, showing real intent. Shot selection against the short ball still a development area."</p>
+                </div>
+              </div>
+              <div>
+                <div class="sr-detail-section" style="margin-bottom:10px">
+                  <div class="sr-detail-title">Technical Criteria</div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Technique &amp; footwork</span><span class="sr-crit-stars" style="color:var(--green)">★★★★★</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Temperament &amp; composure</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Shot selection</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Running between wickets</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Attack vs defence balance</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                </div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Future Potential</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Recommendation</span><span class="sr-detail-val" style="color:var(--green)">Promote to shortlist</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Attachments</span><span class="sr-detail-val">2 photos</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report 3: Jack Harrison -->
+        <div class="sr-item" id="sri-3" data-player="jack harrison" data-scout="a. singh" data-rec="retain">
+          <div class="sr-item-header" onclick="toggleReport('sri-3')">
+            <div class="sr-player"><div class="sr-player-init">JH</div><div><div class="sr-player-name">Jack Harrison</div><div class="sr-player-meta">Kent</div></div></div>
+            <div><div class="sr-scout-name">A. Singh</div><div class="sr-scout-region">South East</div></div>
+            <div><div class="sr-match-name">Kent vs Middlesex &middot; CC D1</div><div class="sr-match-date">Canterbury &middot; 9 Jun 2026</div></div>
+            <div><span class="sr-role-chip">Top-order Bat</span></div>
+            <div class="sr-stars" style="color:var(--teal)">★★★★☆</div>
+            <div><span class="badge badge-blue">Retain</span></div>
+            <div class="sr-date">9 Jun</div>
+            <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="sr-item-detail">
+            <div class="sr-detail-grid">
+              <div>
+                <div class="sr-detail-section" style="margin-bottom:10px">
+                  <div class="sr-detail-title">Match Context</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Innings</span><span class="sr-detail-val">1st Innings</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Conditions</span><span class="sr-detail-val">Cloudy, humid</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Opposition</span><span class="sr-detail-val">Strong (County 1st XI)</span></div>
+                </div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Overall Assessment</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--teal)">★★★★☆ Excellent</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Next level</span><span class="sr-detail-val">12–24 months</span></div>
+                  <p class="sr-summary-text">"Solid performance, 54 runs, but didn't face the hostile spells. Technically strong but needs exposure to higher quality bowling before Lions selection."</p>
+                </div>
+              </div>
+              <div>
+                <div class="sr-detail-section" style="margin-bottom:10px">
+                  <div class="sr-detail-title">Technical Criteria</div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Technique &amp; footwork</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Temperament &amp; composure</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Shot selection</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Running between wickets</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Attack vs defence balance</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
+                </div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Future Potential</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Recommendation</span><span class="sr-detail-val" style="color:var(--teal)">Retain on current list</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Attachments</span><span class="sr-detail-val">None</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report 4: Jake Morrison -->
+        <div class="sr-item" id="sri-4" data-player="jake morrison" data-scout="m. davis" data-rec="monitor">
+          <div class="sr-item-header" onclick="toggleReport('sri-4')">
+            <div class="sr-player"><div class="sr-player-init">JM</div><div><div class="sr-player-name">Jake Morrison</div><div class="sr-player-meta">Yorkshire</div></div></div>
+            <div><div class="sr-scout-name">M. Davis</div><div class="sr-scout-region">Central</div></div>
+            <div><div class="sr-match-name">Yorkshire vs Durham &middot; T20 Blast</div><div class="sr-match-date">Headingley &middot; 8 Jun 2026</div></div>
+            <div><span class="sr-role-chip">Death Seamer</span></div>
+            <div class="sr-stars" style="color:var(--amber)">★★★☆☆</div>
+            <div><span class="badge badge-amber">Monitor</span></div>
+            <div class="sr-date">8 Jun</div>
+            <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="sr-item-detail">
+            <div class="sr-detail-grid">
+              <div>
+                <div class="sr-detail-section" style="margin-bottom:10px">
+                  <div class="sr-detail-title">Match Context</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Innings</span><span class="sr-detail-val">2nd Innings</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Conditions</span><span class="sr-detail-val">Clear, windy</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Opposition</span><span class="sr-detail-val">Average (County 2nd XI)</span></div>
+                </div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Overall Assessment</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--amber)">★★★☆☆ Progressing</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Next level</span><span class="sr-detail-val">12–24 months</span></div>
+                  <p class="sr-summary-text">"Below his usual standard. Economy of 9.8 in death overs, wide yorker cost 2 sixes. Clear off day but the slower ball is still being read early. Monitor."</p>
+                </div>
+              </div>
+              <div>
+                <div class="sr-detail-section" style="margin-bottom:10px">
+                  <div class="sr-detail-title">Technical Criteria</div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Action &amp; release point</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Control &amp; accuracy</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Variation &amp; pace changes</span><span class="sr-crit-stars" style="color:var(--amber)">★★☆☆☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Swing / seam movement</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Physical capability</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                </div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Future Potential</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Recommendation</span><span class="sr-detail-val" style="color:var(--amber)">Monitor — no change</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Attachments</span><span class="sr-detail-val">1 voice note</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report 5: Ravi Patel -->
+        <div class="sr-item" id="sri-5" data-player="ravi patel" data-scout="r. chen" data-rec="retain">
+          <div class="sr-item-header" onclick="toggleReport('sri-5')">
+            <div class="sr-player"><div class="sr-player-init">RP</div><div><div class="sr-player-name">Ravi Patel</div><div class="sr-player-meta">Middlesex</div></div></div>
+            <div><div class="sr-scout-name">R. Chen</div><div class="sr-scout-region">Central</div></div>
+            <div><div class="sr-match-name">Middlesex vs Essex &middot; T20 Blast</div><div class="sr-match-date">Lord's &middot; 5 Jun 2026</div></div>
+            <div><span class="sr-role-chip">Spin Bowler</span></div>
+            <div class="sr-stars" style="color:var(--amber)">★★★☆☆</div>
+            <div><span class="badge badge-blue">Retain</span></div>
+            <div class="sr-date">5 Jun</div>
+            <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="sr-item-detail">
+            <div class="sr-detail-grid">
+              <div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Match Context &amp; Assessment</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Innings</span><span class="sr-detail-val">1st Innings (Powerplay)</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Conditions</span><span class="sr-detail-val">Sunny, dry</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--amber)">★★★☆☆ Progressing</span></div>
+                  <p class="sr-summary-text">"Patel's powerplay numbers are elite — SR 14.2 is top 3% nationally. Needs to improve his length bowling at the death. Strong technical ceiling."</p>
+                </div>
+              </div>
+              <div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Technical Criteria</div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Action &amp; release</span><span class="sr-crit-stars" style="color:var(--green)">★★★★★</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Control &amp; accuracy</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Variation</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Flight &amp; turn</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Physical capability</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report 6: Nick Booth -->
+        <div class="sr-item" id="sri-6" data-player="nick booth" data-scout="j. clarke" data-rec="monitor">
+          <div class="sr-item-header" onclick="toggleReport('sri-6')">
+            <div class="sr-player"><div class="sr-player-init">NB</div><div><div class="sr-player-name">Nick Booth</div><div class="sr-player-meta">Gloucestershire</div></div></div>
+            <div><div class="sr-scout-name">J. Clarke</div><div class="sr-scout-region">North Region</div></div>
+            <div><div class="sr-match-name">Gloucestershire vs Somerset &middot; CC D1</div><div class="sr-match-date">Bristol &middot; 6 Jun 2026</div></div>
+            <div><span class="sr-role-chip">WK Batter</span></div>
+            <div class="sr-stars" style="color:var(--amber)">★★★☆☆</div>
+            <div><span class="badge badge-amber">Monitor</span></div>
+            <div class="sr-date">6 Jun</div>
+            <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="sr-item-detail">
+            <div class="sr-detail-grid">
+              <div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Match Context &amp; Assessment</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Innings</span><span class="sr-detail-val">2nd Innings</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Conditions</span><span class="sr-detail-val">Overcast, dry</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--amber)">★★★☆☆ Progressing</span></div>
+                  <p class="sr-summary-text">"Reliable behind the stumps — zero byes, two sharp stumpings. Batting (34 from 41) showed good temperament but lack of power against pace at the death. Keeping up, batting still catching up."</p>
+                </div>
+              </div>
+              <div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Future Potential</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Next level</span><span class="sr-detail-val">12–24 months</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Recommendation</span><span class="sr-detail-val" style="color:var(--amber)">Monitor — no change</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Attachments</span><span class="sr-detail-val">None</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report 7: Callum Price -->
+        <div class="sr-item" id="sri-7" data-player="callum price" data-scout="r. chen" data-rec="monitor">
+          <div class="sr-item-header" onclick="toggleReport('sri-7')">
+            <div class="sr-player"><div class="sr-player-init">CP</div><div><div class="sr-player-name">Callum Price</div><div class="sr-player-meta">Kent</div></div></div>
+            <div><div class="sr-scout-name">R. Chen</div><div class="sr-scout-region">Central</div></div>
+            <div><div class="sr-match-name">Kent vs Surrey &middot; CC D1</div><div class="sr-match-date">Canterbury &middot; 2 Jun 2026</div></div>
+            <div><span class="sr-role-chip">Death Seamer</span></div>
+            <div class="sr-stars" style="color:var(--red)">★★☆☆☆</div>
+            <div><span class="badge badge-amber">Monitor</span></div>
+            <div class="sr-date">2 Jun</div>
+            <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="sr-item-detail">
+            <div class="sr-detail-grid">
+              <div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Match Context &amp; Assessment</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Innings</span><span class="sr-detail-val">2nd Innings</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Conditions</span><span class="sr-detail-val">Overcast, damp</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--red)">★★☆☆☆ Developing</span></div>
+                  <p class="sr-summary-text">"Struggled with the seaming conditions — lost rhythm after the first over. Raw pace is evident (136 km/h) but release consistency at the crease is the primary development need."</p>
+                </div>
+              </div>
+              <div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Future Potential</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Next level</span><span class="sr-detail-val">Not ready — significant dev needed</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Recommendation</span><span class="sr-detail-val" style="color:var(--amber)">Continue monitoring</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Attachments</span><span class="sr-detail-val">2 video clips linked</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
       <!-- ══ SQUAD SELECTION ══ -->
       <div class="content-panel" id="panel-squad-selection">
 
@@ -2434,7 +2869,7 @@ button { font-family: var(--font); cursor: pointer; }
 </div>
 
 <script>
-const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts','comparison','squad-selection'];
+const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts','comparison','squad-selection','scout-reports'];
 const TOPBAR = {
   'dashboard':       ['Insight Manager',  'Good morning, Ed · Monday 16 June 2026'],
   'nl-search':       ['NL Search',        'Query players, video and report data conversationally'],
@@ -2444,6 +2879,7 @@ const TOPBAR = {
   'depth-charts':    ['Depth Charts',     'Player pipeline by role archetype · drag to reassign'],
   'comparison':      ['Player Comparison',  'Side-by-side analysis · Sam Hartley, Oliver Webb, Jack Harrison'],
   'squad-selection': ['Squad Selection',    'England Lions T20 — 20 Jun 2026 · Draft · 4 / 15 filled'],
+  'scout-reports':   ['Scout Reports',      '7 reports this month · 47 this season · 91% accuracy'],
 };
 
 function showPanel(name) {
@@ -2505,6 +2941,27 @@ document.querySelectorAll('.arch-chip').forEach(chip => {
     chip.classList.add('active');
   });
 });
+
+// ── Scout Reports ─────────────────────────────────────────────────────────
+function toggleReport(id) {
+  document.getElementById(id).classList.toggle('expanded');
+}
+
+function setSrFilter(chip) {
+  document.querySelectorAll('.sr-rec-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  filterReports();
+}
+
+function filterReports() {
+  const q   = (document.getElementById('srSearch')?.value || '').toLowerCase().trim();
+  const rec = document.querySelector('.sr-rec-chip.active')?.dataset.rec || 'all';
+  document.querySelectorAll('[id^="sri-"]').forEach(item => {
+    const pMatch = !q || item.dataset.player.includes(q) || item.dataset.scout.includes(q);
+    const rMatch = rec === 'all' || item.dataset.rec === rec;
+    item.style.display = (pMatch && rMatch) ? '' : 'none';
+  });
+}
 
 // ── Squad Selection ───────────────────────────────────────────────────────
 let draggingPoolCard = null;
