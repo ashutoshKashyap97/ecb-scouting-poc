@@ -604,6 +604,111 @@ button { font-family: var(--font); cursor: pointer; }
   transition: all .15s;
 }
 .dc-add-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
+
+/* ══════════════════════════════════════
+   PLAYER REGISTRY
+══════════════════════════════════════ */
+.registry-controls {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px; flex-wrap: wrap;
+}
+.registry-search-wrap { flex: 1; min-width: 220px; position: relative; }
+.registry-search {
+  width: 100%; background: var(--card); border: 1.5px solid var(--border);
+  padding: 9px 14px 9px 36px; font-size: 13px; font-weight: 500;
+  color: var(--text-primary); font-family: var(--font); outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.registry-search::placeholder { color: var(--text-muted); font-weight: 400; }
+.registry-search:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,114,206,.1); }
+.registry-search-icon {
+  position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+  width: 14px; height: 14px; color: var(--text-muted); pointer-events: none;
+}
+.reg-filter-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.reg-chip {
+  font-size: 10px; font-weight: 700; padding: 5px 10px;
+  border: 1px solid var(--border); color: var(--text-muted);
+  background: var(--card); cursor: pointer; transition: all .15s;
+}
+.reg-chip:hover { border-color: var(--teal); color: var(--teal); }
+.reg-chip.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+.reg-count { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+
+/* Actions dropdown */
+.action-cell { position: relative; }
+.action-menu-btn {
+  width: 26px; height: 26px; background: none; border: 1px solid var(--border-light);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-muted); font-size: 14px; transition: all .15s;
+}
+.action-menu-btn:hover { border-color: var(--teal); color: var(--teal); }
+.action-dropdown {
+  display: none; position: absolute; right: 0; top: 28px; z-index: 50;
+  background: var(--card); border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-elev); min-width: 170px;
+}
+.action-dropdown.show { display: block; }
+.action-dropdown-item {
+  display: block; padding: 9px 14px; font-size: 12px; font-weight: 600;
+  color: var(--text-sec); cursor: pointer; transition: background .15s;
+  width: 100%; text-align: left; background: none; border: none; font-family: var(--font);
+}
+.action-dropdown-item:hover { background: var(--surface); color: var(--teal); }
+.action-dropdown-item.red:hover { color: var(--red); }
+
+/* Add Player Modal */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(10,27,61,.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 300; opacity: 0; pointer-events: none; transition: opacity .2s;
+}
+.modal-overlay.show { opacity: 1; pointer-events: all; }
+.modal-card {
+  background: var(--card); border: 1px solid var(--border-light);
+  width: 460px; max-height: 90vh; overflow-y: auto;
+  box-shadow: var(--shadow-elev);
+  animation: slideUp .22s ease-out;
+}
+@keyframes slideUp { from { transform: translateY(16px); opacity:0; } to { transform: none; opacity:1; } }
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px; border-bottom: 1px solid var(--border-light);
+  background: var(--navy);
+}
+.modal-title { font-size: 14px; font-weight: 700; color: #fff; }
+.modal-close {
+  width: 28px; height: 28px; background: rgba(255,255,255,.1); border: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: rgba(255,255,255,.7); cursor: pointer; transition: background .15s;
+}
+.modal-close:hover { background: rgba(255,255,255,.2); }
+.modal-body { padding: 18px 20px; }
+.modal-field { margin-bottom: 14px; }
+.modal-field:last-child { margin-bottom: 0; }
+.modal-label {
+  display: block; font-size: 10px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .4px; margin-bottom: 6px;
+}
+.modal-input, .modal-select {
+  width: 100%; background: var(--card); border: 1.5px solid var(--border);
+  padding: 10px 12px; font-size: 13px; font-weight: 500;
+  color: var(--text-primary); font-family: var(--font); outline: none; transition: border-color .2s;
+}
+.modal-input:focus, .modal-select:focus { border-color: var(--teal); }
+.modal-select { appearance: none; -webkit-appearance: none; }
+.modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.toggle-pair { display: flex; border: 1.5px solid var(--border); }
+.tgl-btn {
+  flex: 1; padding: 9px; font-size: 12px; font-weight: 600;
+  color: var(--text-muted); background: var(--card); border: none;
+  cursor: pointer; transition: all .15s; font-family: var(--font);
+}
+.tgl-btn.active { background: var(--navy); color: #fff; }
+.modal-footer {
+  padding: 12px 20px; border-top: 1px solid var(--border-light);
+  display: flex; justify-content: flex-end; gap: 8px;
+}
 </style>
 </head>
 <body>
@@ -635,7 +740,7 @@ button { font-family: var(--font); cursor: pointer; }
 
     <div class="nav-section">
       <div class="nav-label">Players</div>
-      <div class="nav-item" onclick="showPanel('nl-search'); startNLDemo()">
+      <div class="nav-item" id="nav-player-registry" onclick="showPanel('player-registry')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
         Player Registry
       </div>
@@ -1119,6 +1224,336 @@ button { font-family: var(--font); cursor: pointer; }
         </div>
       </div>
 
+      <!-- ══ PLAYER REGISTRY ══ -->
+      <div class="content-panel" id="panel-player-registry">
+
+        <div class="registry-controls">
+          <div class="registry-search-wrap">
+            <svg class="registry-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input class="registry-search" id="regSearch" type="search"
+              placeholder="Search by name or county…" oninput="filterRegistry()">
+          </div>
+          <div class="reg-filter-chips">
+            <div class="reg-chip active" data-filter="all"          onclick="setRegFilter(this)">All</div>
+            <div class="reg-chip"        data-filter="death"        onclick="setRegFilter(this)">Death Bowler</div>
+            <div class="reg-chip"        data-filter="top-order"    onclick="setRegFilter(this)">Top-Order</div>
+            <div class="reg-chip"        data-filter="spin"         onclick="setRegFilter(this)">Spinner</div>
+            <div class="reg-chip"        data-filter="wk"           onclick="setRegFilter(this)">WK Batter</div>
+            <div class="reg-chip"        data-filter="all-rounder"  onclick="setRegFilter(this)">All-Rounder</div>
+            <div class="reg-chip"        data-filter="middle"       onclick="setRegFilter(this)">Middle-Order</div>
+          </div>
+          <span class="reg-count" id="regCount">20 players</span>
+          <button class="btn-primary" onclick="document.getElementById('addPlayerModal').classList.add('show')">+ Add player</button>
+        </div>
+
+        <table class="player-table" id="regTable">
+          <thead>
+            <tr>
+              <th>Player</th><th>Age</th><th>Role</th><th>Archetype</th>
+              <th>Readiness</th><th>Future</th><th>Status</th>
+              <th>Scout</th><th>Last report</th><th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Death Bowlers -->
+            <tr data-name="sam hartley" data-county="lancashire" data-filter="death" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">SH</div><div><div class="p-name">Sam Hartley</div><div class="p-county">Lancashire</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">21</td>
+              <td style="font-size:12px;color:var(--text-sec)">Seamer</td>
+              <td><span class="arch-tag">Death Bowler</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:74%;background:var(--green)"></div></div><span class="r-val" style="color:var(--green)">74%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">91%</span></td>
+              <td><span class="badge badge-green">Short-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">J. Clarke</td>
+              <td style="font-size:11px;color:var(--text-muted)">12 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="jake morrison" data-county="yorkshire" data-filter="death" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">JM</div><div><div class="p-name">Jake Morrison</div><div class="p-county">Yorkshire</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">22</td>
+              <td style="font-size:12px;color:var(--text-sec)">Seamer</td>
+              <td><span class="arch-tag">Death Bowler</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:58%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">58%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">79%</span></td>
+              <td><span class="badge badge-blue">Long-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">J. Clarke</td>
+              <td style="font-size:11px;color:var(--text-muted)">8 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="ben crawford" data-county="middlesex" data-filter="death" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">BC</div><div><div class="p-name">Ben Crawford</div><div class="p-county">Middlesex</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">23</td>
+              <td style="font-size:12px;color:var(--text-sec)">Seamer</td>
+              <td><span class="arch-tag">Death Bowler</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:81%;background:var(--green)"></div></div><span class="r-val" style="color:var(--green)">81%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">89%</span></td>
+              <td><span class="badge badge-green">Short-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">M. Davis</td>
+              <td style="font-size:11px;color:var(--text-muted)">14 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="lee evans" data-county="warwickshire" data-filter="death" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">LE</div><div><div class="p-name">Lee Evans</div><div class="p-county">Warwickshire</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">22</td>
+              <td style="font-size:12px;color:var(--text-sec)">Seamer</td>
+              <td><span class="arch-tag">Death Bowler</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:70%;background:var(--green)"></div></div><span class="r-val" style="color:var(--green)">70%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">85%</span></td>
+              <td><span class="badge badge-green">Short-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">R. Chen</td>
+              <td style="font-size:11px;color:var(--text-muted)">11 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="callum price" data-county="kent" data-filter="death" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">CP</div><div><div class="p-name">Callum Price</div><div class="p-county">Kent</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">20</td>
+              <td style="font-size:12px;color:var(--text-sec)">Seamer</td>
+              <td><span class="arch-tag">Death Bowler</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:51%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">51%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">72%</span></td>
+              <td><span class="badge badge-blue">Long-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">R. Chen</td>
+              <td style="font-size:11px;color:var(--text-muted)">2 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="ryan steele" data-county="northants" data-filter="death" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">RS</div><div><div class="p-name">Ryan Steele</div><div class="p-county">Northamptonshire</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">18</td>
+              <td style="font-size:12px;color:var(--text-sec)">Seamer</td>
+              <td><span class="arch-tag">Death Bowler</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:52%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">52%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">74%</span></td>
+              <td><span class="badge badge-blue">Long-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">M. Davis</td>
+              <td style="font-size:11px;color:var(--text-muted)">30 May</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <!-- Top-Order Batters -->
+            <tr data-name="oliver webb" data-county="surrey" data-filter="top-order" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">OW</div><div><div class="p-name">Oliver Webb</div><div class="p-county">Surrey</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">20</td>
+              <td style="font-size:12px;color:var(--text-sec)">Batter</td>
+              <td><span class="arch-tag">Top-Order Bat</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:66%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">66%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">88%</span></td>
+              <td><span class="badge badge-green">Short-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">M. Davis</td>
+              <td style="font-size:11px;color:var(--text-muted)">10 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="jack harrison" data-county="kent" data-filter="top-order" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">JH</div><div><div class="p-name">Jack Harrison</div><div class="p-county">Kent</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">21</td>
+              <td style="font-size:12px;color:var(--text-sec)">Batter</td>
+              <td><span class="arch-tag">Top-Order Bat</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:76%;background:var(--green)"></div></div><span class="r-val" style="color:var(--green)">76%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">87%</span></td>
+              <td><span class="badge badge-green">Short-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">A. Singh</td>
+              <td style="font-size:11px;color:var(--text-muted)">9 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="tom reed" data-county="somerset" data-filter="top-order" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">TR</div><div><div class="p-name">Tom Reed</div><div class="p-county">Somerset</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">23</td>
+              <td style="font-size:12px;color:var(--text-sec)">Batter</td>
+              <td><span class="arch-tag">Top-Order Bat</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:64%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">64%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">80%</span></td>
+              <td><span class="badge badge-blue">Long-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">P. Jones</td>
+              <td style="font-size:11px;color:var(--text-muted)">4 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="matt wilson" data-county="hampshire" data-filter="top-order" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">MW</div><div><div class="p-name">Matt Wilson</div><div class="p-county">Hampshire</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">24</td>
+              <td style="font-size:12px;color:var(--text-sec)">Batter</td>
+              <td><span class="arch-tag">Top-Order Bat</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:55%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">55%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">73%</span></td>
+              <td><span class="badge badge-blue">Long-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">P. Jones</td>
+              <td style="font-size:11px;color:var(--text-muted)">27 May</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <!-- Spinners -->
+            <tr data-name="ravi patel" data-county="middlesex" data-filter="spin" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">RP</div><div><div class="p-name">Ravi Patel</div><div class="p-county">Middlesex</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">22</td>
+              <td style="font-size:12px;color:var(--text-sec)">Spinner</td>
+              <td><span class="arch-tag">Spin Bowler</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:61%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">61%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">84%</span></td>
+              <td><span class="badge badge-blue">Long-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">A. Singh</td>
+              <td style="font-size:11px;color:var(--text-muted)">5 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="harry scott" data-county="essex" data-filter="spin" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">HS</div><div><div class="p-name">Harry Scott</div><div class="p-county">Essex</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">22</td>
+              <td style="font-size:12px;color:var(--text-sec)">Spinner</td>
+              <td><span class="arch-tag">Spin Bowler</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:59%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">59%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">77%</span></td>
+              <td><span class="badge badge-blue">Long-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">R. Chen</td>
+              <td style="font-size:11px;color:var(--text-muted)">1 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="aaron fisher" data-county="derbyshire" data-filter="spin" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">AF</div><div><div class="p-name">Aaron Fisher</div><div class="p-county">Derbyshire</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">21</td>
+              <td style="font-size:12px;color:var(--text-sec)">Spinner</td>
+              <td><span class="arch-tag">Spin Bowler</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:43%;background:var(--text-muted)"></div></div><span class="r-val" style="color:var(--text-muted)">43%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">62%</span></td>
+              <td><span class="badge badge-amber">Watch</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">A. Singh</td>
+              <td style="font-size:11px;color:var(--text-muted)">22 May</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <!-- WK Batters -->
+            <tr data-name="nick booth" data-county="gloucestershire" data-filter="wk" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">NB</div><div><div class="p-name">Nick Booth</div><div class="p-county">Gloucestershire</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">24</td>
+              <td style="font-size:12px;color:var(--text-sec)">Keeper</td>
+              <td><span class="arch-tag">WK Batter</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:67%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">67%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">79%</span></td>
+              <td><span class="badge badge-blue">Long-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">J. Clarke</td>
+              <td style="font-size:11px;color:var(--text-muted)">6 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="tom ashworth" data-county="nottinghamshire" data-filter="wk" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">TA</div><div><div class="p-name">Tom Ashworth</div><div class="p-county">Nottinghamshire</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">23</td>
+              <td style="font-size:12px;color:var(--text-sec)">Keeper</td>
+              <td><span class="arch-tag">WK Batter</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:54%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">54%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">76%</span></td>
+              <td><span class="badge badge-amber">Watch</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">P. Jones</td>
+              <td style="font-size:11px;color:var(--text-muted)">28 May</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <!-- All-Rounders -->
+            <tr data-name="arjun sharma" data-county="england u17" data-filter="all-rounder" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">AS</div><div><div class="p-name">Arjun Sharma</div><div class="p-county">England U17</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">16</td>
+              <td style="font-size:12px;color:var(--text-sec)">All-Rounder</td>
+              <td><span class="arch-tag">All-Rounder</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:61%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">61%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">82%</span></td>
+              <td><span class="badge badge-blue">Long-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">J. Clarke</td>
+              <td style="font-size:11px;color:var(--text-muted)">7 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="dan hughes" data-county="durham" data-filter="all-rounder" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">DH</div><div><div class="p-name">Dan Hughes</div><div class="p-county">Durham</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">25</td>
+              <td style="font-size:12px;color:var(--text-sec)">All-Rounder</td>
+              <td><span class="arch-tag">All-Rounder</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:48%;background:var(--text-muted)"></div></div><span class="r-val" style="color:var(--text-muted)">48%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">68%</span></td>
+              <td><span class="badge badge-amber">Watch</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">P. Jones</td>
+              <td style="font-size:11px;color:var(--text-muted)">25 May</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <!-- Middle-Order -->
+            <tr data-name="charlie jones" data-county="northants" data-filter="middle" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">CJ</div><div><div class="p-name">Charlie Jones</div><div class="p-county">Northamptonshire</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">22</td>
+              <td style="font-size:12px;color:var(--text-sec)">Batter</td>
+              <td><span class="arch-tag">Middle-Order</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:62%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">62%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">78%</span></td>
+              <td><span class="badge badge-blue">Long-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">M. Davis</td>
+              <td style="font-size:11px;color:var(--text-muted)">3 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+            <tr data-name="luke taylor" data-county="worcestershire" data-filter="middle" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init">LT</div><div><div class="p-name">Luke Taylor</div><div class="p-county">Worcestershire</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">22</td>
+              <td style="font-size:12px;color:var(--text-sec)">Batter</td>
+              <td><span class="arch-tag">Middle-Order</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:45%;background:var(--text-muted)"></div></div><span class="r-val" style="color:var(--text-muted)">45%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">65%</span></td>
+              <td><span class="badge badge-amber">Watch</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">R. Chen</td>
+              <td style="font-size:11px;color:var(--text-muted)">20 May</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Add Player Modal -->
+      <div class="modal-overlay" id="addPlayerModal" onclick="if(event.target===this)this.classList.remove('show')">
+        <div class="modal-card">
+          <div class="modal-header">
+            <span class="modal-title">Add Player to Registry</span>
+            <button class="modal-close" onclick="document.getElementById('addPlayerModal').classList.remove('show')">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-row">
+              <div class="modal-field">
+                <label class="modal-label" for="npName">Full name</label>
+                <input class="modal-input" id="npName" type="text" placeholder="First and last name">
+              </div>
+              <div class="modal-field">
+                <label class="modal-label" for="npDob">Date of birth</label>
+                <input class="modal-input" id="npDob" type="date">
+              </div>
+            </div>
+            <div class="modal-row">
+              <div class="modal-field">
+                <label class="modal-label" for="npCounty">County / Club</label>
+                <input class="modal-input" id="npCounty" type="text" placeholder="e.g. Yorkshire">
+              </div>
+              <div class="modal-field">
+                <label class="modal-label" for="npRole">Primary role</label>
+                <select class="modal-select" id="npRole">
+                  <option value="">Select…</option>
+                  <option>Opening Batter</option>
+                  <option>Top-Order Batter</option>
+                  <option>Middle-Order Batter</option>
+                  <option>Pace Seamer</option>
+                  <option>Spin Bowler</option>
+                  <option>Wicket-Keeper Batter</option>
+                  <option>All-Rounder</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-row">
+              <div class="modal-field">
+                <label class="modal-label">EPP Status</label>
+                <div class="toggle-pair">
+                  <button class="tgl-btn active" onclick="this.classList.add('active');this.nextElementSibling.classList.remove('active')">Yes</button>
+                  <button class="tgl-btn" onclick="this.classList.add('active');this.previousElementSibling.classList.remove('active')">No</button>
+                </div>
+              </div>
+              <div class="modal-field">
+                <label class="modal-label">Contracted</label>
+                <div class="toggle-pair">
+                  <button class="tgl-btn" onclick="this.classList.add('active');this.nextElementSibling.classList.remove('active')">Yes</button>
+                  <button class="tgl-btn active" onclick="this.classList.add('active');this.previousElementSibling.classList.remove('active')">No</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn-outline" onclick="document.getElementById('addPlayerModal').classList.remove('show')">Cancel</button>
+            <button class="btn-primary" onclick="saveNewPlayer()">Add to Registry &rarr;</button>
+          </div>
+        </div>
+      </div>
+
       <!-- ══ DEPTH CHARTS ══ -->
       <div class="content-panel" id="panel-depth-charts">
 
@@ -1150,13 +1585,14 @@ button { font-family: var(--font); cursor: pointer; }
 </div>
 
 <script>
-const PANELS = ['dashboard','nl-search','video','profile','depth-charts'];
+const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts'];
 const TOPBAR = {
-  'dashboard':    ['Insight Manager',  'Good morning, Ed · Monday 16 June 2026'],
-  'nl-search':    ['NL Search',        'Query players, video and report data conversationally'],
-  'video':        ['Video Evidence',   'Sam Hartley · Left-arm seamer, death overs ≥135 km/h'],
-  'profile':      ['Player Profile',   'Sam Hartley · Lancashire · Age 21'],
-  'depth-charts': ['Depth Charts',     'Player pipeline by role archetype · drag to reassign'],
+  'dashboard':       ['Insight Manager',  'Good morning, Ed · Monday 16 June 2026'],
+  'nl-search':       ['NL Search',        'Query players, video and report data conversationally'],
+  'video':           ['Video Evidence',   'Sam Hartley · Left-arm seamer, death overs ≥135 km/h'],
+  'profile':         ['Player Profile',   'Sam Hartley · Lancashire · Age 21'],
+  'player-registry': ['Player Registry',  '20 players · EPP upwards · all levels'],
+  'depth-charts':    ['Depth Charts',     'Player pipeline by role archetype · drag to reassign'],
 };
 
 function showPanel(name) {
@@ -1219,7 +1655,52 @@ document.querySelectorAll('.arch-chip').forEach(chip => {
   });
 });
 
-// ── Depth Charts ──────────────────────────────────────────────────────────
+// ── Player Registry ───────────────────────────────────────────────────────
+function setRegFilter(chip) {
+  document.querySelectorAll('.reg-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  filterRegistry();
+}
+
+function filterRegistry() {
+  const q      = document.getElementById('regSearch').value.toLowerCase().trim();
+  const active = document.querySelector('.reg-chip.active');
+  const filter = active ? active.dataset.filter : 'all';
+  let visible  = 0;
+
+  document.querySelectorAll('#regTable tbody tr[data-name]').forEach(row => {
+    const nameMatch   = !q || row.dataset.name.includes(q) || row.dataset.county.includes(q);
+    const filterMatch = filter === 'all' || row.dataset.filter === filter;
+    const show = nameMatch && filterMatch;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  document.getElementById('regCount').textContent = visible + ' player' + (visible !== 1 ? 's' : '');
+}
+
+// Close all dropdowns when clicking elsewhere
+document.addEventListener('click', () => {
+  document.querySelectorAll('.action-dropdown.show').forEach(d => d.classList.remove('show'));
+});
+
+function toggleMenu(btn) {
+  const dd = btn.nextElementSibling;
+  const wasOpen = dd.classList.contains('show');
+  document.querySelectorAll('.action-dropdown.show').forEach(d => d.classList.remove('show'));
+  if (!wasOpen) dd.classList.add('show');
+}
+
+function saveNewPlayer() {
+  const name = document.getElementById('npName').value.trim();
+  if (!name) { document.getElementById('npName').focus(); return; }
+  document.getElementById('addPlayerModal').classList.remove('show');
+  // Reset
+  ['npName','npDob','npCounty'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('npRole').selectedIndex = 0;
+}
+
+// ── Depth Charts ───────────────────────────────────────────────────────────
 const DEPTH_DATA = {
   men: { cols: [
     { id:'death-seamer', label:'Death Seamer', players:[
