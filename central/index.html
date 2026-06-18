@@ -494,6 +494,138 @@ button { font-family: var(--font); cursor: pointer; }
 .fix-comp  { font-size: 11px; color: var(--text-sec); }
 
 /* ══════════════════════════════════════
+   PLAYER COMPARISON
+══════════════════════════════════════ */
+.cmp-controls {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+}
+.cmp-player-count { font-size: 12px; color: var(--text-muted); }
+
+.cmp-wrap { overflow-x: auto; }
+.cmp-wrap::-webkit-scrollbar { height: 5px; }
+.cmp-wrap::-webkit-scrollbar-thumb { background: var(--border); }
+
+.cmp-table {
+  width: 100%; border-collapse: collapse;
+  min-width: 640px; table-layout: fixed;
+}
+.cmp-table thead th { border-bottom: 2px solid var(--border); }
+
+/* Sticky label column */
+.cmp-label-col {
+  position: sticky; left: 0; z-index: 20;
+  background: var(--surface); width: 190px; min-width: 190px;
+  border-right: 2px solid var(--border);
+}
+
+/* Player header cell */
+.cmp-player-col { width: 180px; min-width: 180px; position: relative; }
+.cmp-player-header {
+  background: var(--card); padding: 14px 12px; text-align: center;
+  vertical-align: top; border-bottom: 3px solid var(--teal);
+  border-right: 1px solid var(--border-light);
+}
+.cmp-player-avatar {
+  width: 44px; height: 44px; background: var(--teal-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: var(--teal);
+  margin: 0 auto 8px; cursor: pointer;
+}
+.cmp-player-name {
+  font-size: 13px; font-weight: 700; color: var(--text-primary);
+  cursor: pointer; margin-bottom: 2px;
+}
+.cmp-player-name:hover { color: var(--teal); }
+.cmp-player-meta { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; }
+.cmp-remove-btn {
+  position: absolute; top: 7px; right: 7px;
+  width: 18px; height: 18px; background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--text-muted); cursor: pointer; transition: all .15s;
+}
+.cmp-remove-btn:hover { background: var(--red); border-color: var(--red); color: #fff; }
+
+/* Add player column */
+.cmp-add-col { width: 110px; min-width: 110px; }
+.cmp-add-header {
+  background: var(--surface); padding: 14px 8px; text-align: center;
+  border-left: 1px solid var(--border-light); border-bottom: 3px solid var(--border);
+  vertical-align: middle;
+}
+.cmp-add-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  width: 100%; padding: 12px 8px; background: none; border: 1.5px dashed var(--border);
+  color: var(--text-muted); font-size: 11px; font-weight: 600; cursor: pointer;
+  transition: all .15s; font-family: var(--font);
+}
+.cmp-add-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
+.cmp-add-btn svg { width: 18px; height: 18px; }
+
+/* Section header row */
+.cmp-section-hdr td, .cmp-section-hdr th {
+  background: var(--navy); color: rgba(255,255,255,.7);
+  font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .7px;
+  padding: 5px 12px; border: none;
+}
+.cmp-section-hdr .cmp-label-col { background: var(--navy); color: rgba(255,255,255,.7); border-right-color: rgba(255,255,255,.1); }
+
+/* Data rows */
+.cmp-data-row:hover td { background: rgba(0,114,206,.03); }
+.cmp-data-row:hover .cmp-label-col { background: var(--surface); }
+.cmp-label-cell {
+  font-size: 11px; font-weight: 600; color: var(--text-sec);
+  padding: 11px 12px; border-bottom: 1px solid var(--border-light);
+}
+.cmp-data-cell {
+  text-align: center; padding: 11px 12px;
+  border-bottom: 1px solid var(--border-light);
+  border-right: 1px solid var(--border-light);
+  vertical-align: middle; font-size: 12px;
+}
+.cmp-data-cell.best { background: rgba(31,157,85,.07); }
+.cmp-add-data { background: var(--surface); border-left: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+
+/* Readiness bar in cell */
+.cmp-r-val { font-size: 18px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+.cmp-r-bar { height: 4px; background: var(--border); margin: 0 auto; width: 80px; }
+.cmp-r-fill { height: 100%; }
+
+/* Confidence badge */
+.conf-pill {
+  font-size: 11px; font-weight: 700; padding: 3px 9px; display: inline-block;
+}
+.conf-pill.high { background: var(--teal-pale); color: var(--teal); }
+.conf-pill.mid  { background: var(--surface); color: var(--text-muted); border: 1px solid var(--border); }
+.conf-pill.low  { font-size: 10px; color: var(--text-muted); }
+
+/* Recommendation badge in comparison */
+.rec-promote { font-size: 11px; font-weight: 700; color: var(--green); }
+.rec-retain  { font-size: 11px; font-weight: 700; color: var(--teal); }
+.rec-monitor { font-size: 11px; font-weight: 700; color: var(--amber); }
+
+/* Add-player dropdown */
+.add-player-dropdown {
+  display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  background: var(--card); border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-elev); z-index: 100; width: 200px; max-height: 280px; overflow-y: auto;
+}
+.add-player-dropdown.show { display: block; }
+.apd-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px; cursor: pointer; transition: background .15s;
+  font-size: 12px; border-bottom: 1px solid var(--border-light);
+}
+.apd-item:last-child { border-bottom: none; }
+.apd-item:hover { background: var(--teal-pale); color: var(--teal); }
+.apd-init {
+  width: 24px; height: 24px; background: var(--teal-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 800; color: var(--teal); flex-shrink: 0;
+}
+.apd-name { font-weight: 600; color: var(--text-primary); }
+.apd-meta { font-size: 10px; color: var(--text-muted); }
+
+/* ══════════════════════════════════════
    DEPTH CHARTS
 ══════════════════════════════════════ */
 .depth-controls {
@@ -748,7 +880,7 @@ button { font-family: var(--font); cursor: pointer; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="4" height="20"/><rect x="10" y="8" width="4" height="14"/><rect x="18" y="5" width="4" height="17"/></svg>
         Depth Charts
       </div>
-      <div class="nav-item">
+      <div class="nav-item" id="nav-comparison" onclick="showPanel('comparison')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
         Comparison
       </div>
@@ -1580,12 +1712,285 @@ button { font-family: var(--font); cursor: pointer; }
 
       </div>
 
+      <!-- ══ COMPARISON ══ -->
+      <div class="content-panel" id="panel-comparison">
+
+        <div class="cmp-controls">
+          <span class="cmp-player-count" id="cmpCount">3 players selected</span>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <button class="btn-outline">Configure data points</button>
+            <button class="btn-outline">Add to squad draft</button>
+            <button class="btn-outline">Export PDF</button>
+          </div>
+        </div>
+
+        <div class="cmp-wrap">
+          <table class="cmp-table">
+            <thead>
+              <tr>
+                <th class="cmp-label-col" style="padding:12px;font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px">Data point</th>
+
+                <!-- Player 1: Sam Hartley -->
+                <th class="cmp-player-col" id="cmp-col-SH">
+                  <div class="cmp-player-header">
+                    <button class="cmp-remove-btn" onclick="removePlayer('SH')" title="Remove">&times;</button>
+                    <div class="cmp-player-avatar" onclick="showPanel('profile')">SH</div>
+                    <div class="cmp-player-name" onclick="showPanel('profile')">Sam Hartley</div>
+                    <div class="cmp-player-meta">Lancashire &middot; 21</div>
+                    <span class="badge badge-green" style="font-size:9px">Short-list</span>
+                    <br><span class="arch-tag" style="font-size:9px;margin-top:4px;display:inline-block">Death Bowler</span>
+                  </div>
+                </th>
+
+                <!-- Player 2: Oliver Webb -->
+                <th class="cmp-player-col" id="cmp-col-OW">
+                  <div class="cmp-player-header">
+                    <button class="cmp-remove-btn" onclick="removePlayer('OW')" title="Remove">&times;</button>
+                    <div class="cmp-player-avatar" onclick="showPanel('profile')">OW</div>
+                    <div class="cmp-player-name" onclick="showPanel('profile')">Oliver Webb</div>
+                    <div class="cmp-player-meta">Surrey &middot; 20</div>
+                    <span class="badge badge-green" style="font-size:9px">Short-list</span>
+                    <br><span class="arch-tag" style="font-size:9px;margin-top:4px;display:inline-block">Top-Order Bat</span>
+                  </div>
+                </th>
+
+                <!-- Player 3: Jack Harrison -->
+                <th class="cmp-player-col" id="cmp-col-JH">
+                  <div class="cmp-player-header">
+                    <button class="cmp-remove-btn" onclick="removePlayer('JH')" title="Remove">&times;</button>
+                    <div class="cmp-player-avatar" onclick="showPanel('profile')">JH</div>
+                    <div class="cmp-player-name" onclick="showPanel('profile')">Jack Harrison</div>
+                    <div class="cmp-player-meta">Kent &middot; 21</div>
+                    <span class="badge badge-green" style="font-size:9px">Short-list</span>
+                    <br><span class="arch-tag" style="font-size:9px;margin-top:4px;display:inline-block">Top-Order Bat</span>
+                  </div>
+                </th>
+
+                <!-- Player 4: Callum Price (hidden, can be added) -->
+                <th class="cmp-player-col" id="cmp-col-CP" style="display:none">
+                  <div class="cmp-player-header">
+                    <button class="cmp-remove-btn" onclick="removePlayer('CP')" title="Remove">&times;</button>
+                    <div class="cmp-player-avatar" onclick="showPanel('profile')">CP</div>
+                    <div class="cmp-player-name" onclick="showPanel('profile')">Callum Price</div>
+                    <div class="cmp-player-meta">Kent &middot; 20</div>
+                    <span class="badge badge-blue" style="font-size:9px">Long-list</span>
+                    <br><span class="arch-tag" style="font-size:9px;margin-top:4px;display:inline-block">Death Bowler</span>
+                  </div>
+                </th>
+
+                <!-- Add player -->
+                <th class="cmp-add-col" style="position:relative">
+                  <div class="cmp-add-header">
+                    <button class="cmp-add-btn" onclick="toggleAddDropdown()" aria-label="Add player to comparison">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                      Add player
+                    </button>
+                    <div class="add-player-dropdown" id="addPlayerDropdown">
+                      <div class="apd-item" onclick="addPlayer('BC')"><div class="apd-init">BC</div><div><div class="apd-name">Ben Crawford</div><div class="apd-meta">Middlesex · Death Bowler</div></div></div>
+                      <div class="apd-item" onclick="addPlayer('CP')"><div class="apd-init">CP</div><div><div class="apd-name">Callum Price</div><div class="apd-meta">Kent · Death Bowler</div></div></div>
+                      <div class="apd-item" onclick="addPlayer('RP')"><div class="apd-init">RP</div><div><div class="apd-name">Ravi Patel</div><div class="apd-meta">Middlesex · Spin Bowler</div></div></div>
+                      <div class="apd-item" onclick="addPlayer('NB')"><div class="apd-init">NB</div><div><div class="apd-name">Nick Booth</div><div class="apd-meta">Gloucestershire · WK Batter</div></div></div>
+                    </div>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <!-- ── READINESS ── -->
+              <tr class="cmp-section-hdr"><td class="cmp-label-col">Readiness</td><td></td><td></td><td></td><td id="s-CP-read" style="display:none"></td><td class="cmp-add-data"></td></tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Current readiness</td>
+                <td class="cmp-data-cell" data-col="SH">
+                  <div class="cmp-r-val" style="color:var(--green)">74%</div>
+                  <div class="cmp-r-bar"><div class="cmp-r-fill" style="width:74%;background:var(--green)"></div></div>
+                </td>
+                <td class="cmp-data-cell" data-col="OW">
+                  <div class="cmp-r-val" style="color:var(--amber)">66%</div>
+                  <div class="cmp-r-bar"><div class="cmp-r-fill" style="width:66%;background:var(--amber)"></div></div>
+                </td>
+                <td class="cmp-data-cell best" data-col="JH">
+                  <div class="cmp-r-val" style="color:var(--green)">76%</div>
+                  <div class="cmp-r-bar"><div class="cmp-r-fill" style="width:76%;background:var(--green)"></div></div>
+                </td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none">
+                  <div class="cmp-r-val" style="color:var(--amber)">51%</div>
+                  <div class="cmp-r-bar"><div class="cmp-r-fill" style="width:51%;background:var(--amber)"></div></div>
+                </td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Future potential</td>
+                <td class="cmp-data-cell best" data-col="SH">
+                  <div class="cmp-r-val" style="color:var(--teal)">91%</div>
+                  <div class="cmp-r-bar"><div class="cmp-r-fill" style="width:91%;background:var(--teal)"></div></div>
+                </td>
+                <td class="cmp-data-cell" data-col="OW">
+                  <div class="cmp-r-val" style="color:var(--teal)">88%</div>
+                  <div class="cmp-r-bar"><div class="cmp-r-fill" style="width:88%;background:var(--teal)"></div></div>
+                </td>
+                <td class="cmp-data-cell" data-col="JH">
+                  <div class="cmp-r-val" style="color:var(--teal)">87%</div>
+                  <div class="cmp-r-bar"><div class="cmp-r-fill" style="width:87%;background:var(--teal)"></div></div>
+                </td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none">
+                  <div class="cmp-r-val" style="color:var(--teal)">72%</div>
+                  <div class="cmp-r-bar"><div class="cmp-r-fill" style="width:72%;background:var(--teal)"></div></div>
+                </td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <!-- ── SCOUT INTELLIGENCE ── -->
+              <tr class="cmp-section-hdr"><td class="cmp-label-col">Scout Intelligence</td><td></td><td></td><td></td><td data-col="CP" style="display:none"></td><td class="cmp-add-data"></td></tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Reports</td>
+                <td class="cmp-data-cell best" data-col="SH"><span style="font-size:16px;font-weight:800;color:var(--text-primary)">8</span><div style="font-size:10px;color:var(--text-muted)">reports</div></td>
+                <td class="cmp-data-cell" data-col="OW"><span style="font-size:16px;font-weight:800;color:var(--text-primary)">5</span><div style="font-size:10px;color:var(--text-muted)">reports</div></td>
+                <td class="cmp-data-cell" data-col="JH"><span style="font-size:16px;font-weight:800;color:var(--text-primary)">6</span><div style="font-size:10px;color:var(--text-muted)">reports</div></td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none"><span style="font-size:16px;font-weight:800;color:var(--text-primary)">3</span><div style="font-size:10px;color:var(--text-muted)">reports</div></td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Recommendation</td>
+                <td class="cmp-data-cell" data-col="SH"><span class="rec-promote">&#8593; Promote</span></td>
+                <td class="cmp-data-cell" data-col="OW"><span class="rec-promote">&#8593; Promote</span></td>
+                <td class="cmp-data-cell" data-col="JH"><span class="rec-retain">Retain</span></td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none"><span class="rec-monitor">Monitor</span></td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Last scouted</td>
+                <td class="cmp-data-cell" data-col="SH" style="font-size:12px;color:var(--text-sec)">12 Jun 2026</td>
+                <td class="cmp-data-cell" data-col="OW" style="font-size:12px;color:var(--text-sec)">10 Jun 2026</td>
+                <td class="cmp-data-cell" data-col="JH" style="font-size:12px;color:var(--text-sec)">9 Jun 2026</td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none;font-size:12px;color:var(--text-sec)">2 Jun 2026</td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <!-- ── PERFORMANCE DATA ── -->
+              <tr class="cmp-section-hdr"><td class="cmp-label-col">Performance Data (PDW)</td><td></td><td></td><td></td><td data-col="CP" style="display:none"></td><td class="cmp-add-data"></td></tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Avg speed (death)</td>
+                <td class="cmp-data-cell best" data-col="SH"><span style="font-size:16px;font-weight:800;color:var(--teal)">137</span> <span style="font-size:10px;color:var(--text-muted)">km/h</span></td>
+                <td class="cmp-data-cell" data-col="OW" style="color:var(--text-muted);font-size:12px">&mdash;</td>
+                <td class="cmp-data-cell" data-col="JH" style="color:var(--text-muted);font-size:12px">&mdash;</td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none"><span style="font-size:16px;font-weight:800;color:var(--teal)">136</span> <span style="font-size:10px;color:var(--text-muted)">km/h</span></td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Economy (death)</td>
+                <td class="cmp-data-cell best" data-col="SH"><span style="font-size:16px;font-weight:800;color:var(--green)">7.2</span></td>
+                <td class="cmp-data-cell" data-col="OW" style="color:var(--text-muted);font-size:12px">&mdash;</td>
+                <td class="cmp-data-cell" data-col="JH" style="color:var(--text-muted);font-size:12px">&mdash;</td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none"><span style="font-size:16px;font-weight:800;color:var(--amber)">8.6</span></td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Batting average</td>
+                <td class="cmp-data-cell" data-col="SH" style="color:var(--text-muted);font-size:12px">&mdash;</td>
+                <td class="cmp-data-cell best" data-col="OW"><span style="font-size:16px;font-weight:800;color:var(--green)">42.1</span></td>
+                <td class="cmp-data-cell" data-col="JH"><span style="font-size:16px;font-weight:800;color:var(--text-primary)">38.7</span></td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none;color:var(--text-muted);font-size:12px">&mdash;</td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Strike rate</td>
+                <td class="cmp-data-cell" data-col="SH" style="color:var(--text-muted);font-size:12px">&mdash;</td>
+                <td class="cmp-data-cell best" data-col="OW"><span style="font-size:16px;font-weight:800;color:var(--teal)">89.4</span></td>
+                <td class="cmp-data-cell" data-col="JH"><span style="font-size:16px;font-weight:800;color:var(--text-primary)">82.1</span></td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none;color:var(--text-muted);font-size:12px">&mdash;</td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Runs / Wickets (12mo)</td>
+                <td class="cmp-data-cell" data-col="SH"><span style="font-size:14px;font-weight:800;color:var(--text-primary)">12 wkts</span></td>
+                <td class="cmp-data-cell best" data-col="OW"><span style="font-size:14px;font-weight:800;color:var(--text-primary)">712 runs</span></td>
+                <td class="cmp-data-cell" data-col="JH"><span style="font-size:14px;font-weight:800;color:var(--text-primary)">634 runs</span></td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none"><span style="font-size:14px;font-weight:800;color:var(--text-primary)">6 wkts</span></td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <!-- ── ARCHETYPE MATCH ── -->
+              <tr class="cmp-section-hdr"><td class="cmp-label-col">Archetype Match (AI)</td><td></td><td></td><td></td><td data-col="CP" style="display:none"></td><td class="cmp-add-data"></td></tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Death Specialist</td>
+                <td class="cmp-data-cell best" data-col="SH"><span class="conf-pill high">87%</span></td>
+                <td class="cmp-data-cell" data-col="OW"><span class="conf-pill low">12%</span></td>
+                <td class="cmp-data-cell" data-col="JH"><span class="conf-pill low">8%</span></td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none"><span class="conf-pill high">79%</span></td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">T20 Powerplay Bat</td>
+                <td class="cmp-data-cell" data-col="SH"><span class="conf-pill low">23%</span></td>
+                <td class="cmp-data-cell best" data-col="OW"><span class="conf-pill high">78%</span></td>
+                <td class="cmp-data-cell" data-col="JH"><span class="conf-pill mid">71%</span></td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none"><span class="conf-pill low">18%</span></td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Test Top-Order</td>
+                <td class="cmp-data-cell" data-col="SH"><span class="conf-pill low">15%</span></td>
+                <td class="cmp-data-cell" data-col="OW"><span class="conf-pill mid">62%</span></td>
+                <td class="cmp-data-cell best" data-col="JH"><span class="conf-pill high">69%</span></td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none"><span class="conf-pill low">11%</span></td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <!-- ── SCOUT CONSENSUS ── -->
+              <tr class="cmp-section-hdr"><td class="cmp-label-col">Scout Consensus</td><td></td><td></td><td></td><td data-col="CP" style="display:none"></td><td class="cmp-add-data"></td></tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Promote</td>
+                <td class="cmp-data-cell" data-col="SH"><span style="font-size:13px;font-weight:700;color:var(--green)">5/8</span> <span style="font-size:10px;color:var(--text-muted)">63%</span></td>
+                <td class="cmp-data-cell" data-col="OW"><span style="font-size:13px;font-weight:700;color:var(--green)">3/5</span> <span style="font-size:10px;color:var(--text-muted)">60%</span></td>
+                <td class="cmp-data-cell best" data-col="JH"><span style="font-size:13px;font-weight:700;color:var(--green)">4/6</span> <span style="font-size:10px;color:var(--text-muted)">67%</span></td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none"><span style="font-size:13px;font-weight:700;color:var(--green)">1/3</span> <span style="font-size:10px;color:var(--text-muted)">33%</span></td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Retain</td>
+                <td class="cmp-data-cell" data-col="SH" style="font-size:12px;color:var(--text-sec)">2/8 &nbsp; 25%</td>
+                <td class="cmp-data-cell" data-col="OW" style="font-size:12px;color:var(--text-sec)">2/5 &nbsp; 40%</td>
+                <td class="cmp-data-cell" data-col="JH" style="font-size:12px;color:var(--text-sec)">2/6 &nbsp; 33%</td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none;font-size:12px;color:var(--text-sec)">2/3 &nbsp; 67%</td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+              <tr class="cmp-data-row">
+                <td class="cmp-label-col cmp-label-cell">Monitor</td>
+                <td class="cmp-data-cell" data-col="SH" style="font-size:12px;color:var(--text-muted)">1/8 &nbsp; 12%</td>
+                <td class="cmp-data-cell" data-col="OW" style="font-size:12px;color:var(--text-muted)">0/5</td>
+                <td class="cmp-data-cell" data-col="JH" style="font-size:12px;color:var(--text-muted)">0/6</td>
+                <td class="cmp-data-cell" data-col="CP" style="display:none;font-size:12px;color:var(--text-muted)">0/3</td>
+                <td class="cmp-add-data"></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
 <script>
-const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts'];
+const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts','comparison'];
 const TOPBAR = {
   'dashboard':       ['Insight Manager',  'Good morning, Ed · Monday 16 June 2026'],
   'nl-search':       ['NL Search',        'Query players, video and report data conversationally'],
@@ -1593,6 +1998,7 @@ const TOPBAR = {
   'profile':         ['Player Profile',   'Sam Hartley · Lancashire · Age 21'],
   'player-registry': ['Player Registry',  '20 players · EPP upwards · all levels'],
   'depth-charts':    ['Depth Charts',     'Player pipeline by role archetype · drag to reassign'],
+  'comparison':      ['Player Comparison','Side-by-side analysis · Sam Hartley, Oliver Webb, Jack Harrison'],
 };
 
 function showPanel(name) {
@@ -1653,6 +2059,47 @@ document.querySelectorAll('.arch-chip').forEach(chip => {
     chip.closest('.arch-filters').querySelectorAll('.arch-chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
   });
+});
+
+// ── Player Comparison ─────────────────────────────────────────────────────
+const CMP_PLAYERS = { SH:true, OW:true, JH:true, CP:false }; // true = visible
+
+function removePlayer(id) {
+  CMP_PLAYERS[id] = false;
+  refreshCmpCols();
+}
+
+function addPlayer(id) {
+  CMP_PLAYERS[id] = true;
+  document.getElementById('addPlayerDropdown').classList.remove('show');
+  refreshCmpCols();
+}
+
+function toggleAddDropdown() {
+  document.getElementById('addPlayerDropdown').classList.toggle('show');
+}
+
+function refreshCmpCols() {
+  let count = 0;
+  Object.entries(CMP_PLAYERS).forEach(([id, vis]) => {
+    const colEl = document.getElementById('cmp-col-' + id);
+    if (colEl) colEl.style.display = vis ? '' : 'none';
+    // data cells
+    document.querySelectorAll('[data-col="' + id + '"]').forEach(el => {
+      el.style.display = vis ? '' : 'none';
+    });
+    if (vis) count++;
+  });
+  const el = document.getElementById('cmpCount');
+  if (el) el.textContent = count + ' player' + (count !== 1 ? 's' : '') + ' selected';
+}
+
+// Close add dropdown on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.cmp-add-header')) {
+    const dd = document.getElementById('addPlayerDropdown');
+    if (dd) dd.classList.remove('show');
+  }
 });
 
 // ── Player Registry ───────────────────────────────────────────────────────
