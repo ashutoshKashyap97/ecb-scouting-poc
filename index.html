@@ -364,6 +364,32 @@ body {
 }
 .trust-badge svg { width: 10px; height: 10px; }
 
+/* ── Referral Portal ── */
+.referral-portal { margin-bottom: 4px; }
+.referral-label {
+  font-size: 11px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .5px;
+  margin-bottom: 8px; text-align: center;
+}
+.referral-link {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1.5px solid var(--border-light);
+  padding: 12px 14px; text-decoration: none; color: inherit;
+  transition: border-color .2s, box-shadow .2s;
+}
+.referral-link:hover { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,114,206,.08); }
+.referral-link:active { transform: scale(.99); }
+.referral-link-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: var(--teal-pale); color: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+}
+.referral-link-icon svg { width: 18px; height: 18px; }
+.referral-link-text { flex: 1; }
+.referral-link-title { display: block; font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.referral-link-sub { display: block; font-size: 11px; font-weight: 500; color: var(--text-muted); margin-top: 1px; }
+.referral-link-chevron { width: 16px; height: 16px; color: var(--text-muted); flex-shrink: 0; }
+
 /* ── Animations ── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(12px); }
@@ -475,6 +501,23 @@ body {
     <div class="help-link">
       Need help? <a href="#">Contact support</a>
     </div>
+
+    <div class="divider"></div>
+
+    <div class="referral-portal">
+      <div class="referral-label">Are you a coach?</div>
+      <a class="referral-link" href="coach/index.html" aria-label="Open coach referral portal — no login required">
+        <div class="referral-link-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>
+        </div>
+        <div class="referral-link-text">
+          <span class="referral-link-title">Referral Portal</span>
+          <span class="referral-link-sub">Refer a player &mdash; no login required</span>
+        </div>
+        <svg class="referral-link-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+    </div>
+
   </main>
 
   <!-- Footer -->
