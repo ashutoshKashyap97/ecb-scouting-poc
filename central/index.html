@@ -494,6 +494,138 @@ button { font-family: var(--font); cursor: pointer; }
 .fix-comp  { font-size: 11px; color: var(--text-sec); }
 
 /* ══════════════════════════════════════
+   SQUAD SELECTION
+══════════════════════════════════════ */
+.squad-top-bar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 11px 14px; background: var(--card);
+  border: 1px solid var(--border-light); margin-bottom: 12px;
+  box-shadow: var(--shadow-card);
+}
+.squad-name-input {
+  font-size: 14px; font-weight: 700; color: var(--text-primary);
+  background: none; border: none; border-bottom: 1.5px solid transparent;
+  outline: none; transition: border-color .2s; min-width: 240px; font-family: var(--font);
+}
+.squad-name-input:focus { border-bottom-color: var(--teal); }
+.squad-template-select {
+  font-size: 12px; font-weight: 600; color: var(--text-sec);
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 6px 10px; font-family: var(--font); outline: none; cursor: pointer;
+}
+
+.squad-layout { display: grid; grid-template-columns: 2fr 3fr; gap: 12px; }
+
+.squad-panel-header {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+}
+.squad-panel-label {
+  font-size: 10px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .6px;
+}
+.squad-count {
+  font-size: 11px; font-weight: 700; color: var(--teal);
+  background: var(--teal-pale); padding: 2px 9px;
+}
+
+/* Slot groups */
+.slot-group { margin-bottom: 8px; }
+.slot-group-header {
+  background: var(--navy); padding: 5px 10px; margin-bottom: 4px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 10px; font-weight: 700; color: rgba(255,255,255,.7);
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.slot-group-count { color: rgba(255,255,255,.35); }
+
+.slot {
+  border: 1.5px dashed var(--border); background: var(--surface);
+  padding: 7px 10px; margin-bottom: 3px; min-height: 40px;
+  display: flex; align-items: center; transition: all .15s;
+}
+.slot.empty:hover, .slot.drag-over { border-color: var(--teal); background: var(--teal-pale); }
+.slot.filled { background: var(--card); border-style: solid; border-color: var(--border-light); flex-direction: column; align-items: stretch; }
+.slot-empty-label { font-size: 11px; color: var(--text-muted); font-style: italic; }
+.slot-role-name { font-weight: 700; color: var(--text-sec); font-style: normal; }
+
+/* Player in slot */
+.slot-player { display: flex; align-items: center; gap: 8px; }
+.slot-init {
+  width: 26px; height: 26px; background: var(--teal-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 800; color: var(--teal); flex-shrink: 0;
+}
+.slot-player-info { flex: 1; min-width: 0; }
+.slot-player-name { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+.slot-player-meta { font-size: 10px; color: var(--text-muted); }
+.slot-r-bar  { height: 3px; background: var(--border); margin-top: 3px; }
+.slot-r-fill { height: 100%; }
+.slot-remove {
+  width: 18px; height: 18px; background: none; border: none;
+  font-size: 14px; color: var(--text-muted); cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; transition: color .15s; padding: 0;
+}
+.slot-remove:hover { color: var(--red); }
+.slot-notes { margin-top: 5px; border-top: 1px solid var(--border-light); padding-top: 5px; }
+.slot-notes-input {
+  width: 100%; font-size: 10px; color: var(--text-sec); background: none;
+  border: none; outline: none; font-family: var(--font); resize: none;
+  height: 26px; line-height: 1.4; font-style: italic;
+}
+.slot-notes-input::placeholder { color: var(--border); }
+
+/* Published squads section */
+.published-section { margin-top: 14px; }
+.published-section-label {
+  font-size: 10px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px;
+}
+.published-row {
+  background: var(--card); border: 1px solid var(--border-light);
+  padding: 8px 10px; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px; font-size: 11px;
+}
+.pub-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; flex-shrink: 0; }
+.pub-by   { font-weight: 700; color: var(--text-primary); }
+.pub-info { color: var(--text-muted); }
+.pub-view { color: var(--teal); font-weight: 700; cursor: pointer; margin-left: auto; white-space: nowrap; }
+
+/* Pool panel */
+.pool-controls { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.pool-filter-label { font-size: 11px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 5px; cursor: pointer; }
+.pool-filter-label input { accent-color: var(--teal); }
+.pool-status-tabs { display: flex; border: 1px solid var(--border); }
+.pool-status-tab {
+  font-size: 10px; font-weight: 700; padding: 5px 11px;
+  background: var(--card); border: none; border-right: 1px solid var(--border);
+  color: var(--text-muted); cursor: pointer; transition: all .15s; font-family: var(--font);
+}
+.pool-status-tab:last-child { border-right: none; }
+.pool-status-tab.active { background: var(--navy); color: #fff; }
+
+/* Pool player cards */
+.pool-card {
+  background: var(--card); border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card); padding: 10px 12px; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 10px;
+  cursor: grab; user-select: none; transition: all .15s;
+}
+.pool-card:hover { border-color: var(--teal); box-shadow: var(--shadow-elev); }
+.pool-card.dragging { opacity: .35; cursor: grabbing; }
+.pool-init {
+  width: 32px; height: 32px; background: var(--teal-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800; color: var(--teal); flex-shrink: 0;
+}
+.pool-player-info { flex: 1; min-width: 0; }
+.pool-name { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.pool-meta { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+.pool-r-bar  { height: 3px; background: var(--border); margin-top: 4px; width: 70px; }
+.pool-r-fill { height: 100%; }
+.pool-right  { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.drag-grip   { font-size: 14px; color: var(--border); letter-spacing: 1px; }
+
+/* ══════════════════════════════════════
    PLAYER COMPARISON
 ══════════════════════════════════════ */
 .cmp-controls {
@@ -888,7 +1020,7 @@ button { font-family: var(--font); cursor: pointer; }
 
     <div class="nav-section">
       <div class="nav-label">Selection</div>
-      <div class="nav-item">
+      <div class="nav-item" id="nav-squad-selection" onclick="showPanel('squad-selection')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
         Squad Selection
       </div>
@@ -1712,6 +1844,318 @@ button { font-family: var(--font); cursor: pointer; }
 
       </div>
 
+      <!-- ══ SQUAD SELECTION ══ -->
+      <div class="content-panel" id="panel-squad-selection">
+
+        <!-- Top bar -->
+        <div class="squad-top-bar">
+          <input class="squad-name-input" id="squadNameInput" value="England Lions T20 — 20 Jun 2026">
+          <span class="badge badge-amber" id="squadStatusBadge">Draft</span>
+          <select class="squad-template-select">
+            <option>T20 Squad (15)</option>
+            <option>Test Squad (13)</option>
+            <option>50-over Squad (14)</option>
+            <option>Custom</option>
+          </select>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <button class="btn-outline" onclick="clearSquad()">Clear squad</button>
+            <button class="btn-primary" id="publishBtn" onclick="showPublishModal()">Publish squad</button>
+          </div>
+        </div>
+
+        <div class="squad-layout">
+
+          <!-- ── LEFT: Squad builder ── -->
+          <div>
+            <div class="squad-panel-header">
+              <span class="squad-panel-label">Selected Squad</span>
+              <span class="squad-count" id="squadCount">4 / 15</span>
+            </div>
+
+            <!-- Openers -->
+            <div class="slot-group">
+              <div class="slot-group-header">Openers <span class="slot-group-count">2</span></div>
+              <div class="slot filled" id="slot-op1">
+                <div class="slot-player"><div class="slot-init">JH</div><div class="slot-player-info"><div class="slot-player-name">Jack Harrison</div><div class="slot-player-meta">Kent &middot; 21</div><div class="slot-r-bar"><div class="slot-r-fill" style="width:76%;background:var(--green)"></div></div></div><span class="badge badge-green" style="font-size:9px">Short</span><button class="slot-remove" onclick="clearSlot('slot-op1','Opener');">&times;</button></div>
+                <div class="slot-notes"><textarea class="slot-notes-input" placeholder="Notes for Jack Harrison…"></textarea></div>
+              </div>
+              <div class="slot filled" id="slot-op2">
+                <div class="slot-player"><div class="slot-init">OW</div><div class="slot-player-info"><div class="slot-player-name">Oliver Webb</div><div class="slot-player-meta">Surrey &middot; 20</div><div class="slot-r-bar"><div class="slot-r-fill" style="width:66%;background:var(--amber)"></div></div></div><span class="badge badge-green" style="font-size:9px">Short</span><button class="slot-remove" onclick="clearSlot('slot-op2','Opener');">&times;</button></div>
+                <div class="slot-notes"><textarea class="slot-notes-input" placeholder="Notes for Oliver Webb…"></textarea></div>
+              </div>
+            </div>
+
+            <!-- Top-order -->
+            <div class="slot-group">
+              <div class="slot-group-header">Top-order <span class="slot-group-count">2</span></div>
+              <div class="slot empty" id="slot-to1" data-role="Top-order" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnSlot(event,'slot-to1','Top-order')"><span class="slot-empty-label"><span class="slot-role-name">Top-order</span> — drag player here</span></div>
+              <div class="slot empty" id="slot-to2" data-role="Top-order" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnSlot(event,'slot-to2','Top-order')"><span class="slot-empty-label"><span class="slot-role-name">Top-order</span> — drag player here</span></div>
+            </div>
+
+            <!-- Middle-order -->
+            <div class="slot-group">
+              <div class="slot-group-header">Middle-order <span class="slot-group-count">3</span></div>
+              <div class="slot filled" id="slot-mo1">
+                <div class="slot-player"><div class="slot-init">CJ</div><div class="slot-player-info"><div class="slot-player-name">Charlie Jones</div><div class="slot-player-meta">Northants &middot; 22</div><div class="slot-r-bar"><div class="slot-r-fill" style="width:62%;background:var(--amber)"></div></div></div><span class="badge badge-blue" style="font-size:9px">Long</span><button class="slot-remove" onclick="clearSlot('slot-mo1','Middle-order');">&times;</button></div>
+                <div class="slot-notes"><textarea class="slot-notes-input" placeholder="Notes for Charlie Jones…"></textarea></div>
+              </div>
+              <div class="slot empty" id="slot-mo2" data-role="Middle-order" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnSlot(event,'slot-mo2','Middle-order')"><span class="slot-empty-label"><span class="slot-role-name">Middle-order</span> — drag player here</span></div>
+              <div class="slot empty" id="slot-mo3" data-role="Middle-order" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnSlot(event,'slot-mo3','Middle-order')"><span class="slot-empty-label"><span class="slot-role-name">Middle-order</span> — drag player here</span></div>
+            </div>
+
+            <!-- All-rounders -->
+            <div class="slot-group">
+              <div class="slot-group-header">All-rounders <span class="slot-group-count">2</span></div>
+              <div class="slot filled" id="slot-ar1">
+                <div class="slot-player"><div class="slot-init">AS</div><div class="slot-player-info"><div class="slot-player-name">Arjun Sharma</div><div class="slot-player-meta">Eng U17 &middot; 16</div><div class="slot-r-bar"><div class="slot-r-fill" style="width:61%;background:var(--amber)"></div></div></div><span class="badge badge-blue" style="font-size:9px">Long</span><button class="slot-remove" onclick="clearSlot('slot-ar1','All-rounder');">&times;</button></div>
+                <div class="slot-notes"><textarea class="slot-notes-input" placeholder="Notes for Arjun Sharma…"></textarea></div>
+              </div>
+              <div class="slot empty" id="slot-ar2" data-role="All-rounder" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnSlot(event,'slot-ar2','All-rounder')"><span class="slot-empty-label"><span class="slot-role-name">All-rounder</span> — drag player here</span></div>
+            </div>
+
+            <!-- Wicket-keeper -->
+            <div class="slot-group">
+              <div class="slot-group-header">Wicket-keeper <span class="slot-group-count">1</span></div>
+              <div class="slot empty" id="slot-wk1" data-role="WK Batter" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnSlot(event,'slot-wk1','WK Batter')"><span class="slot-empty-label"><span class="slot-role-name">WK Batter</span> — drag player here</span></div>
+            </div>
+
+            <!-- Seamers -->
+            <div class="slot-group">
+              <div class="slot-group-header">Seamers <span class="slot-group-count">3</span></div>
+              <div class="slot filled" id="slot-sm1">
+                <div class="slot-player"><div class="slot-init">SH</div><div class="slot-player-info"><div class="slot-player-name">Sam Hartley</div><div class="slot-player-meta">Lancashire &middot; 21</div><div class="slot-r-bar"><div class="slot-r-fill" style="width:74%;background:var(--green)"></div></div></div><span class="badge badge-green" style="font-size:9px">Short</span><button class="slot-remove" onclick="clearSlot('slot-sm1','Seamer');">&times;</button></div>
+                <div class="slot-notes"><textarea class="slot-notes-input" placeholder="Notes for Sam Hartley…"></textarea></div>
+              </div>
+              <div class="slot empty" id="slot-sm2" data-role="Seamer" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnSlot(event,'slot-sm2','Seamer')"><span class="slot-empty-label"><span class="slot-role-name">Seamer</span> — drag player here</span></div>
+              <div class="slot empty" id="slot-sm3" data-role="Seamer" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnSlot(event,'slot-sm3','Seamer')"><span class="slot-empty-label"><span class="slot-role-name">Seamer</span> — drag player here</span></div>
+            </div>
+
+            <!-- Spinners -->
+            <div class="slot-group">
+              <div class="slot-group-header">Spinners <span class="slot-group-count">2</span></div>
+              <div class="slot empty" id="slot-sp1" data-role="Spinner" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnSlot(event,'slot-sp1','Spinner')"><span class="slot-empty-label"><span class="slot-role-name">Spinner</span> — drag player here</span></div>
+              <div class="slot empty" id="slot-sp2" data-role="Spinner" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnSlot(event,'slot-sp2','Spinner')"><span class="slot-empty-label"><span class="slot-role-name">Spinner</span> — drag player here</span></div>
+            </div>
+
+            <!-- Published by others -->
+            <div class="published-section">
+              <div class="published-section-label">Other published selections</div>
+              <div class="published-row">
+                <div class="pub-dot"></div>
+                <div><div class="pub-by">Sarah Mitchell</div><div class="pub-info">Published 14 Jun 2026 &middot; 15 players</div></div>
+                <span class="pub-view">View &rarr;</span>
+              </div>
+              <div class="published-row">
+                <div class="pub-dot"></div>
+                <div><div class="pub-by">James Okafor</div><div class="pub-info">Published 12 Jun 2026 &middot; 15 players</div></div>
+                <span class="pub-view">View &rarr;</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── RIGHT: Player pool ── -->
+          <div>
+            <div class="squad-panel-header">
+              <span class="squad-panel-label">Player Pool</span>
+              <label class="pool-filter-label">
+                <input type="checkbox" id="showWatch" onchange="filterPool()"> Show Watch list
+              </label>
+            </div>
+            <div class="pool-controls">
+              <div class="pool-status-tabs">
+                <button class="pool-status-tab active" data-status="all"     onclick="setPoolStatus(this)">All</button>
+                <button class="pool-status-tab"        data-status="seamer"  onclick="setPoolStatus(this)">Seamers</button>
+                <button class="pool-status-tab"        data-status="batter"  onclick="setPoolStatus(this)">Batters</button>
+                <button class="pool-status-tab"        data-status="spinner" onclick="setPoolStatus(this)">Spinners</button>
+                <button class="pool-status-tab"        data-status="keeper"  onclick="setPoolStatus(this)">Keepers</button>
+              </div>
+            </div>
+
+            <div id="pool-list">
+
+              <!-- Short-list players in pool -->
+              <div class="pool-card" id="pool-BC" draggable="true" data-pid="BC" data-name="Ben Crawford" data-county="Middlesex" data-r="81" data-status="short" data-role="seamer" ondragstart="poolDragStart(this)" ondragend="poolDragEnd(this)">
+                <div class="pool-init">BC</div>
+                <div class="pool-player-info">
+                  <div class="pool-name">Ben Crawford</div>
+                  <div class="pool-meta">Middlesex &middot; 23 &middot; Death Bowler</div>
+                  <div class="pool-r-bar"><div class="pool-r-fill" style="width:81%;background:var(--green)"></div></div>
+                </div>
+                <div class="pool-right">
+                  <span class="badge badge-green" style="font-size:9px">Short-list</span>
+                  <span style="font-size:11px;font-weight:700;color:var(--green)">81%</span>
+                  <span class="drag-grip">&#8942;&#8942;</span>
+                </div>
+              </div>
+
+              <div class="pool-card" id="pool-LE" draggable="true" data-pid="LE" data-name="Lee Evans" data-county="Warwickshire" data-r="70" data-status="short" data-role="seamer" ondragstart="poolDragStart(this)" ondragend="poolDragEnd(this)">
+                <div class="pool-init">LE</div>
+                <div class="pool-player-info">
+                  <div class="pool-name">Lee Evans</div>
+                  <div class="pool-meta">Warwickshire &middot; 22 &middot; Death Bowler</div>
+                  <div class="pool-r-bar"><div class="pool-r-fill" style="width:70%;background:var(--green)"></div></div>
+                </div>
+                <div class="pool-right">
+                  <span class="badge badge-green" style="font-size:9px">Short-list</span>
+                  <span style="font-size:11px;font-weight:700;color:var(--green)">70%</span>
+                  <span class="drag-grip">&#8942;&#8942;</span>
+                </div>
+              </div>
+
+              <!-- Long-list players in pool -->
+              <div class="pool-card" id="pool-TR" draggable="true" data-pid="TR" data-name="Tom Reed" data-county="Somerset" data-r="64" data-status="long" data-role="batter" ondragstart="poolDragStart(this)" ondragend="poolDragEnd(this)">
+                <div class="pool-init">TR</div>
+                <div class="pool-player-info">
+                  <div class="pool-name">Tom Reed</div>
+                  <div class="pool-meta">Somerset &middot; 23 &middot; Top-Order Bat</div>
+                  <div class="pool-r-bar"><div class="pool-r-fill" style="width:64%;background:var(--amber)"></div></div>
+                </div>
+                <div class="pool-right">
+                  <span class="badge badge-blue" style="font-size:9px">Long-list</span>
+                  <span style="font-size:11px;font-weight:700;color:var(--amber)">64%</span>
+                  <span class="drag-grip">&#8942;&#8942;</span>
+                </div>
+              </div>
+
+              <div class="pool-card" id="pool-NB" draggable="true" data-pid="NB" data-name="Nick Booth" data-county="Gloucestershire" data-r="67" data-status="long" data-role="keeper" ondragstart="poolDragStart(this)" ondragend="poolDragEnd(this)">
+                <div class="pool-init">NB</div>
+                <div class="pool-player-info">
+                  <div class="pool-name">Nick Booth</div>
+                  <div class="pool-meta">Gloucestershire &middot; 24 &middot; WK Batter</div>
+                  <div class="pool-r-bar"><div class="pool-r-fill" style="width:67%;background:var(--amber)"></div></div>
+                </div>
+                <div class="pool-right">
+                  <span class="badge badge-blue" style="font-size:9px">Long-list</span>
+                  <span style="font-size:11px;font-weight:700;color:var(--amber)">67%</span>
+                  <span class="drag-grip">&#8942;&#8942;</span>
+                </div>
+              </div>
+
+              <div class="pool-card" id="pool-HS" draggable="true" data-pid="HS" data-name="Harry Scott" data-county="Essex" data-r="59" data-status="long" data-role="spinner" ondragstart="poolDragStart(this)" ondragend="poolDragEnd(this)">
+                <div class="pool-init">HS</div>
+                <div class="pool-player-info">
+                  <div class="pool-name">Harry Scott</div>
+                  <div class="pool-meta">Essex &middot; 22 &middot; Spin Bowler</div>
+                  <div class="pool-r-bar"><div class="pool-r-fill" style="width:59%;background:var(--amber)"></div></div>
+                </div>
+                <div class="pool-right">
+                  <span class="badge badge-blue" style="font-size:9px">Long-list</span>
+                  <span style="font-size:11px;font-weight:700;color:var(--amber)">59%</span>
+                  <span class="drag-grip">&#8942;&#8942;</span>
+                </div>
+              </div>
+
+              <div class="pool-card" id="pool-JM" draggable="true" data-pid="JM" data-name="Jake Morrison" data-county="Yorkshire" data-r="58" data-status="long" data-role="seamer" ondragstart="poolDragStart(this)" ondragend="poolDragEnd(this)">
+                <div class="pool-init">JM</div>
+                <div class="pool-player-info">
+                  <div class="pool-name">Jake Morrison</div>
+                  <div class="pool-meta">Yorkshire &middot; 22 &middot; Death Bowler</div>
+                  <div class="pool-r-bar"><div class="pool-r-fill" style="width:58%;background:var(--amber)"></div></div>
+                </div>
+                <div class="pool-right">
+                  <span class="badge badge-blue" style="font-size:9px">Long-list</span>
+                  <span style="font-size:11px;font-weight:700;color:var(--amber)">58%</span>
+                  <span class="drag-grip">&#8942;&#8942;</span>
+                </div>
+              </div>
+
+              <div class="pool-card" id="pool-MW" draggable="true" data-pid="MW" data-name="Matt Wilson" data-county="Hampshire" data-r="55" data-status="long" data-role="batter" ondragstart="poolDragStart(this)" ondragend="poolDragEnd(this)">
+                <div class="pool-init">MW</div>
+                <div class="pool-player-info">
+                  <div class="pool-name">Matt Wilson</div>
+                  <div class="pool-meta">Hampshire &middot; 24 &middot; Top-Order Bat</div>
+                  <div class="pool-r-bar"><div class="pool-r-fill" style="width:55%;background:var(--amber)"></div></div>
+                </div>
+                <div class="pool-right">
+                  <span class="badge badge-blue" style="font-size:9px">Long-list</span>
+                  <span style="font-size:11px;font-weight:700;color:var(--amber)">55%</span>
+                  <span class="drag-grip">&#8942;&#8942;</span>
+                </div>
+              </div>
+
+              <div class="pool-card" id="pool-CP" draggable="true" data-pid="CP" data-name="Callum Price" data-county="Kent" data-r="51" data-status="long" data-role="seamer" ondragstart="poolDragStart(this)" ondragend="poolDragEnd(this)">
+                <div class="pool-init">CP</div>
+                <div class="pool-player-info">
+                  <div class="pool-name">Callum Price</div>
+                  <div class="pool-meta">Kent &middot; 20 &middot; Death Bowler</div>
+                  <div class="pool-r-bar"><div class="pool-r-fill" style="width:51%;background:var(--amber)"></div></div>
+                </div>
+                <div class="pool-right">
+                  <span class="badge badge-blue" style="font-size:9px">Long-list</span>
+                  <span style="font-size:11px;font-weight:700;color:var(--amber)">51%</span>
+                  <span class="drag-grip">&#8942;&#8942;</span>
+                </div>
+              </div>
+
+              <!-- Watch list (hidden by default) -->
+              <div class="pool-card watch-card" id="pool-TA" draggable="true" data-pid="TA" data-name="Tom Ashworth" data-county="Nottinghamshire" data-r="54" data-status="watch" data-role="keeper" style="display:none" ondragstart="poolDragStart(this)" ondragend="poolDragEnd(this)">
+                <div class="pool-init">TA</div>
+                <div class="pool-player-info">
+                  <div class="pool-name">Tom Ashworth</div>
+                  <div class="pool-meta">Nottinghamshire &middot; 23 &middot; WK Batter</div>
+                  <div class="pool-r-bar"><div class="pool-r-fill" style="width:54%;background:var(--amber)"></div></div>
+                </div>
+                <div class="pool-right">
+                  <span class="badge badge-amber" style="font-size:9px">Watch</span>
+                  <span style="font-size:11px;font-weight:700;color:var(--amber)">54%</span>
+                  <span class="drag-grip">&#8942;&#8942;</span>
+                </div>
+              </div>
+
+              <div class="pool-card watch-card" id="pool-DH" draggable="true" data-pid="DH" data-name="Dan Hughes" data-county="Durham" data-r="48" data-status="watch" data-role="batter" style="display:none" ondragstart="poolDragStart(this)" ondragend="poolDragEnd(this)">
+                <div class="pool-init">DH</div>
+                <div class="pool-player-info">
+                  <div class="pool-name">Dan Hughes</div>
+                  <div class="pool-meta">Durham &middot; 25 &middot; All-Rounder</div>
+                  <div class="pool-r-bar"><div class="pool-r-fill" style="width:48%;background:var(--text-muted)"></div></div>
+                </div>
+                <div class="pool-right">
+                  <span class="badge badge-amber" style="font-size:9px">Watch</span>
+                  <span style="font-size:11px;font-weight:700;color:var(--text-muted)">48%</span>
+                  <span class="drag-grip">&#8942;&#8942;</span>
+                </div>
+              </div>
+
+              <div class="pool-card watch-card" id="pool-AF" draggable="true" data-pid="AF" data-name="Aaron Fisher" data-county="Derbyshire" data-r="43" data-status="watch" data-role="spinner" style="display:none" ondragstart="poolDragStart(this)" ondragend="poolDragEnd(this)">
+                <div class="pool-init">AF</div>
+                <div class="pool-player-info">
+                  <div class="pool-name">Aaron Fisher</div>
+                  <div class="pool-meta">Derbyshire &middot; 21 &middot; Spin Bowler</div>
+                  <div class="pool-r-bar"><div class="pool-r-fill" style="width:43%;background:var(--text-muted)"></div></div>
+                </div>
+                <div class="pool-right">
+                  <span class="badge badge-amber" style="font-size:9px">Watch</span>
+                  <span style="font-size:11px;font-weight:700;color:var(--text-muted)">43%</span>
+                  <span class="drag-grip">&#8942;&#8942;</span>
+                </div>
+              </div>
+
+            </div><!-- /pool-list -->
+          </div><!-- /right panel -->
+        </div><!-- /squad-layout -->
+
+        <!-- Publish confirmation modal -->
+        <div class="modal-overlay" id="publishModal" onclick="if(event.target===this)this.classList.remove('show')">
+          <div class="modal-card" style="width:400px">
+            <div class="modal-header">
+              <span class="modal-title">Publish squad?</span>
+              <button class="modal-close" onclick="document.getElementById('publishModal').classList.remove('show')">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p style="font-size:13px;color:var(--text-sec);line-height:1.6">This squad will be visible to all Central Staff as <strong id="publishSquadName">England Lions T20 — 20 Jun 2026</strong>. You cannot undo publication.</p>
+              <div style="background:var(--surface);border:1px solid var(--border-light);padding:12px 14px;margin-top:12px;font-size:12px;color:var(--text-muted)">
+                <strong style="color:var(--text-primary)">4 / 15</strong> slots filled &middot; 11 slots still empty. Other staff will see the current state.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn-outline" onclick="document.getElementById('publishModal').classList.remove('show')">Cancel</button>
+              <button class="btn-primary" onclick="confirmPublish()">Publish squad</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
       <!-- ══ COMPARISON ══ -->
       <div class="content-panel" id="panel-comparison">
 
@@ -1990,7 +2434,7 @@ button { font-family: var(--font); cursor: pointer; }
 </div>
 
 <script>
-const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts','comparison'];
+const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts','comparison','squad-selection'];
 const TOPBAR = {
   'dashboard':       ['Insight Manager',  'Good morning, Ed · Monday 16 June 2026'],
   'nl-search':       ['NL Search',        'Query players, video and report data conversationally'],
@@ -1998,7 +2442,8 @@ const TOPBAR = {
   'profile':         ['Player Profile',   'Sam Hartley · Lancashire · Age 21'],
   'player-registry': ['Player Registry',  '20 players · EPP upwards · all levels'],
   'depth-charts':    ['Depth Charts',     'Player pipeline by role archetype · drag to reassign'],
-  'comparison':      ['Player Comparison','Side-by-side analysis · Sam Hartley, Oliver Webb, Jack Harrison'],
+  'comparison':      ['Player Comparison',  'Side-by-side analysis · Sam Hartley, Oliver Webb, Jack Harrison'],
+  'squad-selection': ['Squad Selection',    'England Lions T20 — 20 Jun 2026 · Draft · 4 / 15 filled'],
 };
 
 function showPanel(name) {
@@ -2060,6 +2505,111 @@ document.querySelectorAll('.arch-chip').forEach(chip => {
     chip.classList.add('active');
   });
 });
+
+// ── Squad Selection ───────────────────────────────────────────────────────
+let draggingPoolCard = null;
+
+function poolDragStart(card) {
+  draggingPoolCard = card;
+  setTimeout(() => card.classList.add('dragging'), 0);
+}
+function poolDragEnd(card) {
+  card.classList.remove('dragging');
+}
+
+function dropOnSlot(e, slotId, roleName) {
+  e.preventDefault();
+  const slot = document.getElementById(slotId);
+  slot.classList.remove('drag-over');
+  if (!draggingPoolCard || !slot.classList.contains('empty')) return;
+
+  const pid  = draggingPoolCard.dataset.pid;
+  const name = draggingPoolCard.dataset.name;
+  const county = draggingPoolCard.dataset.county;
+  const r    = parseInt(draggingPoolCard.dataset.r);
+  const st   = draggingPoolCard.dataset.status;
+  const rCol = r >= 70 ? 'var(--green)' : r >= 50 ? 'var(--amber)' : 'var(--text-muted)';
+  const sBadge = st === 'short' ? 'badge-green" style="font-size:9px">Short'
+               : st === 'long'  ? 'badge-blue" style="font-size:9px">Long'
+               :                  'badge-amber" style="font-size:9px">Watch';
+
+  slot.classList.remove('empty');
+  slot.classList.add('filled');
+  slot.removeAttribute('ondragover');
+  slot.removeAttribute('ondragleave');
+  slot.removeAttribute('ondrop');
+  slot.innerHTML = `
+    <div class="slot-player">
+      <div class="slot-init">${pid}</div>
+      <div class="slot-player-info">
+        <div class="slot-player-name">${name}</div>
+        <div class="slot-player-meta">${county}</div>
+        <div class="slot-r-bar"><div class="slot-r-fill" style="width:${r}%;background:${rCol}"></div></div>
+      </div>
+      <span class="badge ${sBadge}</span>
+      <button class="slot-remove" onclick="clearSlot('${slotId}','${roleName}')">&times;</button>
+    </div>
+    <div class="slot-notes">
+      <textarea class="slot-notes-input" placeholder="Notes for ${name}…"></textarea>
+    </div>`;
+
+  draggingPoolCard.remove();
+  updateSquadCount();
+}
+
+function clearSlot(slotId, roleName) {
+  const slot = document.getElementById(slotId);
+  slot.classList.remove('filled');
+  slot.classList.add('empty');
+  slot.setAttribute('ondragover', "event.preventDefault();this.classList.add('drag-over')");
+  slot.setAttribute('ondragleave', "this.classList.remove('drag-over')");
+  slot.setAttribute('ondrop', `dropOnSlot(event,'${slotId}','${roleName}')`);
+  slot.innerHTML = `<span class="slot-empty-label"><span class="slot-role-name">${roleName}</span> — drag player here</span>`;
+  updateSquadCount();
+}
+
+function updateSquadCount() {
+  const filled = document.querySelectorAll('#panel-squad-selection .slot.filled').length;
+  const total  = document.querySelectorAll('#panel-squad-selection .slot').length;
+  const el = document.getElementById('squadCount');
+  if (el) el.textContent = filled + ' / ' + total;
+}
+
+function clearSquad() {
+  if (!confirm('Clear all selected players from the squad?')) return;
+  document.querySelectorAll('#panel-squad-selection .slot.filled').forEach(slot => {
+    const roleName = slot.dataset.role || 'Player';
+    clearSlot(slot.id, roleName);
+  });
+}
+
+function setPoolStatus(btn) {
+  document.querySelectorAll('.pool-status-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterPool();
+}
+function filterPool() {
+  const status = document.querySelector('.pool-status-tab.active')?.dataset.status || 'all';
+  const showWatch = document.getElementById('showWatch')?.checked;
+  document.querySelectorAll('#pool-list .pool-card').forEach(card => {
+    const roleMatch = status === 'all' || card.dataset.role === status;
+    const isWatch   = card.dataset.status === 'watch';
+    card.style.display = (roleMatch && (!isWatch || showWatch)) ? '' : 'none';
+  });
+}
+
+function showPublishModal() {
+  document.getElementById('publishSquadName').textContent =
+    document.getElementById('squadNameInput')?.value || 'England Lions T20';
+  document.getElementById('publishModal').classList.add('show');
+}
+function confirmPublish() {
+  document.getElementById('publishModal').classList.remove('show');
+  const badge = document.getElementById('squadStatusBadge');
+  if (badge) { badge.textContent = 'Published'; badge.className = 'badge badge-green'; }
+  const btn = document.getElementById('publishBtn');
+  if (btn) { btn.textContent = 'Published ✓'; btn.disabled = true; btn.style.opacity = '.6'; }
+}
 
 // ── Player Comparison ─────────────────────────────────────────────────────
 const CMP_PLAYERS = { SH:true, OW:true, JH:true, CP:false }; // true = visible
