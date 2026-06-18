@@ -492,6 +492,118 @@ button { font-family: var(--font); cursor: pointer; }
 .fix-date  { font-size: 10px; color: var(--text-muted); }
 .fix-match { font-size: 12px; font-weight: 600; color: var(--text-primary); }
 .fix-comp  { font-size: 11px; color: var(--text-sec); }
+
+/* ══════════════════════════════════════
+   DEPTH CHARTS
+══════════════════════════════════════ */
+.depth-controls {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px; flex-wrap: wrap;
+}
+.level-tabs { display: flex; gap: 0; border: 1px solid var(--border); background: var(--card); }
+.level-tab {
+  padding: 8px 16px; font-size: 12px; font-weight: 600; color: var(--text-muted);
+  background: transparent; border: none; border-right: 1px solid var(--border);
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.level-tab:last-child { border-right: none; }
+.level-tab:hover { background: var(--surface); color: var(--text-primary); }
+.level-tab.active { background: var(--navy); color: #fff; }
+
+.view-toggle { display: flex; border: 1px solid var(--border); }
+.view-toggle-btn {
+  padding: 7px 12px; font-size: 11px; font-weight: 600; color: var(--text-muted);
+  background: var(--card); border: none; border-right: 1px solid var(--border);
+  cursor: pointer; transition: all .15s;
+}
+.view-toggle-btn:last-child { border-right: none; }
+.view-toggle-btn.active { background: var(--teal); color: #fff; }
+
+.depth-grid-wrap {
+  overflow-x: auto; overflow-y: hidden;
+  padding-bottom: 8px;
+}
+.depth-grid-wrap::-webkit-scrollbar { height: 5px; }
+.depth-grid-wrap::-webkit-scrollbar-track { background: var(--surface); }
+.depth-grid-wrap::-webkit-scrollbar-thumb { background: var(--border); }
+.depth-grid { display: flex; gap: 10px; min-width: min-content; }
+
+.depth-col {
+  width: 214px; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  transition: background .15s;
+}
+.depth-col.drop-over { background: var(--teal-pale); outline: 2px dashed var(--teal); outline-offset: -2px; }
+
+.depth-col-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; background: var(--navy); margin-bottom: 8px;
+}
+.depth-col-title {
+  font-size: 11px; font-weight: 700; color: rgba(255,255,255,.85);
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.depth-col-count {
+  font-size: 11px; font-weight: 700; color: #fff;
+  background: rgba(255,255,255,.15); padding: 1px 7px;
+}
+
+.depth-col-body {
+  display: flex; flex-direction: column; gap: 7px;
+  max-height: calc(100vh - 260px); overflow-y: auto; padding-bottom: 2px;
+}
+.depth-col-body::-webkit-scrollbar { width: 3px; }
+.depth-col-body::-webkit-scrollbar-thumb { background: var(--border); }
+
+/* Player card */
+.dc-card {
+  background: var(--card); border: 1px solid var(--border-light);
+  padding: 10px 12px; cursor: grab; user-select: none;
+  box-shadow: var(--shadow-card); transition: box-shadow .15s, opacity .15s;
+  border-left: 3px solid transparent; position: relative;
+}
+.dc-card:hover { box-shadow: var(--shadow-elev); }
+.dc-card:hover .dc-remove { opacity: 1; }
+.dc-card.dragging { opacity: .45; cursor: grabbing; }
+.dc-card.short { border-left-color: var(--green); }
+.dc-card.long  { border-left-color: var(--teal); }
+.dc-card.watch { border-left-color: var(--amber); }
+
+.dc-card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.dc-avatar {
+  width: 26px; height: 26px; background: var(--teal-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 800; color: var(--teal); flex-shrink: 0;
+}
+.dc-info { flex: 1; min-width: 0; }
+.dc-name {
+  font-size: 12px; font-weight: 700; color: var(--text-primary);
+  cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dc-name:hover { color: var(--teal); }
+.dc-meta { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+.dc-remove {
+  position: absolute; top: 7px; right: 7px;
+  width: 16px; height: 16px; background: none; border: none;
+  font-size: 13px; color: var(--text-muted); opacity: 0;
+  cursor: pointer; transition: color .15s, opacity .15s;
+  display: flex; align-items: center; justify-content: center; padding: 0;
+}
+.dc-remove:hover { color: var(--red); }
+
+.dc-readiness-bar { height: 3px; background: var(--surface); margin-bottom: 7px; }
+.dc-readiness-fill { height: 100%; transition: width .3s; }
+.dc-footer { display: flex; align-items: center; justify-content: space-between; }
+.dc-pct { font-size: 10px; font-weight: 700; }
+
+/* Add player button */
+.dc-add-btn {
+  width: 100%; padding: 8px; font-size: 11px; font-weight: 600;
+  color: var(--text-muted); background: var(--card);
+  border: 1.5px dashed var(--border); cursor: pointer;
+  transition: all .15s;
+}
+.dc-add-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
 </style>
 </head>
 <body>
@@ -527,8 +639,8 @@ button { font-family: var(--font); cursor: pointer; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
         Player Registry
       </div>
-      <div class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <div class="nav-item" id="nav-depth-charts" onclick="showPanel('depth-charts'); renderDepthChart('men')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="4" height="20"/><rect x="10" y="8" width="4" height="14"/><rect x="18" y="5" width="4" height="17"/></svg>
         Depth Charts
       </div>
       <div class="nav-item">
@@ -1007,17 +1119,44 @@ button { font-family: var(--font); cursor: pointer; }
         </div>
       </div>
 
+      <!-- ══ DEPTH CHARTS ══ -->
+      <div class="content-panel" id="panel-depth-charts">
+
+        <div class="depth-controls">
+          <div class="level-tabs">
+            <button class="level-tab active" data-level="men"      onclick="renderDepthChart('men')">England Men</button>
+            <button class="level-tab"        data-level="lions"    onclick="renderDepthChart('lions')">Lions</button>
+            <button class="level-tab"        data-level="u19"      onclick="renderDepthChart('u19')">U19</button>
+            <button class="level-tab"        data-level="emerging" onclick="renderDepthChart('emerging')">Emerging</button>
+            <button class="level-tab"        data-level="epp"      onclick="renderDepthChart('epp')">EPP</button>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+            <div class="view-toggle">
+              <button class="view-toggle-btn active" onclick="this.classList.add('active');this.nextElementSibling.classList.remove('active')">Shared view</button>
+              <button class="view-toggle-btn" onclick="this.classList.add('active');this.previousElementSibling.classList.remove('active')">My view</button>
+            </div>
+            <button class="btn-outline">Export &rarr;</button>
+          </div>
+        </div>
+
+        <div class="depth-grid-wrap">
+          <div class="depth-grid" id="depth-grid"></div>
+        </div>
+
+      </div>
+
     </div>
   </div>
 </div>
 
 <script>
-const PANELS = ['dashboard','nl-search','video','profile'];
+const PANELS = ['dashboard','nl-search','video','profile','depth-charts'];
 const TOPBAR = {
-  'dashboard': ['Insight Manager',  'Good morning, Ed · Monday 16 June 2026'],
-  'nl-search': ['NL Search',        'Query players, video and report data conversationally'],
-  'video':     ['Video Evidence',   'Sam Hartley · Left-arm seamer, death overs ≥135 km/h'],
-  'profile':   ['Player Profile',   'Sam Hartley · Lancashire · Age 21'],
+  'dashboard':    ['Insight Manager',  'Good morning, Ed · Monday 16 June 2026'],
+  'nl-search':    ['NL Search',        'Query players, video and report data conversationally'],
+  'video':        ['Video Evidence',   'Sam Hartley · Left-arm seamer, death overs ≥135 km/h'],
+  'profile':      ['Player Profile',   'Sam Hartley · Lancashire · Age 21'],
+  'depth-charts': ['Depth Charts',     'Player pipeline by role archetype · drag to reassign'],
 };
 
 function showPanel(name) {
@@ -1079,6 +1218,165 @@ document.querySelectorAll('.arch-chip').forEach(chip => {
     chip.classList.add('active');
   });
 });
+
+// ── Depth Charts ──────────────────────────────────────────────────────────
+const DEPTH_DATA = {
+  men: { cols: [
+    { id:'death-seamer', label:'Death Seamer', players:[
+      { id:'SH', name:'Sam Hartley',   county:'Lancashire',      age:21, readiness:74, status:'short' },
+      { id:'JM', name:'Jake Morrison', county:'Yorkshire',        age:22, readiness:58, status:'long'  },
+      { id:'CP', name:'Callum Price',  county:'Kent',             age:20, readiness:51, status:'long'  },
+    ]},
+    { id:'top-order', label:'Top-Order Bat', players:[
+      { id:'OW', name:'Oliver Webb',   county:'Surrey',           age:20, readiness:66, status:'short' },
+      { id:'MW', name:'Matt Wilson',   county:'Hampshire',        age:24, readiness:55, status:'long'  },
+    ]},
+    { id:'spin', label:'Spin Bowler', players:[
+      { id:'RP', name:'Ravi Patel',    county:'Middlesex',        age:22, readiness:61, status:'long'  },
+      { id:'AF', name:'Aaron Fisher',  county:'Derbyshire',       age:21, readiness:43, status:'watch' },
+    ]},
+    { id:'wk', label:'WK Batter', players:[
+      { id:'TA', name:'Tom Ashworth',  county:'Nottinghamshire',  age:23, readiness:54, status:'watch' },
+    ]},
+    { id:'allround', label:'All-Rounder', players:[
+      { id:'DH', name:'Dan Hughes',    county:'Durham',           age:25, readiness:48, status:'watch' },
+    ]},
+    { id:'middle', label:'Middle-Order Bat', players:[
+      { id:'LT', name:'Luke Taylor',   county:'Worcestershire',   age:22, readiness:45, status:'watch' },
+    ]},
+  ]},
+  lions: { cols: [
+    { id:'death-seamer', label:'Death Seamer', players:[
+      { id:'BC', name:'Ben Crawford',  county:'Middlesex',        age:23, readiness:81, status:'short' },
+      { id:'LE', name:'Lee Evans',     county:'Warwickshire',     age:22, readiness:70, status:'short' },
+    ]},
+    { id:'top-order', label:'Top-Order Bat', players:[
+      { id:'JH', name:'Jack Harrison', county:'Kent',             age:21, readiness:76, status:'short' },
+      { id:'TR', name:'Tom Reed',      county:'Somerset',         age:23, readiness:64, status:'long'  },
+    ]},
+    { id:'spin', label:'Spin Bowler', players:[
+      { id:'HS', name:'Harry Scott',   county:'Essex',            age:22, readiness:59, status:'long'  },
+    ]},
+    { id:'wk', label:'WK Batter', players:[
+      { id:'NB', name:'Nick Booth',    county:'Gloucestershire',  age:24, readiness:67, status:'long'  },
+    ]},
+    { id:'allround', label:'All-Rounder', players:[] },
+    { id:'middle', label:'Middle-Order Bat', players:[
+      { id:'CJ', name:'Charlie Jones', county:'Northants',        age:22, readiness:62, status:'long'  },
+    ]},
+  ]},
+  u19: { cols: [
+    { id:'death-seamer', label:'Death Seamer', players:[
+      { id:'RS', name:'Ryan Steele',   county:'Northants',        age:18, readiness:52, status:'long'  },
+    ]},
+    { id:'top-order', label:'Top-Order Bat', players:[
+      { id:'AS', name:'Arjun Sharma',  county:'England U17',      age:16, readiness:61, status:'long'  },
+    ]},
+    { id:'spin', label:'Spin Bowler', players:[] },
+    { id:'wk',   label:'WK Batter',   players:[] },
+    { id:'allround', label:'All-Rounder', players:[
+      { id:'FP', name:'Freddie Peake', county:'Surrey',           age:17, readiness:44, status:'watch' },
+    ]},
+    { id:'middle', label:'Middle-Order Bat', players:[] },
+  ]},
+  emerging: { cols: [
+    { id:'death-seamer', label:'Death Seamer', players:[
+      { id:'IK', name:'Imran Khan',    county:'Lancashire',       age:19, readiness:41, status:'watch' },
+    ]},
+    { id:'top-order', label:'Top-Order Bat', players:[
+      { id:'GW', name:'George White',  county:'Yorkshire',        age:19, readiness:38, status:'watch' },
+    ]},
+    { id:'spin',     label:'Spin Bowler',     players:[] },
+    { id:'wk',       label:'WK Batter',       players:[] },
+    { id:'allround', label:'All-Rounder',     players:[] },
+    { id:'middle',   label:'Middle-Order Bat', players:[] },
+  ]},
+  epp: { cols: [
+    { id:'death-seamer', label:'Death Seamer', players:[] },
+    { id:'top-order', label:'Top-Order Bat', players:[
+      { id:'HM', name:'Harry Mills',   county:'Somerset',         age:16, readiness:32, status:'watch' },
+    ]},
+    { id:'spin',     label:'Spin Bowler',     players:[] },
+    { id:'wk',       label:'WK Batter',       players:[] },
+    { id:'allround', label:'All-Rounder',     players:[] },
+    { id:'middle',   label:'Middle-Order Bat', players:[] },
+  ]},
+};
+
+function rcColor(r) {
+  return r >= 70 ? 'var(--green)' : r >= 50 ? 'var(--amber)' : 'var(--text-muted)';
+}
+const STATUS_LABEL = { short:'Short-list', long:'Long-list', watch:'Watch' };
+const STATUS_CLASS = { short:'badge-green', long:'badge-blue', watch:'badge-amber' };
+
+function buildCard(p) {
+  const c = rcColor(p.readiness);
+  return `<div class="dc-card ${p.status}" draggable="true" data-id="${p.id}">
+    <div class="dc-card-top">
+      <div class="dc-avatar">${p.id}</div>
+      <div class="dc-info">
+        <div class="dc-name" onclick="showPanel('profile')">${p.name}</div>
+        <div class="dc-meta">${p.county} &middot; ${p.age}</div>
+      </div>
+      <button class="dc-remove" onclick="this.closest('.dc-card').remove();updateCounts()" title="Remove">&times;</button>
+    </div>
+    <div class="dc-readiness-bar"><div class="dc-readiness-fill" style="width:${p.readiness}%;background:${c}"></div></div>
+    <div class="dc-footer">
+      <span class="badge ${STATUS_CLASS[p.status]}">${STATUS_LABEL[p.status]}</span>
+      <span class="dc-pct" style="color:${c}">${p.readiness}%</span>
+    </div>
+  </div>`;
+}
+
+function updateCounts() {
+  document.querySelectorAll('.depth-col').forEach(col => {
+    const n = col.querySelectorAll('.dc-card').length;
+    col.querySelector('.depth-col-count').textContent = n;
+  });
+}
+
+function renderDepthChart(level) {
+  document.querySelectorAll('.level-tab').forEach(t =>
+    t.classList.toggle('active', t.dataset.level === level)
+  );
+  const grid = document.getElementById('depth-grid');
+  grid.innerHTML = '';
+  (DEPTH_DATA[level] || DEPTH_DATA.men).cols.forEach(col => {
+    const el = document.createElement('div');
+    el.className = 'depth-col';
+    el.innerHTML = `
+      <div class="depth-col-header">
+        <span class="depth-col-title">${col.label}</span>
+        <span class="depth-col-count">${col.players.length}</span>
+      </div>
+      <div class="depth-col-body">
+        ${col.players.map(buildCard).join('')}
+        <button class="dc-add-btn">+ Add player</button>
+      </div>`;
+
+    // Drop zone
+    el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('drop-over'); });
+    el.addEventListener('dragleave', () => el.classList.remove('drop-over'));
+    el.addEventListener('drop', e => {
+      e.preventDefault();
+      el.classList.remove('drop-over');
+      const dragging = document.querySelector('.dc-card.dragging');
+      if (dragging) {
+        const body = el.querySelector('.depth-col-body');
+        body.insertBefore(dragging, body.querySelector('.dc-add-btn'));
+        updateCounts();
+      }
+    });
+
+    // Drag events on cards
+    el.querySelectorAll('.dc-card').forEach(card => {
+      card.addEventListener('dragstart', () => card.classList.add('dragging'));
+      card.addEventListener('dragend',   () => card.classList.remove('dragging'));
+    });
+
+    grid.appendChild(el);
+  });
+}
 </script>
 </body>
 </html>
