@@ -462,7 +462,7 @@ body {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
         <span>Authentication failed. Try again or contact support.</span>
       </div>
-      <button class="ms-btn" aria-label="Sign in with Microsoft" onclick="signIn()">
+      <button class="ms-btn" aria-label="Sign in with Microsoft" onclick="signIn('scout/home.html')">
         <div class="ms-logo">
           <div class="ms-q ms-q1"></div>
           <div class="ms-q ms-q2"></div>
@@ -490,7 +490,7 @@ body {
           <label class="ref-label" for="refPin">6-Digit PIN</label>
           <input class="ref-input pin" id="refPin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="------" autocomplete="current-password" aria-required="true">
         </div>
-        <button class="ref-submit" type="submit" onclick="signIn()">
+        <button class="ref-submit" type="submit" onclick="signIn('coach/index.html')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10,17 15,12 10,7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
           Sign In
         </button>
@@ -580,11 +580,10 @@ if (pinInput) {
   });
 }
 
-function signIn() {
-  // POC: show loading state then navigate
+function signIn(dest) {
   const btns = document.querySelectorAll('.ms-btn, .ref-submit');
   btns.forEach(b => { b.textContent = 'Signing in…'; b.disabled = true; });
-  setTimeout(() => { window.location.href = 'scout/home.html'; }, 900);
+  setTimeout(() => { window.location.href = dest; }, 900);
 }
 </script>
 
