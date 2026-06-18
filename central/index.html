@@ -494,6 +494,96 @@ button { font-family: var(--font); cursor: pointer; }
 .fix-comp  { font-size: 11px; color: var(--text-sec); }
 
 /* ══════════════════════════════════════
+   PLATFORM ANALYTICS
+══════════════════════════════════════ */
+.pa-controls { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+.pa-date-select {
+  font-size:12px; font-weight:600; color:var(--text-sec);
+  background:var(--card); border:1px solid var(--border);
+  padding:7px 10px; font-family:var(--font); outline:none; cursor:pointer;
+}
+.pa-metrics {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px;
+}
+.pa-metric {
+  background:var(--card); border:1px solid var(--border-light);
+  box-shadow:var(--shadow-card); padding:14px 16px;
+}
+.pa-metric-val { font-size:30px; font-weight:800; color:var(--text-primary); line-height:1; }
+.pa-metric-val.green { color:var(--green); }
+.pa-metric-val.blue  { color:var(--teal); }
+.pa-metric-label { font-size:11px; color:var(--text-muted); margin-top:5px; font-weight:500; }
+.pa-metric-trend { font-size:11px; font-weight:700; margin-top:4px; }
+.pa-trend-up   { color:var(--green); }
+.pa-trend-down { color:var(--red); }
+.pa-sparkline {
+  display:flex; align-items:flex-end; gap:3px; height:30px; margin-top:8px;
+}
+.pa-spark-bar { flex:1; background:var(--teal); opacity:.55; min-height:3px; border-radius:1px 1px 0 0; }
+
+.pa-bottom { display:grid; grid-template-columns:1.1fr 0.9fr; gap:12px; }
+
+/* Activity log */
+.pa-card {
+  background:var(--card); border:1px solid var(--border-light);
+  box-shadow:var(--shadow-card); overflow:hidden;
+}
+.pa-card-header {
+  padding:11px 14px; border-bottom:1px solid var(--border-light);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.pa-card-title { font-size:12px; font-weight:700; color:var(--text-primary); }
+.pa-card-sub   { font-size:11px; color:var(--text-muted); }
+.activity-item {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:10px 14px; border-bottom:1px solid var(--border-light);
+  transition:background .15s;
+}
+.activity-item:last-child { border-bottom:none; }
+.activity-item:hover { background:var(--surface); }
+.act-icon {
+  width:26px; height:26px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; margin-top:1px;
+}
+.act-icon svg { width:13px; height:13px; }
+.act-report  { background:rgba(0,114,206,.1);  color:var(--teal); }
+.act-move    { background:rgba(31,157,85,.1);  color:var(--green); }
+.act-publish { background:rgba(232,161,0,.1);  color:var(--amber); }
+.act-view    { background:var(--surface); color:var(--text-muted); }
+.act-add     { background:rgba(228,0,43,.07);  color:var(--red); }
+.act-text { flex:1; font-size:12px; color:var(--text-sec); line-height:1.5; }
+.act-text strong { color:var(--text-primary); font-weight:700; }
+.act-time { font-size:10px; color:var(--text-muted); flex-shrink:0; white-space:nowrap; margin-top:2px; }
+
+/* Scout leaderboard */
+.scout-lb-row {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 14px; border-bottom:1px solid var(--border-light);
+}
+.scout-lb-row:last-child { border-bottom:none; }
+.scout-lb-rank { font-size:11px; font-weight:800; color:var(--text-muted); width:14px; flex-shrink:0; text-align:center; }
+.scout-lb-init {
+  width:26px; height:26px; background:var(--teal-pale);
+  display:flex; align-items:center; justify-content:center;
+  font-size:9px; font-weight:800; color:var(--teal); flex-shrink:0;
+}
+.scout-lb-info { flex:1; }
+.scout-lb-name { font-size:12px; font-weight:700; color:var(--text-primary); }
+.scout-lb-meta { font-size:10px; color:var(--text-muted); margin-top:1px; }
+.scout-lb-right { text-align:right; flex-shrink:0; }
+.scout-lb-acc { font-size:14px; font-weight:800; }
+.scout-lb-bar { height:3px; background:var(--border); margin-top:4px; width:56px; }
+.scout-lb-fill { height:100%; }
+
+/* Reports by scout mini chart */
+.mini-chart { padding:14px; }
+.mini-chart-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.mini-chart-label { font-size:10px; color:var(--text-sec); font-weight:600; width:56px; flex-shrink:0; }
+.mini-chart-bar-wrap { flex:1; height:16px; background:var(--surface); border:1px solid var(--border-light); }
+.mini-chart-bar { height:100%; background:var(--teal); opacity:.8; }
+.mini-chart-val { font-size:11px; font-weight:700; color:var(--text-primary); width:20px; text-align:right; flex-shrink:0; }
+
+/* ══════════════════════════════════════
    SCOUT REPORTS
 ══════════════════════════════════════ */
 .sr-controls {
@@ -1133,7 +1223,7 @@ button { font-family: var(--font); cursor: pointer; }
 
     <div class="nav-section">
       <div class="nav-label">Admin</div>
-      <div class="nav-item">
+      <div class="nav-item" id="nav-platform-analytics" onclick="showPanel('platform-analytics')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         Platform Analytics
       </div>
@@ -2279,6 +2369,231 @@ button { font-family: var(--font); cursor: pointer; }
 
       </div>
 
+      <!-- ══ PLATFORM ANALYTICS ══ -->
+      <div class="content-panel" id="panel-platform-analytics">
+
+        <!-- Controls -->
+        <div class="pa-controls">
+          <select class="pa-date-select">
+            <option>Last 30 days</option>
+            <option>Last 7 days</option>
+            <option>Last 3 months</option>
+            <option>Custom range</option>
+          </select>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <button class="btn-outline">Export CSV</button>
+          </div>
+        </div>
+
+        <!-- Metrics grid -->
+        <div class="pa-metrics">
+
+          <div class="pa-metric">
+            <div class="pa-metric-val">47</div>
+            <div class="pa-metric-label">Reports this month</div>
+            <div class="pa-metric-trend pa-trend-up">&#8593; 12 vs last month</div>
+          </div>
+
+          <div class="pa-metric">
+            <div class="pa-metric-val blue">18</div>
+            <div class="pa-metric-label">Active scouts</div>
+            <div class="pa-metric-trend" style="color:var(--text-muted)">Avg 2.3 days since last login</div>
+          </div>
+
+          <div class="pa-metric">
+            <div class="pa-metric-val">156</div>
+            <div class="pa-metric-label">Platform logins &middot; last 7 days</div>
+            <div class="pa-sparkline" aria-label="Daily logins sparkline">
+              <!-- Mon–Sun: 18,22,25,19,30,22,20 — max 30 -->
+              <div class="pa-spark-bar" style="height:60%"  title="Mon 18"></div>
+              <div class="pa-spark-bar" style="height:73%"  title="Tue 22"></div>
+              <div class="pa-spark-bar" style="height:83%"  title="Wed 25"></div>
+              <div class="pa-spark-bar" style="height:63%"  title="Thu 19"></div>
+              <div class="pa-spark-bar" style="height:100%" title="Fri 30"></div>
+              <div class="pa-spark-bar" style="height:73%"  title="Sat 22"></div>
+              <div class="pa-spark-bar" style="height:67%"  title="Sun 20"></div>
+            </div>
+          </div>
+
+          <div class="pa-metric">
+            <div class="pa-metric-val">3</div>
+            <div class="pa-metric-label">Players added this month</div>
+            <div class="pa-metric-trend" style="color:var(--text-muted)">23 players total in registry</div>
+          </div>
+
+          <div class="pa-metric">
+            <div class="pa-metric-val">8.4</div>
+            <div class="pa-metric-label">Avg report submission time (min)</div>
+            <div class="pa-metric-trend pa-trend-up">&#8595; 1.2 min vs last month</div>
+          </div>
+
+          <div class="pa-metric">
+            <div class="pa-metric-val green">12</div>
+            <div class="pa-metric-label">Referrals received &middot; last 30 days</div>
+            <div class="pa-metric-trend" style="color:var(--text-muted)">7 accepted &middot; 58% acceptance rate</div>
+          </div>
+
+        </div>
+
+        <!-- Bottom split: activity log + scout leaderboard -->
+        <div class="pa-bottom">
+
+          <!-- Activity log -->
+          <div class="pa-card">
+            <div class="pa-card-header">
+              <span class="pa-card-title">Activity Log</span>
+              <span class="pa-card-sub">Last 30 days &middot; all users</span>
+            </div>
+            <div class="activity-item">
+              <div class="act-icon act-report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
+              <div class="act-text"><strong>J. Clarke</strong> submitted report for <strong>Sam Hartley</strong> &middot; Outstanding, Promote</div>
+              <div class="act-time">2h ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="act-icon act-view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+              <div class="act-text"><strong>R. Chen</strong> viewed player profile &mdash; <strong>Callum Price</strong></div>
+              <div class="act-time">3h ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="act-icon act-move"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="17,11 12,6 7,11"/><polyline points="17,18 12,13 7,18"/></svg></div>
+              <div class="act-text"><strong>M. Davis</strong> moved <strong>Jake Morrison</strong> from Watch &rarr; Long-list</div>
+              <div class="act-time">4h ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="act-icon act-report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
+              <div class="act-text"><strong>A. Singh</strong> submitted report for <strong>Jack Harrison</strong> &middot; Good, Retain</div>
+              <div class="act-time">6h ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="act-icon act-publish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2L11 13"/><polygon points="22,2 15,22 11,13 2,9 22,2"/></svg></div>
+              <div class="act-text"><strong>Ed Thompson</strong> published squad &mdash; <strong>England Lions T20</strong> &middot; 4 / 15 slots</div>
+              <div class="act-time">8h ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="act-icon act-report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
+              <div class="act-text"><strong>J. Clarke</strong> submitted report for <strong>Nick Booth</strong> &middot; Progressing, Monitor</div>
+              <div class="act-time">1d ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="act-icon act-publish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2L11 13"/><polygon points="22,2 15,22 11,13 2,9 22,2"/></svg></div>
+              <div class="act-text"><strong>Sarah Mitchell</strong> published squad selection &mdash; 15 players</div>
+              <div class="act-time">2d ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="act-icon act-move"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg></div>
+              <div class="act-text"><strong>M. Davis</strong> moved <strong>Oliver Webb</strong> to Short-list</div>
+              <div class="act-time">3d ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="act-icon act-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg></div>
+              <div class="act-text"><strong>Ed Thompson</strong> added <strong>Harry Mills</strong> to player registry &middot; Watch</div>
+              <div class="act-time">5d ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="act-icon act-report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
+              <div class="act-text"><strong>R. Chen</strong> submitted report for <strong>Ravi Patel</strong> &middot; Progressing, Retain</div>
+              <div class="act-time">1w ago</div>
+            </div>
+          </div>
+
+          <!-- Right: Scout leaderboard + mini chart -->
+          <div style="display:flex;flex-direction:column;gap:12px">
+
+            <div class="pa-card">
+              <div class="pa-card-header">
+                <span class="pa-card-title">Scout Accuracy Leaderboard</span>
+                <span class="pa-card-sub">2026 season</span>
+              </div>
+              <div class="scout-lb-row">
+                <div class="scout-lb-rank">1</div>
+                <div class="scout-lb-init">JC</div>
+                <div class="scout-lb-info"><div class="scout-lb-name">J. Clarke</div><div class="scout-lb-meta">8 reports &middot; North Region</div></div>
+                <div class="scout-lb-right">
+                  <div class="scout-lb-acc" style="color:var(--green)">92%</div>
+                  <div class="scout-lb-bar"><div class="scout-lb-fill" style="width:92%;background:var(--green)"></div></div>
+                </div>
+              </div>
+              <div class="scout-lb-row">
+                <div class="scout-lb-rank">2</div>
+                <div class="scout-lb-init">MD</div>
+                <div class="scout-lb-info"><div class="scout-lb-name">M. Davis</div><div class="scout-lb-meta">7 reports &middot; Central</div></div>
+                <div class="scout-lb-right">
+                  <div class="scout-lb-acc" style="color:var(--green)">88%</div>
+                  <div class="scout-lb-bar"><div class="scout-lb-fill" style="width:88%;background:var(--green)"></div></div>
+                </div>
+              </div>
+              <div class="scout-lb-row">
+                <div class="scout-lb-rank">3</div>
+                <div class="scout-lb-init">AS</div>
+                <div class="scout-lb-info"><div class="scout-lb-name">A. Singh</div><div class="scout-lb-meta">6 reports &middot; South East</div></div>
+                <div class="scout-lb-right">
+                  <div class="scout-lb-acc" style="color:var(--green)">85%</div>
+                  <div class="scout-lb-bar"><div class="scout-lb-fill" style="width:85%;background:var(--green)"></div></div>
+                </div>
+              </div>
+              <div class="scout-lb-row">
+                <div class="scout-lb-rank">4</div>
+                <div class="scout-lb-init">RC</div>
+                <div class="scout-lb-info"><div class="scout-lb-name">R. Chen</div><div class="scout-lb-meta">5 reports &middot; Central</div></div>
+                <div class="scout-lb-right">
+                  <div class="scout-lb-acc" style="color:var(--amber)">79%</div>
+                  <div class="scout-lb-bar"><div class="scout-lb-fill" style="width:79%;background:var(--amber)"></div></div>
+                </div>
+              </div>
+              <div class="scout-lb-row">
+                <div class="scout-lb-rank">5</div>
+                <div class="scout-lb-init">PJ</div>
+                <div class="scout-lb-info"><div class="scout-lb-name">P. Jones</div><div class="scout-lb-meta">4 reports &middot; Midlands</div></div>
+                <div class="scout-lb-right">
+                  <div class="scout-lb-acc" style="color:var(--amber)">71%</div>
+                  <div class="scout-lb-bar"><div class="scout-lb-fill" style="width:71%;background:var(--amber)"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pa-card">
+              <div class="pa-card-header">
+                <span class="pa-card-title">Reports by scout</span>
+                <span class="pa-card-sub">This month</span>
+              </div>
+              <div class="mini-chart">
+                <div class="mini-chart-row">
+                  <div class="mini-chart-label">J. Clarke</div>
+                  <div class="mini-chart-bar-wrap"><div class="mini-chart-bar" style="width:100%"></div></div>
+                  <div class="mini-chart-val">8</div>
+                </div>
+                <div class="mini-chart-row">
+                  <div class="mini-chart-label">M. Davis</div>
+                  <div class="mini-chart-bar-wrap"><div class="mini-chart-bar" style="width:87.5%"></div></div>
+                  <div class="mini-chart-val">7</div>
+                </div>
+                <div class="mini-chart-row">
+                  <div class="mini-chart-label">A. Singh</div>
+                  <div class="mini-chart-bar-wrap"><div class="mini-chart-bar" style="width:75%"></div></div>
+                  <div class="mini-chart-val">6</div>
+                </div>
+                <div class="mini-chart-row">
+                  <div class="mini-chart-label">R. Chen</div>
+                  <div class="mini-chart-bar-wrap"><div class="mini-chart-bar" style="width:62.5%"></div></div>
+                  <div class="mini-chart-val">5</div>
+                </div>
+                <div class="mini-chart-row">
+                  <div class="mini-chart-label">P. Jones</div>
+                  <div class="mini-chart-bar-wrap"><div class="mini-chart-bar" style="width:50%"></div></div>
+                  <div class="mini-chart-val">4</div>
+                </div>
+                <div class="mini-chart-row">
+                  <div class="mini-chart-label">Others</div>
+                  <div class="mini-chart-bar-wrap"><div class="mini-chart-bar" style="width:21%;opacity:.4"></div></div>
+                  <div class="mini-chart-val" style="color:var(--text-muted)">17</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       <!-- ══ SQUAD SELECTION ══ -->
       <div class="content-panel" id="panel-squad-selection">
 
@@ -2869,7 +3184,7 @@ button { font-family: var(--font); cursor: pointer; }
 </div>
 
 <script>
-const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts','comparison','squad-selection','scout-reports'];
+const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts','comparison','squad-selection','scout-reports','platform-analytics'];
 const TOPBAR = {
   'dashboard':       ['Insight Manager',  'Good morning, Ed · Monday 16 June 2026'],
   'nl-search':       ['NL Search',        'Query players, video and report data conversationally'],
@@ -2879,7 +3194,8 @@ const TOPBAR = {
   'depth-charts':    ['Depth Charts',     'Player pipeline by role archetype · drag to reassign'],
   'comparison':      ['Player Comparison',  'Side-by-side analysis · Sam Hartley, Oliver Webb, Jack Harrison'],
   'squad-selection': ['Squad Selection',    'England Lions T20 — 20 Jun 2026 · Draft · 4 / 15 filled'],
-  'scout-reports':   ['Scout Reports',      '7 reports this month · 47 this season · 91% accuracy'],
+  'scout-reports':      ['Scout Reports',      '7 reports this month · 47 this season · 91% accuracy'],
+  'platform-analytics': ['Platform Analytics', '47 reports · 18 active scouts · 156 logins this week'],
 };
 
 function showPanel(name) {
