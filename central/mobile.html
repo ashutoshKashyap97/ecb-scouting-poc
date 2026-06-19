@@ -371,6 +371,73 @@ body {
 .ref-done.approved { background: rgba(31,157,85,.12); color: var(--green); }
 .ref-done.rejected { background: var(--surface); color: var(--text-muted); }
 
+/* ── Player Profile (C-5) ── */
+.prof-hero { background: var(--navy); padding: 18px 16px 20px; border-left: 4px solid var(--teal); }
+.prof-top-row { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.prof-avatar { width: 56px; height: 56px; background: var(--teal); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #fff; flex-shrink: 0; }
+.prof-name { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -.3px; margin-bottom: 3px; }
+.prof-meta { font-size: 12px; color: rgba(255,255,255,.5); }
+.prof-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.prof-tag { font-size: 10px; font-weight: 700; padding: 4px 9px; background: rgba(255,255,255,.08); color: rgba(255,255,255,.65); border: 1px solid rgba(255,255,255,.1); }
+.prof-tag.primary { background: var(--teal); color: #fff; border-color: var(--teal); }
+.prof-r-pair { display: flex; gap: 24px; }
+.prof-r-label { font-size: 10px; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 5px; }
+.prof-r-bar { height: 4px; background: rgba(255,255,255,.12); width: 100px; margin-bottom: 4px; }
+.prof-r-fill { height: 100%; }
+.prof-r-val { font-size: 13px; font-weight: 700; }
+.prof-video-btn { width: 100%; background: var(--teal); color: #fff; border: none; padding: 13px; font-size: 14px; font-weight: 700; font-family: var(--font); cursor: pointer; margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; }
+.prof-video-btn:active { transform: scale(.98); }
+.prof-video-btn svg { width: 16px; height: 16px; }
+.prof-section { padding: 16px 14px 0; }
+.prof-section:last-child { padding-bottom: 20px; }
+.prof-sec-title { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--border-light); }
+.prof-ai-block { background: var(--surface); border-left: 3px solid var(--teal); padding: 10px 12px; margin-bottom: 8px; }
+.prof-ai-label { font-size: 10px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 4px; }
+.prof-ai-text  { font-size: 12px; color: var(--text-sec); line-height: 1.55; }
+.prof-rep-row { padding: 10px 0; border-bottom: 1px solid var(--border-light); }
+.prof-rep-row:last-child { border-bottom: none; }
+.prof-rep-scout { font-size: 10px; color: var(--text-muted); margin-bottom: 3px; }
+.prof-rep-text { font-size: 12px; color: var(--text-sec); line-height: 1.5; font-style: italic; }
+.prof-fix-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-light); }
+.prof-fix-row:last-child { border-bottom: none; }
+.prof-fix-date { font-size: 10px; color: var(--text-muted); }
+.prof-fix-match { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+.prof-fix-comp { font-size: 11px; color: var(--text-sec); }
+
+/* ── Video Clips (C-4) ── */
+.vid-ctx { background: var(--card); border-bottom: 1px solid var(--border-light); padding: 10px 14px; font-size: 12px; color: var(--text-sec); }
+.vid-ctx strong { color: var(--text-primary); }
+.vid-clip-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 12px 14px; -webkit-overflow-scrolling: touch; }
+.vid-clip-scroll::-webkit-scrollbar { display: none; }
+.vid-thumb { flex-shrink: 0; width: 130px; border: 2px solid var(--border-light); cursor: pointer; transition: border-color .15s; }
+.vid-thumb.active { border-color: var(--teal); }
+.vid-thumb-img { height: 70px; background: linear-gradient(160deg, var(--navy), var(--navy-light)); display: flex; align-items: center; justify-content: center; position: relative; }
+.vid-play-sm { width: 26px; height: 26px; background: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.vid-play-sm svg { width: 10px; height: 10px; color: #fff; margin-left: 2px; }
+.vid-speed-sm { position: absolute; top: 5px; right: 5px; background: var(--teal); font-size: 9px; font-weight: 800; color: #fff; padding: 2px 5px; }
+.vid-over-sm  { position: absolute; top: 5px; left: 5px; background: rgba(0,0,0,.6); font-size: 9px; font-weight: 600; color: rgba(255,255,255,.85); padding: 2px 5px; }
+.vid-thumb-body { padding: 7px 8px; background: var(--card); }
+.vid-thumb-desc { font-size: 10px; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+.vid-thumb-match { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
+.vid-player { background: var(--navy); margin: 0 14px 14px; }
+.vid-screen { height: 190px; background: linear-gradient(160deg, var(--navy), var(--navy-light)); display: flex; align-items: center; justify-content: center; position: relative; }
+.vid-play-lg { width: 50px; height: 50px; background: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.vid-play-lg svg { width: 18px; height: 18px; color: #fff; margin-left: 3px; }
+.vid-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(10,27,61,.85)); padding: 16px 14px 10px; }
+.vid-ol-title { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+.vid-ol-sub   { font-size: 11px; color: rgba(255,255,255,.5); }
+.vid-speed-badge { position: absolute; top: 8px; right: 8px; background: var(--teal); font-size: 11px; font-weight: 800; color: #fff; padding: 3px 8px; }
+.vid-controls { padding: 9px 12px; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(255,255,255,.08); }
+.vid-scrub { flex: 1; height: 3px; background: rgba(255,255,255,.15); }
+.vid-scrub-fill { width: 35%; height: 100%; background: var(--teal); }
+.vid-time { font-size: 11px; color: rgba(255,255,255,.4); }
+.vid-data { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; padding: 14px; }
+.vid-stat { background: var(--card); border: 1px solid var(--border-light); padding: 10px 8px; text-align: center; }
+.vid-stat-val { font-size: 16px; font-weight: 800; color: var(--text-primary); line-height: 1; }
+.vid-stat-val.blue  { color: var(--teal); }
+.vid-stat-val.green { color: var(--green); }
+.vid-stat-lbl { font-size: 9px; color: var(--text-muted); margin-top: 3px; letter-spacing: .2px; }
+
 /* ── Bottom tab bar ── */
 .tabbar {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 70;
@@ -459,19 +526,19 @@ body {
 
       <div class="sec-head"><span class="sec-title">Overnight Movers</span><span class="sec-count">3 flagged</span></div>
 
-      <div class="insight-card green" onclick="go('players')">
+      <div class="insight-card green" onclick="goProfile('insights')">
         <div class="ic-header"><span class="badge badge-green">↑ Readiness Uplift</span><span class="ic-scouts">3 scouts</span></div>
         <div class="ic-player">Sam Hartley</div>
         <div class="ic-body">Death-over economy improved from 9.4 → 7.2 across last 6 matches. Consistent 135 km/h+ at the death. 3 scouts corroborate independently.</div>
-        <div class="ic-footer"><span class="ic-metric green">Econ 7.2 ↑</span><span class="ic-link">View evidence</span></div>
+        <div class="ic-footer"><span class="ic-metric green">Econ 7.2 ↑</span><span class="ic-link" onclick="event.stopPropagation();goVideo('insights')">&#9654; View evidence</span></div>
       </div>
-      <div class="insight-card amber" onclick="go('players')">
+      <div class="insight-card amber" onclick="goProfile('insights')">
         <div class="ic-header"><span class="badge badge-amber">⇧ List Movement</span><span class="ic-scouts">2 scouts</span></div>
         <div class="ic-player">Oliver Webb</div>
         <div class="ic-body">Independently moved from Long-list to Short-list by 2 scouts this week. Top-order batter, Surrey. AI sentiment: high ceiling, strong under pressure.</div>
         <div class="ic-footer"><span class="ic-metric amber">Future: 88%</span><span class="ic-link">View profile</span></div>
       </div>
-      <div class="insight-card blue" onclick="go('players')">
+      <div class="insight-card blue" onclick="goProfile('insights')">
         <div class="ic-header"><span class="badge badge-blue">★ AI Sentiment</span><span class="ic-scouts">5 reports</span></div>
         <div class="ic-player">Ravi Patel</div>
         <div class="ic-body">Off-spin strike rate in powerplay: 14.2 — top 3% nationally. Aggregated sentiment across 5 reports flags high technical ceiling and improving match awareness.</div>
@@ -517,11 +584,11 @@ body {
         </div>
         <div class="result-meta"><strong>3 players</strong> matched · <strong>11 clips</strong> from ECB Performance Data Warehouse</div>
 
-        <div class="prc">
+        <div class="prc" onclick="goProfile('search')" style="cursor:pointer">
           <div class="prc-top">
             <div class="prc-avatar">SH</div>
             <div class="prc-info" style="flex:1"><div class="prc-name">Sam Hartley</div><div class="prc-meta">Left-arm seamer · Age 21 · Lancashire · Short-list</div></div>
-            <div class="prc-clips"><div class="num">5</div><div class="lbl">clips</div></div>
+            <div class="prc-clips" onclick="event.stopPropagation();goVideo('search')" style="cursor:pointer"><div class="num">5</div><div class="lbl">clips</div></div>
           </div>
           <div class="prc-stats">
             <div><div class="prc-stat-val hl">137</div><div class="prc-stat-label">Avg km/h death</div></div>
@@ -934,6 +1001,110 @@ body {
     </div>
   </section>
 
+  <!-- ════════ PLAYER PROFILE (C-5) ════════ -->
+  <section class="view" id="view-profile">
+    <div class="prof-hero">
+      <div class="subhead" style="padding:0;margin-bottom:14px;background:none"><button class="back-link" id="profBack" onclick="go(profileOrigin)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg> Back</button></div>
+      <div class="prof-top-row">
+        <div class="prof-avatar">SH</div>
+        <div>
+          <div class="prof-name">Sam Hartley</div>
+          <div class="prof-meta">Left-arm seamer &middot; Age 21 &middot; Lancashire &middot; DOB: 14 Mar 2005</div>
+        </div>
+      </div>
+      <div class="prof-tags">
+        <span class="prof-tag primary">Death Bowler</span>
+        <span class="prof-tag">Swing Bowler</span>
+        <span class="prof-tag">T20 Specialist</span>
+        <span class="prof-tag">Short-list</span>
+      </div>
+      <div class="prof-r-pair">
+        <div>
+          <div class="prof-r-label">Current readiness</div>
+          <div class="prof-r-bar"><div class="prof-r-fill" style="width:74%;background:var(--green)"></div></div>
+          <div class="prof-r-val" style="color:var(--green)">74%</div>
+        </div>
+        <div>
+          <div class="prof-r-label">Future potential</div>
+          <div class="prof-r-bar"><div class="prof-r-fill" style="width:91%;background:var(--teal-light)"></div></div>
+          <div class="prof-r-val" style="color:var(--teal-light)">91%</div>
+        </div>
+      </div>
+      <button class="prof-video-btn" onclick="goVideo('profile')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+        View video clips &middot; 5 matched
+      </button>
+    </div>
+
+    <div class="prof-section">
+      <div class="prof-sec-title">AI Insight &mdash; Death Bowler Archetype</div>
+      <div class="prof-ai-block"><div class="prof-ai-label">Strengths</div><div class="prof-ai-text">Exceptional yorker precision under pressure &mdash; consistently hits off-stump yorker at 136 km/h+ in overs 18&ndash;20. Economy improving across 6 consecutive matches. Composure with 2&ndash;5 to defend is elite for his age.</div></div>
+      <div class="prof-ai-block"><div class="prof-ai-label">Development areas</div><div class="prof-ai-text">Slower-ball variation inconsistent &mdash; 3 scouts note it is being telegraphed. Powerplay economy (10.2) lags behind death-over performance, suggesting role specificity.</div></div>
+      <div class="prof-ai-block"><div class="prof-ai-label">Archetype match confidence</div><div class="prof-ai-text">Death Specialist &mdash; 87% confidence &middot; T20 Powerplay &mdash; 71% &middot; Based on 8 reports and 24 months of PDW data.</div></div>
+    </div>
+
+    <div class="prof-section">
+      <div class="prof-sec-title">Scout Reports &middot; 8 total</div>
+      <div class="prof-rep-row"><div class="prof-rep-scout">J. Clarke &middot; North Region &middot; 12 Jun 2026 &middot; <span style="color:var(--green)">★★★★★ Promote</span></div><div class="prof-rep-text">&ldquo;Outstanding at the death. Yorker to dismiss top-order batter on 38 was the best I&rsquo;ve seen from a U21 bowler this season.&rdquo;</div></div>
+      <div class="prof-rep-row"><div class="prof-rep-scout">M. Davis &middot; Central &middot; 28 May 2026 &middot; <span style="color:var(--teal)">★★★★☆ Good</span></div><div class="prof-rep-text">&ldquo;Backed up last performance with another strong showing. Slower ball still a concern &mdash; batters reading it early. Needs work.&rdquo;</div></div>
+    </div>
+
+    <div class="prof-section">
+      <div class="prof-sec-title">Upcoming Fixtures</div>
+      <div class="prof-fix-row"><div><div class="prof-fix-date">Fri 20 Jun</div><div class="prof-fix-match">Lancashire vs Durham</div><div class="prof-fix-comp">T20 Blast &middot; Old Trafford</div></div><span class="badge badge-green" style="font-size:10px">Scouted</span></div>
+      <div class="prof-fix-row"><div><div class="prof-fix-date">Wed 25 Jun</div><div class="prof-fix-match">Lancashire vs Warwickshire</div><div class="prof-fix-comp">T20 Blast &middot; Edgbaston</div></div><span class="badge badge-amber" style="font-size:10px">Watch</span></div>
+      <div class="prof-fix-row"><div><div class="prof-fix-date">Sun 29 Jun</div><div class="prof-fix-match">Lancashire vs Yorkshire</div><div class="prof-fix-comp">T20 Blast &middot; Old Trafford</div></div><span style="font-size:10px;color:var(--text-muted)">Unassigned</span></div>
+    </div>
+  </section>
+
+  <!-- ════════ VIDEO CLIPS (C-4) ════════ -->
+  <section class="view" id="view-video">
+    <div class="subhead" style="background:var(--card);border-bottom:1px solid var(--border-light)">
+      <button class="back-link" id="vidBack" onclick="go(videoOrigin)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg> Back</button>
+    </div>
+    <div class="vid-ctx">
+      <strong>Sam Hartley</strong> &middot; Left-arm seamer, death overs, &ge;135 km/h &middot; <strong>5 clips matched</strong>
+    </div>
+
+    <div class="vid-clip-scroll">
+      <div class="vid-thumb active" onclick="selectClipMobile(this,0)">
+        <div class="vid-thumb-img"><div class="vid-over-sm">Over 19.3</div><div class="vid-play-sm"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div><div class="vid-speed-sm">138</div></div>
+        <div class="vid-thumb-body"><div class="vid-thumb-desc">Full, angling in — bowled through gate</div><div class="vid-thumb-match">Lancs vs Surrey · T20 · May 26</div></div>
+      </div>
+      <div class="vid-thumb" onclick="selectClipMobile(this,1)">
+        <div class="vid-thumb-img"><div class="vid-over-sm">Over 18.5</div><div class="vid-play-sm"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div><div class="vid-speed-sm">135</div></div>
+        <div class="vid-thumb-body"><div class="vid-thumb-desc">Yorker precision — 2 to defend</div><div class="vid-thumb-match">Lancs vs Yorkshire · T20 · Apr 26</div></div>
+      </div>
+      <div class="vid-thumb" onclick="selectClipMobile(this,2)">
+        <div class="vid-thumb-img"><div class="vid-over-sm">Over 20.2</div><div class="vid-play-sm"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div><div class="vid-speed-sm">136</div></div>
+        <div class="vid-thumb-body"><div class="vid-thumb-desc">Back of length — mistimed pull</div><div class="vid-thumb-match">Lancs vs Notts · T20 · Jun 25</div></div>
+      </div>
+    </div>
+
+    <div class="vid-player">
+      <div class="vid-screen">
+        <div class="vid-play-lg"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+        <div class="vid-speed-badge" id="vidSpeed">138 km/h</div>
+        <div class="vid-overlay">
+          <div class="vid-ol-title" id="vidTitle">Sam Hartley &middot; Over 19.3 &middot; Lancashire vs Surrey, T20 Blast</div>
+          <div class="vid-ol-sub"  id="vidSub">Bowled through the gate &mdash; full, angling in, late swing</div>
+        </div>
+      </div>
+      <div class="vid-controls">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;color:rgba(255,255,255,.4)"><polygon points="5,3 19,12 5,21"/></svg>
+        <div class="vid-scrub"><div class="vid-scrub-fill"></div></div>
+        <span class="vid-time">0:07 / 0:22</span>
+      </div>
+    </div>
+
+    <div class="vid-data">
+      <div class="vid-stat"><div class="vid-stat-val blue" id="vidStatSpeed">137.4</div><div class="vid-stat-lbl">Avg km/h</div></div>
+      <div class="vid-stat"><div class="vid-stat-val green">7.2</div><div class="vid-stat-lbl">Economy</div></div>
+      <div class="vid-stat"><div class="vid-stat-val">12</div><div class="vid-stat-lbl">Death wkts</div></div>
+      <div class="vid-stat"><div class="vid-stat-val green">14.8</div><div class="vid-stat-lbl">Strike rate</div></div>
+    </div>
+  </section>
+
   <!-- Allocate player bottom sheet (CS-19) -->
   <div class="sheet-overlay" id="allocOverlay" onclick="closeAllocate()">
     <div class="sheet" onclick="event.stopPropagation()">
@@ -1002,10 +1173,37 @@ const TITLES = {
   depth:        ['Depth Charts', 'Pipeline by role & level'],
   compare:      ['Player Comparison', 'Side-by-side metrics'],
   analytics:    ['Platform Analytics', 'Usage & activity'],
-  referrals:    ['Coach Referrals', '3 referrals pending review']
+  referrals:    ['Coach Referrals', '3 referrals pending review'],
+  profile:      ['Player Profile', 'Sam Hartley · Lancashire · Age 21'],
+  video:        ['Video Evidence', 'Sam Hartley · Death overs ≥135 km/h · 5 clips'],
 };
-// Sub-views opened from the More tab keep the "More" nav item active.
-const SUBVIEWS = ['managescouts', 'squad', 'depth', 'compare', 'analytics', 'referrals'];
+const SUBVIEWS = ['managescouts', 'squad', 'depth', 'compare', 'analytics', 'referrals', 'profile', 'video'];
+
+// Profile & video origin tracking
+let profileOrigin = 'insights';
+let videoOrigin   = 'search';
+
+function goProfile(origin) {
+  profileOrigin = origin || 'insights';
+  go('profile');
+}
+function goVideo(origin) {
+  videoOrigin = origin || 'search';
+  go('video');
+}
+
+const VID_CLIPS = [
+  { speed: '138 km/h', title: 'Sam Hartley · Over 19.3 · Lancashire vs Surrey, T20 Blast', sub: 'Bowled through the gate — full, angling in, late swing' },
+  { speed: '135 km/h', title: 'Sam Hartley · Over 18.5 · Lancashire vs Yorkshire, Vitality Blast', sub: 'Yorker precision under pressure — 2 to defend, 6th ball' },
+  { speed: '136 km/h', title: 'Sam Hartley · Over 20.2 · Lancashire vs Nottinghamshire, T20', sub: 'Back of a length — mistimed pull to mid-on' },
+];
+function selectClipMobile(el, idx) {
+  document.querySelectorAll('.vid-thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('vidSpeed').textContent = VID_CLIPS[idx].speed;
+  document.getElementById('vidTitle').textContent  = VID_CLIPS[idx].title;
+  document.getElementById('vidSub').textContent    = VID_CLIPS[idx].sub;
+}
 
 function go(tab) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
