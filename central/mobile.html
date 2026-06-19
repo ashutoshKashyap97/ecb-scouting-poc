@@ -301,6 +301,76 @@ body {
 .toast { position: fixed; bottom: calc(92px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); background: var(--navy); color: #fff; padding: 12px 18px; font-size: 13px; font-weight: 600; z-index: 95; display: flex; align-items: center; gap: 8px; max-width: 88%; animation: fadeIn .25s ease-out; }
 .toast svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; }
 
+/* ── Depth Charts (C-8) ── */
+.depth-role { background: var(--card); border: 1px solid var(--border-light); margin-bottom: 8px; }
+.depth-role-head { display: flex; align-items: center; justify-content: space-between; padding: 11px 13px; border-bottom: 1px solid var(--border-light); }
+.depth-role-name { font-size: 13px; font-weight: 800; color: var(--text-primary); }
+.depth-role-count { font-size: 11px; font-weight: 700; color: var(--text-muted); }
+.depth-player { display: flex; align-items: center; gap: 10px; padding: 10px 13px; border-top: 1px solid var(--border-light); cursor: pointer; }
+.depth-player:first-of-type { border-top: none; }
+.depth-tier { width: 4px; align-self: stretch; flex-shrink: 0; }
+.depth-pn { flex: 1; font-size: 13.5px; font-weight: 700; color: var(--text-primary); }
+.depth-pc { font-size: 11px; font-weight: 500; color: var(--text-muted); }
+.depth-rv { font-size: 12px; font-weight: 800; }
+
+/* ── Squad Selection (C-7) ── */
+.squad-bar { background: var(--card); border: 1px solid var(--border-light); padding: 13px 14px; margin-bottom: 12px; }
+.squad-name { font-size: 15px; font-weight: 800; color: var(--text-primary); }
+.squad-meta { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.squad-tmpl { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+.squad-group-head { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: .4px; margin: 14px 2px 7px; }
+.slot { background: var(--card); border: 1px solid var(--border-light); padding: 11px 13px; margin-bottom: 7px; display: flex; align-items: center; gap: 11px; min-height: 56px; }
+.slot.empty { border-style: dashed; border-color: var(--border); cursor: pointer; color: var(--text-muted); justify-content: center; font-size: 13px; font-weight: 600; }
+.slot.empty:active { background: var(--teal-pale); }
+.slot-init { width: 36px; height: 36px; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+.slot-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+.slot-meta { font-size: 11px; font-weight: 500; color: var(--text-muted); margin-top: 1px; }
+.publish-bar { position: sticky; bottom: 0; padding: 12px 0 calc(4px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--surface) 30%); }
+.publish-btn { width: 100%; background: var(--teal); color: #fff; border: none; padding: 15px; font-size: 14px; font-weight: 700; font-family: var(--font); min-height: 52px; cursor: pointer; }
+.publish-btn:disabled { opacity: .5; }
+
+/* ── Player Comparison (C-6) ── */
+.cmp-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border-light); background: var(--card); }
+.cmp-wrap::-webkit-scrollbar { display: none; }
+.cmp-table { width: 100%; border-collapse: collapse; min-width: 340px; }
+.cmp-table th, .cmp-table td { padding: 10px 8px; text-align: center; border-bottom: 1px solid var(--border-light); font-size: 12.5px; }
+.cmp-table th:first-child, .cmp-table td:first-child { text-align: left; font-size: 11px; font-weight: 600; color: var(--text-muted); position: sticky; left: 0; background: var(--card); min-width: 92px; }
+.cmp-ph { padding: 11px 8px !important; }
+.cmp-ph-init { width: 34px; height: 34px; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; margin: 0 auto 4px; }
+.cmp-ph-name { font-size: 12px; font-weight: 800; color: var(--text-primary); line-height: 1.2; }
+.cmp-val { font-weight: 800; color: var(--text-primary); }
+.cmp-best { color: var(--green); }
+
+/* ── Platform Analytics (C-11) ── */
+.an-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px; }
+.an-card { background: var(--card); border: 1px solid var(--border-light); padding: 14px; }
+.an-val { font-size: 24px; font-weight: 800; color: var(--text-primary); line-height: 1; }
+.an-lbl { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-top: 6px; line-height: 1.3; }
+.an-trend { font-size: 11px; font-weight: 700; margin-top: 5px; }
+.an-trend.up { color: var(--green); } .an-trend.down { color: var(--red); }
+.act-row { background: var(--card); border: 1px solid var(--border-light); padding: 11px 13px; margin-bottom: 7px; display: flex; align-items: center; gap: 11px; }
+.act-init { width: 34px; height: 34px; background: var(--surface); color: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.act-text { flex: 1; font-size: 12.5px; font-weight: 500; color: var(--text-secondary); line-height: 1.4; }
+.act-text b { color: var(--text-primary); font-weight: 700; }
+.act-time { font-size: 10.5px; font-weight: 600; color: var(--text-muted); flex-shrink: 0; }
+
+/* ── Coach Referrals (C-9) ── */
+.ref-item { background: var(--card); border: 1px solid var(--border-light); padding: 14px; margin-bottom: 9px; }
+.ref-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.ref-pname { font-size: 15px; font-weight: 800; color: var(--text-primary); }
+.ref-pmeta { font-size: 11.5px; font-weight: 500; color: var(--text-muted); margin-top: 1px; }
+.ref-stars { font-size: 12px; letter-spacing: 1px; color: var(--amber); flex-shrink: 0; }
+.ref-by { font-size: 11.5px; font-weight: 600; color: var(--text-secondary); margin: 9px 0 6px; }
+.ref-obs { font-size: 12.5px; font-weight: 500; color: var(--text-secondary); line-height: 1.5; font-style: italic; }
+.ref-actions { display: flex; gap: 8px; margin-top: 12px; }
+.ref-btn { flex: 1; font-size: 12.5px; font-weight: 700; font-family: var(--font); padding: 10px; border: none; cursor: pointer; min-height: 42px; }
+.ref-btn.approve { background: var(--green); color: #fff; }
+.ref-btn.reject { background: var(--card); color: var(--text-secondary); border: 1px solid var(--border); }
+.ref-btn:active { transform: scale(.98); }
+.ref-done { margin-top: 12px; font-size: 12px; font-weight: 700; padding: 9px; text-align: center; }
+.ref-done.approved { background: rgba(31,157,85,.12); color: var(--green); }
+.ref-done.rejected { background: var(--surface); color: var(--text-muted); }
+
 /* ── Bottom tab bar ── */
 .tabbar {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 70;
@@ -595,30 +665,30 @@ body {
       </div>
 
       <div class="more-section-label">Selection &amp; Analysis</div>
-      <div class="more-row" onclick="toast('Squad Selection — coming to mobile soon')">
+      <div class="more-row" onclick="go('squad')">
         <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
         <div class="more-main"><div class="more-name">Squad Selection</div><div class="more-desc">Build &amp; publish squads</div></div>
-        <span class="more-tag soon">Soon</span>
+        <svg class="more-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
       </div>
-      <div class="more-row" onclick="toast('Depth Charts — coming to mobile soon')">
+      <div class="more-row" onclick="go('depth')">
         <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="20" x2="6" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="14"/></svg></div>
         <div class="more-main"><div class="more-name">Depth Charts</div><div class="more-desc">Positional depth by archetype</div></div>
-        <span class="more-tag soon">Soon</span>
+        <svg class="more-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
       </div>
-      <div class="more-row" onclick="toast('Player Comparison — coming to mobile soon')">
+      <div class="more-row" onclick="go('compare')">
         <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
         <div class="more-main"><div class="more-name">Player Comparison</div><div class="more-desc">Side-by-side metrics</div></div>
-        <span class="more-tag soon">Soon</span>
+        <svg class="more-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
       </div>
-      <div class="more-row" onclick="toast('Coach Referrals — coming to mobile soon')">
+      <div class="more-row" onclick="go('referrals')">
         <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M9 13l2 2 4-4"/></svg></div>
         <div class="more-main"><div class="more-name">Coach Referrals</div><div class="more-desc">Review &amp; action referral queue</div></div>
-        <span class="more-tag soon">Soon</span>
+        <span class="more-tag" style="color:var(--red);background:rgba(228,0,43,.1);border-color:rgba(228,0,43,.2)">3 new</span>
       </div>
-      <div class="more-row" onclick="toast('Platform Analytics — coming to mobile soon')">
+      <div class="more-row" onclick="go('analytics')">
         <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
         <div class="more-main"><div class="more-name">Platform Analytics</div><div class="more-desc">Usage &amp; activity</div></div>
-        <span class="more-tag soon">Soon</span>
+        <svg class="more-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
       </div>
 
       <a class="signout-btn" href="../index.html">Sign out</a>
@@ -643,6 +713,138 @@ body {
       <div class="ms-note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         <span>Accuracy is annual, computed weekly. A high confirmation rate means a scout's recommendations are consistently validated by Central Staff. A low score flags a coaching opportunity — not a disciplinary one.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SQUAD SELECTION (C-7) ════════ -->
+  <section class="view" id="view-squad">
+    <div class="scroll">
+      <div class="subhead"><button class="back-link" onclick="go('more')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg> More</button></div>
+      <div class="squad-bar">
+        <div class="squad-name">England Lions T20 — 20 Jun 2026</div>
+        <div class="squad-meta"><span class="badge badge-amber">Draft</span><span class="squad-tmpl">T20 template · 6 of 15 slots filled</span></div>
+      </div>
+
+      <div class="squad-group-head">Openers (2)</div>
+      <div class="slot"><div class="slot-init">OW</div><div><div class="slot-name">Oliver Webb</div><div class="slot-meta">Surrey · Top-order · 66% ready</div></div></div>
+      <div class="slot empty" onclick="toast('Opens player pool — Shortlisted openers')">+ Add opener</div>
+
+      <div class="squad-group-head">Middle Order (4)</div>
+      <div class="slot"><div class="slot-init">JH</div><div><div class="slot-name">Jack Harrison</div><div class="slot-meta">Kent · Top-order · 62% ready</div></div></div>
+      <div class="slot empty" onclick="toast('Opens player pool — Middle order')">+ Add 3 more</div>
+
+      <div class="squad-group-head">All-rounders (2)</div>
+      <div class="slot empty" onclick="toast('Opens player pool — All-rounders')">+ Add 2 all-rounders</div>
+
+      <div class="squad-group-head">Seamers (4)</div>
+      <div class="slot"><div class="slot-init">SH</div><div><div class="slot-name">Sam Hartley</div><div class="slot-meta">Lancashire · Death Seamer · 74% ready</div></div></div>
+      <div class="slot"><div class="slot-init">JM</div><div><div class="slot-name">Jake Morrison</div><div class="slot-meta">Yorkshire · Death Seamer · 58% ready</div></div></div>
+      <div class="slot empty" onclick="toast('Opens player pool — Seamers')">+ Add 2 more</div>
+
+      <div class="squad-group-head">Spinners (2)</div>
+      <div class="slot"><div class="slot-init">RP</div><div><div class="slot-name">Ravi Patel</div><div class="slot-meta">Middlesex · Spin · 61% ready</div></div></div>
+      <div class="slot empty" onclick="toast('Opens player pool — Spinners')">+ Add 1 more</div>
+
+      <div class="squad-group-head">Wicketkeeper (1)</div>
+      <div class="slot"><div class="slot-init">TA</div><div><div class="slot-name">Tom Ashworth</div><div class="slot-meta">Nottinghamshire · WK Batter · 54% ready</div></div></div>
+
+      <div class="publish-bar"><button class="publish-btn" disabled>Publish squad · 9 slots remaining</button></div>
+    </div>
+  </section>
+
+  <!-- ════════ DEPTH CHARTS (C-8) ════════ -->
+  <section class="view" id="view-depth">
+    <div class="scroll">
+      <div class="subhead"><button class="back-link" onclick="go('more')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg> More</button></div>
+      <div class="filters" style="margin-bottom:12px">
+        <div class="fil-chip active" onclick="setLevel(this,'England Men')">England Men</div>
+        <div class="fil-chip" onclick="setLevel(this,'Lions')">Lions</div>
+        <div class="fil-chip" onclick="setLevel(this,'U19')">U19</div>
+        <div class="fil-chip" onclick="setLevel(this,'Emerging')">Emerging</div>
+        <div class="fil-chip" onclick="setLevel(this,'EPP')">EPP</div>
+      </div>
+      <div class="sec-head"><span class="sec-title" id="depthLevel">England Men</span><span class="sec-count">by role</span></div>
+      <div id="depthGrid"></div>
+    </div>
+  </section>
+
+  <!-- ════════ PLAYER COMPARISON (C-6) ════════ -->
+  <section class="view" id="view-compare">
+    <div class="scroll">
+      <div class="subhead"><button class="back-link" onclick="go('more')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg> More</button></div>
+      <div class="sec-head"><span class="sec-title">Death Seamers</span><span class="sec-count">3 players</span></div>
+      <div class="cmp-wrap">
+        <table class="cmp-table">
+          <thead><tr>
+            <th></th>
+            <th class="cmp-ph"><div class="cmp-ph-init">SH</div><div class="cmp-ph-name">Sam<br>Hartley</div></th>
+            <th class="cmp-ph"><div class="cmp-ph-init">JM</div><div class="cmp-ph-name">Jake<br>Morrison</div></th>
+            <th class="cmp-ph"><div class="cmp-ph-init">CP</div><div class="cmp-ph-name">Callum<br>Price</div></th>
+          </tr></thead>
+          <tbody>
+            <tr><td>County</td><td>Lancs</td><td>Yorks</td><td>Kent</td></tr>
+            <tr><td>Age</td><td>21</td><td>22</td><td>20</td></tr>
+            <tr><td>Readiness</td><td class="cmp-val cmp-best">74%</td><td class="cmp-val">58%</td><td class="cmp-val">51%</td></tr>
+            <tr><td>Future potential</td><td class="cmp-val cmp-best">91%</td><td class="cmp-val">79%</td><td class="cmp-val">68%</td></tr>
+            <tr><td>Avg speed (death)</td><td class="cmp-val cmp-best">137</td><td class="cmp-val">135</td><td class="cmp-val">136</td></tr>
+            <tr><td>Death economy</td><td class="cmp-val cmp-best">7.2</td><td class="cmp-val">8.1</td><td class="cmp-val">8.6</td></tr>
+            <tr><td>Death wickets</td><td class="cmp-val cmp-best">12</td><td class="cmp-val">8</td><td class="cmp-val">6</td></tr>
+            <tr><td>Reports</td><td class="cmp-val cmp-best">8</td><td class="cmp-val">4</td><td class="cmp-val">2</td></tr>
+            <tr><td>Death Specialist</td><td class="cmp-val cmp-best">87%</td><td class="cmp-val">74%</td><td class="cmp-val">62%</td></tr>
+            <tr><td>Scout consensus</td><td class="cmp-val cmp-best">3/3</td><td class="cmp-val">2/3</td><td class="cmp-val">1/3</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="sa-btn primary" style="width:100%;margin-top:12px;min-height:48px" onclick="toast('Added 3 players to England Lions T20 draft')">Add all to squad draft</button>
+    </div>
+  </section>
+
+  <!-- ════════ PLATFORM ANALYTICS (C-11) ════════ -->
+  <section class="view" id="view-analytics">
+    <div class="scroll">
+      <div class="subhead"><button class="back-link" onclick="go('more')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg> More</button></div>
+      <div class="an-grid">
+        <div class="an-card"><div class="an-val">47</div><div class="an-lbl">Reports this season</div><div class="an-trend up">↑ 7 this month</div></div>
+        <div class="an-card"><div class="an-val">18</div><div class="an-lbl">Active scouts</div><div class="an-trend up">avg 2.1d since login</div></div>
+        <div class="an-card"><div class="an-val">156</div><div class="an-lbl">Logins (last 7 days)</div><div class="an-trend up">↑ 12% vs prior week</div></div>
+        <div class="an-card"><div class="an-val">12</div><div class="an-lbl">Players added this month</div></div>
+        <div class="an-card"><div class="an-val">11<span style="font-size:13px">min</span></div><div class="an-lbl">Avg report submit time</div></div>
+        <div class="an-card"><div class="an-val">9</div><div class="an-lbl">Referrals (30 days)</div><div class="an-trend up">78% accepted</div></div>
+      </div>
+      <div class="sec-head"><span class="sec-title">Activity Log</span></div>
+      <div class="act-row"><div class="act-init">ES</div><div class="act-text"><b>Ed Smith</b> published <b>England Lions T20</b> squad draft</div><div class="act-time">2h</div></div>
+      <div class="act-row"><div class="act-init">JC</div><div class="act-text"><b>J. Clarke</b> submitted a report on <b>Sam Hartley</b></div><div class="act-time">5h</div></div>
+      <div class="act-row"><div class="act-init">MD</div><div class="act-text"><b>M. Davis</b> moved <b>Oliver Webb</b> to Shortlist</div><div class="act-time">1d</div></div>
+      <div class="act-row"><div class="act-init">AS</div><div class="act-text"><b>A. Singh</b> submitted a report on <b>Jack Harrison</b></div><div class="act-time">1d</div></div>
+    </div>
+  </section>
+
+  <!-- ════════ COACH REFERRAL QUEUE (C-9) ════════ -->
+  <section class="view" id="view-referrals">
+    <div class="scroll">
+      <div class="subhead"><button class="back-link" onclick="go('more')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg> More</button></div>
+      <div class="sec-head"><span class="sec-title">Referral Queue</span><span class="sec-count">3 pending</span></div>
+
+      <div class="ref-item">
+        <div class="ref-top"><div><div class="ref-pname">Tom Fletcher</div><div class="ref-pmeta">Devon · Age 18 · Seamer</div></div><div class="ref-stars">★★★★★</div></div>
+        <div class="ref-by">Referred by S. Wells · Exeter CC · 2 days ago</div>
+        <div class="ref-obs">"Genuine pace — consistent 88mph spells. Took a 5-fer vs the county 2nd XI. Best quick I've seen at club level in years."</div>
+        <div class="ref-actions"><button class="ref-btn approve" onclick="actRef(this,'approved')">Approve → Longlist</button><button class="ref-btn reject" onclick="actRef(this,'rejected')">Reject</button></div>
+      </div>
+
+      <div class="ref-item">
+        <div class="ref-top"><div><div class="ref-pname">Aiden Cross</div><div class="ref-pmeta">Cornwall · Age 17 · Top-order</div></div><div class="ref-stars">★★★★☆</div></div>
+        <div class="ref-by">Referred by M. Hale · Truro CC · 4 days ago</div>
+        <div class="ref-obs">"Scored 140* in the club final under real pressure. Exceptional temperament and shot range for his age."</div>
+        <div class="ref-actions"><button class="ref-btn approve" onclick="actRef(this,'approved')">Approve → Longlist</button><button class="ref-btn reject" onclick="actRef(this,'rejected')">Reject</button></div>
+      </div>
+
+      <div class="ref-item">
+        <div class="ref-top"><div><div class="ref-pname">Priya Sharma</div><div class="ref-pmeta">Berkshire · Age 19 · Leg-spin</div></div><div class="ref-stars">★★★★☆</div></div>
+        <div class="ref-by">Referred by R. Owen · Reading CC · 5 days ago</div>
+        <div class="ref-obs">"Big-turning leg-spinner — took 6 wickets in a single session. Genuine wicket-taking threat with real control."</div>
+        <div class="ref-actions"><button class="ref-btn approve" onclick="actRef(this,'approved')">Approve → Longlist</button><button class="ref-btn reject" onclick="actRef(this,'rejected')">Reject</button></div>
       </div>
     </div>
   </section>
@@ -710,13 +912,20 @@ const TITLES = {
   players:      ['Player Registry', '23 players on the national longlist'],
   reports:      ['Scout Reports', '7 reports this month · 2 recommend promotion'],
   more:         ['More', 'Central staff tools'],
-  managescouts: ['Scout Management', 'Roster, accuracy & allocation']
+  managescouts: ['Scout Management', 'Roster, accuracy & allocation'],
+  squad:        ['Squad Selection', 'England Lions T20 — 20 Jun 2026'],
+  depth:        ['Depth Charts', 'Pipeline by role & level'],
+  compare:      ['Player Comparison', 'Side-by-side metrics'],
+  analytics:    ['Platform Analytics', 'Usage & activity'],
+  referrals:    ['Coach Referrals', '3 referrals pending review']
 };
+// Sub-views opened from the More tab keep the "More" nav item active.
+const SUBVIEWS = ['managescouts', 'squad', 'depth', 'compare', 'analytics', 'referrals'];
 
 function go(tab) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + tab).classList.add('active');
-  const navTab = (tab === 'managescouts') ? 'more' : tab;
+  const navTab = SUBVIEWS.includes(tab) ? 'more' : tab;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === navTab));
   document.getElementById('tbTitle').textContent = TITLES[tab][0];
   document.getElementById('tbSub').textContent = TITLES[tab][1];
@@ -841,8 +1050,55 @@ function toast(msg) {
   setTimeout(() => t.remove(), 2600);
 }
 
+// ── Depth Charts (C-8) ──
+const DEPTH = [
+  { role:'Death Seamer', players:[
+    { in:'SH', name:'Sam Hartley',   county:'Lancashire', r:74, s:'Short-list' },
+    { in:'JM', name:'Jake Morrison', county:'Yorkshire',  r:58, s:'Long-list'  },
+    { in:'CP', name:'Callum Price',  county:'Kent',       r:51, s:'Long-list'  } ] },
+  { role:'Top-order Bat', players:[
+    { in:'OW', name:'Oliver Webb',   county:'Surrey',     r:66, s:'Short-list' },
+    { in:'JH', name:'Jack Harrison', county:'Kent',       r:62, s:'Long-list'  } ] },
+  { role:'Spinner', players:[
+    { in:'RP', name:'Ravi Patel',    county:'Middlesex',  r:61, s:'Long-list'  } ] },
+  { role:'Wicketkeeper', players:[
+    { in:'TA', name:'Tom Ashworth',  county:'Nottinghamshire', r:54, s:'Watch' },
+    { in:'NB', name:'Nick Booth',    county:'Gloucestershire', r:49, s:'Watch' } ] }
+];
+function rColor(v) { return v >= 70 ? 'var(--green)' : v >= 55 ? 'var(--amber)' : 'var(--red)'; }
+function sBadge(s) { return s === 'Short-list' ? 'green' : s === 'Long-list' ? 'blue' : 'amber'; }
+function renderDepth(level) {
+  document.getElementById('depthLevel').textContent = level;
+  document.getElementById('depthGrid').innerHTML = DEPTH.map(g => `
+    <div class="depth-role">
+      <div class="depth-role-head"><span class="depth-role-name">${g.role}</span><span class="depth-role-count">${g.players.length} charted</span></div>
+      ${g.players.map(p => `
+        <div class="depth-player" onclick="toast('${p.name} — opens player profile')">
+          <div class="depth-tier" style="background:${rColor(p.r)}"></div>
+          <div class="slot-init">${p.in}</div>
+          <div style="flex:1"><div class="depth-pn">${p.name}</div><div class="depth-pc">${p.county} · <span class="badge badge-${sBadge(p.s)}" style="padding:1px 6px">${p.s}</span></div></div>
+          <div class="depth-rv" style="color:${rColor(p.r)}">${p.r}%</div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+function setLevel(el, level) {
+  document.querySelectorAll('#view-depth .fil-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderDepth(level);
+}
+
+// ── Coach Referrals (C-9) ──
+function actRef(btn, outcome) {
+  const item = btn.closest('.ref-item');
+  const name = item.querySelector('.ref-pname').textContent;
+  const msg = outcome === 'approved' ? '✓ Approved — added to Longlist' : 'Rejected — coach notified by email';
+  item.querySelector('.ref-actions').outerHTML = '<div class="ref-done ' + outcome + '">' + msg + '</div>';
+  toast(name + (outcome === 'approved' ? ' approved → Longlist' : ' referral rejected'));
+}
+
 renderScouts();
 renderPlayers('all');
+renderDepth('England Men');
 </script>
 </body>
 </html>
