@@ -519,7 +519,7 @@ body {
         <h3>3 players crossed readiness thresholds since your last session</h3>
         <p>Backed by scout reports, ball-by-ball data and video from the ECB Performance Data Warehouse.</p>
         <button class="ai-hero-btn" onclick="go('search'); runSearch()">
-          Open NL Search
+          Open AI Search
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
         </button>
       </div>
@@ -572,7 +572,7 @@ body {
           <span class="nl-eg" onclick="setQuery(this)">Top-order batters strong vs spin, U23</span>
           <span class="nl-eg" onclick="setQuery(this)">Off-spinners, powerplay wickets, top 5%</span>
         </div>
-        <button class="nl-run" onclick="runSearch()">Search with AI</button>
+        <button class="nl-run" onclick="runSearch()">Search with AI &rarr;</button>
       </div>
 
       <div id="searchResults">
@@ -1132,7 +1132,7 @@ body {
     </button>
     <button class="tab" data-tab="search" onclick="go('search')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-      <span>Search</span>
+      <span>AI Search</span>
     </button>
     <button class="tab" data-tab="players" onclick="go('players')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg>
@@ -1164,7 +1164,7 @@ if ('serviceWorker' in navigator) {
 
 const TITLES = {
   insights:     ['Insight Manager', 'Good morning, Ed · Mon 15 June 2026'],
-  search:       ['NL Search', 'Natural-language player intelligence'],
+  search:       ['AI Search', 'Natural-language player intelligence'],
   players:      ['Player Registry', '23 players on the national longlist'],
   reports:      ['Scout Reports', '7 reports this month · 2 recommend promotion'],
   more:         ['More', 'Central staff tools'],
@@ -1215,7 +1215,7 @@ function go(tab) {
   window.scrollTo(0, 0);
 }
 
-// ── NL Search ──
+// ── AI Search ──
 function setQuery(el) { document.getElementById('nlInput').value = el.textContent; runSearch(); }
 function runSearch() {
   document.getElementById('searchResults').classList.add('show');
