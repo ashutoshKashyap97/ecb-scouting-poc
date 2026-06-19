@@ -5,11 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ECB — Central Staff Platform</title>
 <script>
-  // Central Staff use the mobile app by default. ?desktop=1 opens the full desktop platform.
+  // Phone/tablet → mobile app. Wide screen (laptop/desktop) → full platform.
+  // Override: ?desktop=1 forces desktop even on a narrow screen.
   (function () {
-    if (!/[?&]desktop=1/.test(location.search)) {
-      location.replace('./mobile.html' + location.search);
-    }
+    const forceDesktop = /[?&]desktop=1/.test(location.search);
+    const isPhone = !forceDesktop && (
+      window.innerWidth < 768 ||
+      /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+    );
+    if (isPhone) location.replace('./mobile.html' + location.search);
   })();
 </script>
 <link rel="manifest" href="../manifest.json">
