@@ -460,7 +460,7 @@ body {
         <span>Authentication failed. Try again or contact support.</span>
       </div>
       <div class="portal-label">Select your portal</div>
-      <button class="ms-btn" aria-label="Sign in as Scout" onclick="signIn('scout/home.html')">
+      <button class="ms-btn" aria-label="Sign in as Scout" onclick="signIn('scout/home.html', this)">
         <div class="ms-logo">
           <div class="ms-q ms-q1"></div>
           <div class="ms-q ms-q2"></div>
@@ -470,7 +470,7 @@ body {
         Scout Portal
       </button>
       <div class="auth-hint">Scouts &middot; Regional staff &middot; Field reporters</div>
-      <button class="ms-btn ms-btn-central" aria-label="Sign in as Central Staff" onclick="signIn('central/mobile.html')" style="margin-top:10px">
+      <button class="ms-btn ms-btn-central" aria-label="Sign in as Central Staff" onclick="signIn('central/mobile.html', this)" style="margin-top:10px">
         <div class="ms-logo">
           <div class="ms-q ms-q1"></div>
           <div class="ms-q ms-q2"></div>
@@ -498,7 +498,7 @@ body {
           <label class="ref-label" for="refPin">6-Digit PIN</label>
           <input class="ref-input pin" id="refPin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="------" autocomplete="current-password" aria-required="true">
         </div>
-        <button class="ref-submit" type="submit" onclick="signIn('coach/index.html')">
+        <button class="ref-submit" type="submit" onclick="signIn('coach/index.html', this)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10,17 15,12 10,7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
           Sign In
         </button>
@@ -573,9 +573,10 @@ if (pinInput) {
   });
 }
 
-function signIn(dest) {
-  const btns = document.querySelectorAll('.ms-btn, .ref-submit');
-  btns.forEach(b => { b.textContent = 'Signing in…'; b.disabled = true; });
+function signIn(dest, btn) {
+  // Only the button that was clicked shows the loading state; others just disable.
+  document.querySelectorAll('.ms-btn, .ref-submit').forEach(b => { b.disabled = true; });
+  if (btn) btn.textContent = 'Signing in…';
   setTimeout(() => { window.location.href = dest; }, 900);
 }
 </script>
