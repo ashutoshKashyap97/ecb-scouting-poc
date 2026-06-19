@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -212,7 +212,7 @@ body {
 .sr-info { flex: 1; min-width: 0; }
 .sr-name { font-size: 14px; font-weight: 800; color: var(--text-primary); }
 .sr-sub { font-size: 11px; font-weight: 500; color: var(--text-muted); margin-top: 2px; }
-.sr-stars { font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
+.sr-stars { font-size: 10px; font-weight: 700; margin-top: 3px; }
 .sr-right { text-align: right; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
 .sr-chev { width: 18px; height: 18px; color: var(--text-muted); transition: transform .25s; flex-shrink: 0; }
 .sr-card.open .sr-chev { transform: rotate(180deg); }
@@ -370,6 +370,17 @@ body {
 .ref-done { margin-top: 12px; font-size: 12px; font-weight: 700; padding: 9px; text-align: center; }
 .ref-done.approved { background: rgba(31,157,85,.12); color: var(--green); }
 .ref-done.rejected { background: var(--surface); color: var(--text-muted); }
+
+/* ── Readiness grid ── */
+.rg-wrap { margin: 14px 0 0; }
+.rg-title { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+.rg-grid { display: grid; grid-template-columns: 60px repeat(3,1fr); gap: 1px; background: rgba(255,255,255,.08); }
+.rg-hdr  { background: rgba(255,255,255,.05); font-size: 9px; font-weight: 800; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .5px; padding: 6px 4px; text-align: center; }
+.rg-row-lbl { background: rgba(255,255,255,.04); font-size: 10px; font-weight: 700; color: rgba(255,255,255,.5); padding: 9px 6px; display: flex; align-items: center; }
+.rg-cell { background: rgba(10,27,61,.6); padding: 7px 4px; text-align: center; }
+.rg-pct  { font-size: 14px; font-weight: 800; line-height: 1; }
+.rg-bar  { height: 2px; background: rgba(255,255,255,.1); margin: 4px 8px 0; }
+.rg-bar-fill { height: 100%; }
 
 /* ── Player Profile (C-5) ── */
 .prof-hero { background: var(--navy); padding: 18px 16px 20px; border-left: 4px solid var(--teal); }
@@ -628,7 +639,7 @@ body {
           <div class="ai-sum-head">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>
             <span>AI Analysis — Death Bowling, 135 km/h+, U23</span>
-            <span class="ai-sum-badge">Gemini</span>
+            <span class="ai-sum-badge">Assistive AI</span>
           </div>
           <div class="ai-sum-row"><div class="ai-sum-dot" style="background:var(--green)"></div><div><div class="ai-sum-title" style="color:var(--green)">Common strengths</div><div class="ai-sum-body">High pace consistency in death overs. Effective yorker at pace. Strong work rate and composure with runs to defend.</div></div></div>
           <div class="ai-sum-row"><div class="ai-sum-dot" style="background:var(--amber)"></div><div><div class="ai-sum-title" style="color:var(--amber)">Development areas</div><div class="ai-sum-body">Slower-ball variation inconsistency flagged across 3 of 5 scouts. Powerplay economy lags behind death-over numbers.</div></div></div>
@@ -671,20 +682,20 @@ body {
           <div class="sr-info">
             <div class="sr-name">Sam Hartley</div>
             <div class="sr-sub">J. Clarke · Lancashire vs Surrey · 12 Jun</div>
-            <div class="sr-stars" style="color:var(--green)">★★★★★</div>
+            <div class="sr-stars" style="color:var(--green)">Well above peer group</div>
           </div>
           <div class="sr-right"><span class="badge badge-green">↑ Promote</span><span class="role-chip">Death Seamer</span></div>
           <svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
         </div>
         <div class="sr-detail">
           <div class="sr-d-title">Overall Assessment</div>
-          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--green)">★★★★★ Outstanding</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--green)">Well above peer group</span></div>
           <div class="sr-d-row"><span class="sr-d-key">Next level</span><span class="sr-d-val">Ready now</span></div>
           <div class="sr-quote">"Outstanding at the death. Yorker to dismiss top-order batter on 38 was the best I've seen from a U21 bowler this season. Composure under pressure is elite for his age."</div>
           <div class="sr-d-title">Technical Criteria</div>
-          <div class="sr-d-row"><span class="sr-d-key">Action &amp; release</span><span class="sr-d-val" style="color:var(--green)">★★★★★</span></div>
-          <div class="sr-d-row"><span class="sr-d-key">Control &amp; accuracy</span><span class="sr-d-val" style="color:var(--green)">★★★★★</span></div>
-          <div class="sr-d-row"><span class="sr-d-key">Variation &amp; pace changes</span><span class="sr-d-val" style="color:var(--amber)">★★★☆☆</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Action &amp; release</span><span class="sr-d-val" style="color:var(--green)">Well above peer group</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Control &amp; accuracy</span><span class="sr-d-val" style="color:var(--green)">Well above peer group</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Variation &amp; pace changes</span><span class="sr-d-val" style="color:var(--amber)">Equal to peer group</span></div>
         </div>
       </div>
 
@@ -694,14 +705,14 @@ body {
           <div class="sr-info">
             <div class="sr-name">Oliver Webb</div>
             <div class="sr-sub">M. Davis · Surrey vs Hampshire · 10 Jun</div>
-            <div class="sr-stars" style="color:var(--teal)">★★★★☆</div>
+            <div class="sr-stars" style="color:var(--teal)">Above peer group</div>
           </div>
           <div class="sr-right"><span class="badge badge-green">↑ Promote</span><span class="role-chip">Top-order Bat</span></div>
           <svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
         </div>
         <div class="sr-detail">
           <div class="sr-d-title">Overall Assessment</div>
-          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--teal)">★★★★☆ Excellent</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--teal)">Above peer group</span></div>
           <div class="sr-d-row"><span class="sr-d-key">Next level</span><span class="sr-d-val">6–12 months</span></div>
           <div class="sr-quote">"Webb's footwork against seam movement in helpful conditions was impressive. Made 68 from 82 balls, showing real intent. Shot selection against the short ball still a development area."</div>
         </div>
@@ -713,14 +724,14 @@ body {
           <div class="sr-info">
             <div class="sr-name">Ravi Patel</div>
             <div class="sr-sub">A. Singh · Middlesex vs Essex · 8 Jun</div>
-            <div class="sr-stars" style="color:var(--teal)">★★★★☆</div>
+            <div class="sr-stars" style="color:var(--teal)">Above peer group</div>
           </div>
           <div class="sr-right"><span class="badge badge-amber">Monitor</span><span class="role-chip">Off-spin</span></div>
           <svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
         </div>
         <div class="sr-detail">
           <div class="sr-d-title">Overall Assessment</div>
-          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--teal)">★★★★☆ Excellent</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--teal)">Above peer group</span></div>
           <div class="sr-d-row"><span class="sr-d-key">Next level</span><span class="sr-d-val">12–18 months</span></div>
           <div class="sr-quote">"Outstanding powerplay control for a spinner — 14.2 strike rate is exceptional. Flight and dip are genuine wicket-taking weapons. Needs a reliable arm-ball to round out his attack."</div>
         </div>
@@ -732,14 +743,14 @@ body {
           <div class="sr-info">
             <div class="sr-name">Jack Harrison</div>
             <div class="sr-sub">A. Singh · Kent vs Middlesex · 9 Jun</div>
-            <div class="sr-stars" style="color:var(--teal)">★★★★☆</div>
+            <div class="sr-stars" style="color:var(--teal)">Above peer group</div>
           </div>
           <div class="sr-right"><span class="badge badge-blue">Retain</span><span class="role-chip">Top-order Bat</span></div>
           <svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
         </div>
         <div class="sr-detail">
           <div class="sr-d-title">Overall Assessment</div>
-          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--teal)">★★★★☆ Excellent</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--teal)">Above peer group</span></div>
           <div class="sr-d-row"><span class="sr-d-key">Next level</span><span class="sr-d-val">12–24 months</span></div>
           <div class="sr-quote">"Solid 54 runs but didn't face the hostile spells. Technically strong — needs exposure to higher quality bowling before Lions selection."</div>
         </div>
@@ -751,14 +762,14 @@ body {
           <div class="sr-info">
             <div class="sr-name">Jake Morrison</div>
             <div class="sr-sub">M. Davis · Yorkshire vs Durham · 8 Jun</div>
-            <div class="sr-stars" style="color:var(--amber)">★★★☆☆</div>
+            <div class="sr-stars" style="color:var(--amber)">Equal to peer group</div>
           </div>
           <div class="sr-right"><span class="badge badge-amber">Monitor</span><span class="role-chip">Death Seamer</span></div>
           <svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
         </div>
         <div class="sr-detail">
           <div class="sr-d-title">Overall Assessment</div>
-          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--amber)">★★★☆☆ Progressing</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--amber)">Equal to peer group</span></div>
           <div class="sr-d-row"><span class="sr-d-key">Next level</span><span class="sr-d-val">12–24 months</span></div>
           <div class="sr-quote">"Below his usual standard — economy 9.8 at the death, wide yorker cost 2 sixes. Slower ball still being read early. Clear off-day; continue monitoring."</div>
         </div>
@@ -770,14 +781,14 @@ body {
           <div class="sr-info">
             <div class="sr-name">Nick Booth</div>
             <div class="sr-sub">J. Clarke · Gloucestershire vs Somerset · 6 Jun</div>
-            <div class="sr-stars" style="color:var(--amber)">★★★☆☆</div>
+            <div class="sr-stars" style="color:var(--amber)">Equal to peer group</div>
           </div>
           <div class="sr-right"><span class="badge badge-amber">Monitor</span><span class="role-chip">WK Batter</span></div>
           <svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
         </div>
         <div class="sr-detail">
           <div class="sr-d-title">Overall Assessment</div>
-          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--amber)">★★★☆☆ Progressing</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--amber)">Equal to peer group</span></div>
           <div class="sr-d-row"><span class="sr-d-key">Next level</span><span class="sr-d-val">12–24 months</span></div>
           <div class="sr-quote">"Keeping is solid — zero byes, two sharp stumpings. Batting (34 from 41) showed good temperament but lacks power vs pace at the death."</div>
         </div>
@@ -789,14 +800,14 @@ body {
           <div class="sr-info">
             <div class="sr-name">Callum Price</div>
             <div class="sr-sub">R. Chen · Kent vs Surrey · 2 Jun</div>
-            <div class="sr-stars" style="color:var(--red)">★★☆☆☆</div>
+            <div class="sr-stars" style="color:var(--red)">Somewhat below</div>
           </div>
           <div class="sr-right"><span class="badge badge-amber">Monitor</span><span class="role-chip">Death Seamer</span></div>
           <svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
         </div>
         <div class="sr-detail">
           <div class="sr-d-title">Overall Assessment</div>
-          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--red)">★★☆☆☆ Developing</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--red)">Somewhat below peer group</span></div>
           <div class="sr-d-row"><span class="sr-d-key">Next level</span><span class="sr-d-val">Significant dev needed</span></div>
           <div class="sr-quote">"Raw pace evident at 136 km/h but release consistency is the primary gap. Struggled in seaming conditions — rhythm lost after the first over."</div>
         </div>
@@ -911,6 +922,7 @@ body {
       <div class="subhead"><button class="back-link" onclick="go('more')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg> More</button></div>
       <div class="filters" style="margin-bottom:12px">
         <div class="fil-chip active" onclick="setLevel(this,'England Men')">England Men</div>
+        <div class="fil-chip" onclick="setLevel(this,'England Women')">England Women</div>
         <div class="fil-chip" onclick="setLevel(this,'Lions')">Lions</div>
         <div class="fil-chip" onclick="setLevel(this,'U19')">U19</div>
         <div class="fil-chip" onclick="setLevel(this,'Emerging')">Emerging</div>
@@ -979,21 +991,21 @@ body {
       <div class="sec-head"><span class="sec-title">Referral Queue</span><span class="sec-count">3 pending</span></div>
 
       <div class="ref-item">
-        <div class="ref-top"><div><div class="ref-pname">Tom Fletcher</div><div class="ref-pmeta">Devon · Age 18 · Seamer</div></div><div class="ref-stars">★★★★★</div></div>
+        <div class="ref-top"><div><div class="ref-pname">Tom Fletcher</div><div class="ref-pmeta">Devon · Age 18 · Seamer</div></div><div class="ref-stars">Well above peer group</div></div>
         <div class="ref-by">Referred by S. Wells · Exeter CC · 2 days ago</div>
         <div class="ref-obs">"Genuine pace — consistent 88mph spells. Took a 5-fer vs the county 2nd XI. Best quick I've seen at club level in years."</div>
         <div class="ref-actions"><button class="ref-btn approve" onclick="actRef(this,'approved')">Approve → Longlist</button><button class="ref-btn reject" onclick="actRef(this,'rejected')">Reject</button></div>
       </div>
 
       <div class="ref-item">
-        <div class="ref-top"><div><div class="ref-pname">Aiden Cross</div><div class="ref-pmeta">Cornwall · Age 17 · Top-order</div></div><div class="ref-stars">★★★★☆</div></div>
+        <div class="ref-top"><div><div class="ref-pname">Aiden Cross</div><div class="ref-pmeta">Cornwall · Age 17 · Top-order</div></div><div class="ref-stars">Above peer group</div></div>
         <div class="ref-by">Referred by M. Hale · Truro CC · 4 days ago</div>
         <div class="ref-obs">"Scored 140* in the club final under real pressure. Exceptional temperament and shot range for his age."</div>
         <div class="ref-actions"><button class="ref-btn approve" onclick="actRef(this,'approved')">Approve → Longlist</button><button class="ref-btn reject" onclick="actRef(this,'rejected')">Reject</button></div>
       </div>
 
       <div class="ref-item">
-        <div class="ref-top"><div><div class="ref-pname">Priya Sharma</div><div class="ref-pmeta">Berkshire · Age 19 · Leg-spin</div></div><div class="ref-stars">★★★★☆</div></div>
+        <div class="ref-top"><div><div class="ref-pname">Priya Sharma</div><div class="ref-pmeta">Berkshire · Age 19 · Leg-spin</div></div><div class="ref-stars">Above peer group</div></div>
         <div class="ref-by">Referred by R. Owen · Reading CC · 5 days ago</div>
         <div class="ref-obs">"Big-turning leg-spinner — took 6 wickets in a single session. Genuine wicket-taking threat with real control."</div>
         <div class="ref-actions"><button class="ref-btn approve" onclick="actRef(this,'approved')">Approve → Longlist</button><button class="ref-btn reject" onclick="actRef(this,'rejected')">Reject</button></div>
@@ -1020,14 +1032,39 @@ body {
       </div>
       <div class="prof-r-pair">
         <div>
-          <div class="prof-r-label">Current readiness</div>
+          <div class="prof-r-label">Current readiness (T20)</div>
           <div class="prof-r-bar"><div class="prof-r-fill" style="width:74%;background:var(--green)"></div></div>
           <div class="prof-r-val" style="color:var(--green)">74%</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px">5 of 8 scouts rate ready-now</div>
         </div>
         <div>
-          <div class="prof-r-label">Future potential</div>
+          <div class="prof-r-label">Future potential (T20)</div>
           <div class="prof-r-bar"><div class="prof-r-fill" style="width:91%;background:var(--teal-light)"></div></div>
           <div class="prof-r-val" style="color:var(--teal-light)">91%</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px">avg 4.6/5.0 across scouts</div>
+        </div>
+      </div>
+
+      <!-- Readiness grid: now / 2yr / 5yr × Test / ODI / T20 -->
+      <div class="rg-wrap">
+        <div class="rg-title">Readiness by format &amp; horizon</div>
+        <div class="rg-grid">
+          <div class="rg-hdr"></div>
+          <div class="rg-hdr">Test</div>
+          <div class="rg-hdr">ODI</div>
+          <div class="rg-hdr">T20</div>
+          <div class="rg-row-lbl">Now</div>
+          <div class="rg-cell"><div class="rg-pct" style="color:var(--text-muted)">14%</div><div class="rg-bar"><div class="rg-bar-fill" style="width:14%;background:var(--text-muted)"></div></div></div>
+          <div class="rg-cell"><div class="rg-pct" style="color:var(--amber)">47%</div><div class="rg-bar"><div class="rg-bar-fill" style="width:47%;background:var(--amber)"></div></div></div>
+          <div class="rg-cell"><div class="rg-pct" style="color:var(--green)">74%</div><div class="rg-bar"><div class="rg-bar-fill" style="width:74%;background:var(--green)"></div></div></div>
+          <div class="rg-row-lbl">2 yr</div>
+          <div class="rg-cell"><div class="rg-pct" style="color:var(--amber)">41%</div><div class="rg-bar"><div class="rg-bar-fill" style="width:41%;background:var(--amber)"></div></div></div>
+          <div class="rg-cell"><div class="rg-pct" style="color:var(--green)">69%</div><div class="rg-bar"><div class="rg-bar-fill" style="width:69%;background:var(--green)"></div></div></div>
+          <div class="rg-cell"><div class="rg-pct" style="color:var(--green)">88%</div><div class="rg-bar"><div class="rg-bar-fill" style="width:88%;background:var(--green)"></div></div></div>
+          <div class="rg-row-lbl">5 yr</div>
+          <div class="rg-cell"><div class="rg-pct" style="color:var(--green)">73%</div><div class="rg-bar"><div class="rg-bar-fill" style="width:73%;background:var(--green)"></div></div></div>
+          <div class="rg-cell"><div class="rg-pct" style="color:var(--green)">84%</div><div class="rg-bar"><div class="rg-bar-fill" style="width:84%;background:var(--green)"></div></div></div>
+          <div class="rg-cell"><div class="rg-pct" style="color:var(--teal-light)">91%</div><div class="rg-bar"><div class="rg-bar-fill" style="width:91%;background:var(--teal-light)"></div></div></div>
         </div>
       </div>
       <button class="prof-video-btn" onclick="goVideo('profile')">
@@ -1045,7 +1082,7 @@ body {
 
     <div class="prof-section">
       <div class="prof-sec-title">Scout Reports &middot; 8 total</div>
-      <div class="prof-rep-row"><div class="prof-rep-scout">J. Clarke &middot; North Region &middot; 12 Jun 2026 &middot; <span style="color:var(--green)">★★★★★ Promote</span></div><div class="prof-rep-text">&ldquo;Outstanding at the death. Yorker to dismiss top-order batter on 38 was the best I&rsquo;ve seen from a U21 bowler this season.&rdquo;</div></div>
+      <div class="prof-rep-row"><div class="prof-rep-scout">J. Clarke &middot; North Region &middot; 12 Jun 2026 &middot; <span style="color:var(--green)">Well above peer group · Promote</span></div><div class="prof-rep-text">&ldquo;Outstanding at the death. Yorker to dismiss top-order batter on 38 was the best I&rsquo;ve seen from a U21 bowler this season.&rdquo;</div></div>
       <div class="prof-rep-row"><div class="prof-rep-scout">M. Davis &middot; Central &middot; 28 May 2026 &middot; <span style="color:var(--teal)">★★★★☆ Good</span></div><div class="prof-rep-text">&ldquo;Backed up last performance with another strong showing. Slower ball still a concern &mdash; batters reading it early. Needs work.&rdquo;</div></div>
     </div>
 

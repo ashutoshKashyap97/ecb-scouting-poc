@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1326,7 +1326,7 @@ button { font-family: var(--font); cursor: pointer; }
     <div class="topbar">
       <div>
         <div class="topbar-title" id="topbar-title">Insight Manager</div>
-        <div class="topbar-sub" id="topbar-sub">Good morning, Ed &middot; Monday 16 June 2026</div>
+        <div class="topbar-sub" id="topbar-sub">Good morning, Ed &middot; Monday 15 June 2026</div>
       </div>
       <div class="topbar-actions">
         <div class="icon-btn" onclick="showPanel('nl-search'); startNLDemo()" title="AI Search">
@@ -1549,7 +1549,7 @@ button { font-family: var(--font); cursor: pointer; }
             <div class="ai-summary-header">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>
               <span>AI Analysis &mdash; Death Bowling, 135 km/h+, Under 23</span>
-              <span class="ai-badge">Gemini</span>
+              <span class="ai-badge">Assistive AI</span>
             </div>
             <div class="ai-row">
               <div class="ai-dot" style="background:var(--green)"></div>
@@ -1672,15 +1672,52 @@ button { font-family: var(--font); cursor: pointer; }
             </div>
             <div class="readiness-pair">
               <div>
-                <div class="rp-label">Current Readiness</div>
+                <div class="rp-label">Current Readiness (T20)</div>
                 <div class="rp-track"><div class="rp-fill" style="width:74%;background:var(--green)"></div></div>
                 <div class="rp-val" style="color:var(--green)">74%</div>
+                <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px">5 of 8 scouts rate ready-now</div>
               </div>
               <div>
-                <div class="rp-label">Future Potential</div>
+                <div class="rp-label">Future Potential (T20)</div>
                 <div class="rp-track"><div class="rp-fill" style="width:91%;background:var(--teal-light)"></div></div>
                 <div class="rp-val" style="color:var(--teal-light)">91%</div>
+                <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px">avg 4.6/5.0 across scouts</div>
               </div>
+            </div>
+
+            <!-- Readiness grid: now / 2yr / 5yr × Test / ODI / T20 -->
+            <div style="margin-top:16px">
+              <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Readiness by format &amp; horizon</div>
+              <table style="width:100%;border-collapse:collapse;background:rgba(255,255,255,.04);font-size:11px">
+                <thead>
+                  <tr>
+                    <th style="padding:6px 8px;text-align:left;font-size:9px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid rgba(255,255,255,.08)"></th>
+                    <th style="padding:6px 8px;text-align:center;font-size:9px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid rgba(255,255,255,.08)">Test</th>
+                    <th style="padding:6px 8px;text-align:center;font-size:9px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid rgba(255,255,255,.08)">ODI</th>
+                    <th style="padding:6px 8px;text-align:center;font-size:9px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid rgba(255,255,255,.08)">T20</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+                    <td style="padding:8px 8px;font-size:10px;font-weight:700;color:rgba(255,255,255,.5)">Now</td>
+                    <td style="padding:8px;text-align:center;font-weight:800;color:var(--text-muted)">14%</td>
+                    <td style="padding:8px;text-align:center;font-weight:800;color:var(--amber)">47%</td>
+                    <td style="padding:8px;text-align:center;font-weight:800;color:var(--green)">74%</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
+                    <td style="padding:8px 8px;font-size:10px;font-weight:700;color:rgba(255,255,255,.5)">2 yr</td>
+                    <td style="padding:8px;text-align:center;font-weight:800;color:var(--amber)">41%</td>
+                    <td style="padding:8px;text-align:center;font-weight:800;color:var(--green)">69%</td>
+                    <td style="padding:8px;text-align:center;font-weight:800;color:var(--green)">88%</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:8px 8px;font-size:10px;font-weight:700;color:rgba(255,255,255,.5)">5 yr</td>
+                    <td style="padding:8px;text-align:center;font-weight:800;color:var(--green)">73%</td>
+                    <td style="padding:8px;text-align:center;font-weight:800;color:var(--green)">84%</td>
+                    <td style="padding:8px;text-align:center;font-weight:800;color:var(--teal-light)">91%</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
           <div style="display:flex;gap:8px;flex-shrink:0">
@@ -1710,7 +1747,7 @@ button { font-family: var(--font); cursor: pointer; }
             <div class="report-row">
               <div class="rr-scout">J. Clarke &middot; North Region &middot; 12 Jun 2026</div>
               <div class="rr-text">Outstanding at the death today. Yorker to dismiss top-order batter on 38 was the best I&rsquo;ve seen from a U21 bowler this season. Composure under pressure is elite for his age.</div>
-              <span class="badge badge-green" style="margin-top:5px;display:inline-block">Outstanding</span>
+              <span class="badge badge-green" style="margin-top:5px;display:inline-block">Well above peer group</span>
             </div>
             <div class="report-row">
               <div class="rr-scout">M. Davis &middot; Central &middot; 28 May 2026</div>
@@ -1720,7 +1757,7 @@ button { font-family: var(--font); cursor: pointer; }
             <div class="report-row">
               <div class="rr-scout">A. Singh &middot; North Region &middot; 9 May 2026</div>
               <div class="rr-text">Marked improvement in death accuracy from last year. 3 dot balls in over 20 against Yorkshire. Confident promotion to short-list.</div>
-              <span class="badge badge-green" style="margin-top:5px;display:inline-block">Outstanding</span>
+              <span class="badge badge-green" style="margin-top:5px;display:inline-block">Well above peer group</span>
             </div>
           </div>
         </div>
@@ -2020,6 +2057,31 @@ button { font-family: var(--font); cursor: pointer; }
               <td style="font-size:11px;color:var(--text-muted)">20 May</td>
               <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button><button class="action-dropdown-item">Add to comparison</button></div></td>
             </tr>
+            <!-- Women's pathway -->
+            <tr data-name="imani clarke" data-county="hampshire women" data-filter="top-order" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init" style="background:rgba(228,0,43,.08);color:var(--red)">IC</div><div><div class="p-name">Imani Clarke <span style="font-size:10px;font-weight:600;color:var(--red);background:rgba(228,0,43,.07);padding:1px 5px;margin-left:4px">W</span></div><div class="p-county">Hampshire Women</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">22</td>
+              <td style="font-size:12px;color:var(--text-sec)">Batter</td>
+              <td><span class="arch-tag">Top-Order Bat</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:71%;background:var(--green)"></div></div><span class="r-val" style="color:var(--green)">71%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">85%</span></td>
+              <td><span class="badge badge-green">Short-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">R. Chen</td>
+              <td style="font-size:11px;color:var(--text-muted)">13 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button></div></td>
+            </tr>
+            <tr data-name="grace harper" data-county="surrey women" data-filter="death" onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init" style="background:rgba(228,0,43,.08);color:var(--red)">GH</div><div><div class="p-name">Grace Harper <span style="font-size:10px;font-weight:600;color:var(--red);background:rgba(228,0,43,.07);padding:1px 5px;margin-left:4px">W</span></div><div class="p-county">Surrey Women</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">24</td>
+              <td style="font-size:12px;color:var(--text-sec)">Seamer</td>
+              <td><span class="arch-tag">Pace Bowler</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:78%;background:var(--green)"></div></div><span class="r-val" style="color:var(--green)">78%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">88%</span></td>
+              <td><span class="badge badge-green">Short-list</span></td>
+              <td style="font-size:11px;color:var(--text-sec)">M. Davis</td>
+              <td style="font-size:11px;color:var(--text-muted)">11 Jun</td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item" onclick="showPanel('profile')">View profile</button><button class="action-dropdown-item">Move to Short-list</button><button class="action-dropdown-item">Allocate scout</button></div></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -2091,6 +2153,7 @@ button { font-family: var(--font); cursor: pointer; }
         <div class="depth-controls">
           <div class="level-tabs">
             <button class="level-tab active" data-level="men"      onclick="renderDepthChart('men')">England Men</button>
+            <button class="level-tab"        data-level="women"    onclick="renderDepthChart('women')">England Women</button>
             <button class="level-tab"        data-level="lions"    onclick="renderDepthChart('lions')">Lions</button>
             <button class="level-tab"        data-level="u19"      onclick="renderDepthChart('u19')">U19</button>
             <button class="level-tab"        data-level="emerging" onclick="renderDepthChart('emerging')">Emerging</button>
@@ -2156,7 +2219,7 @@ button { font-family: var(--font); cursor: pointer; }
             <div><div class="sr-scout-name">J. Clarke</div><div class="sr-scout-region">North Region</div></div>
             <div><div class="sr-match-name">Lancashire vs Surrey &middot; T20 Blast</div><div class="sr-match-date">Old Trafford &middot; 12 Jun 2026</div></div>
             <div><span class="sr-role-chip">Death Seamer</span></div>
-            <div class="sr-stars" style="color:var(--green)">★★★★★</div>
+            <div class="sr-stars" style="color:var(--green)">Well above peer group</div>
             <div><span class="badge badge-green">&#8593; Promote</span></div>
             <div class="sr-date">12 Jun</div>
             <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -2172,7 +2235,7 @@ button { font-family: var(--font); cursor: pointer; }
                 </div>
                 <div class="sr-detail-section">
                   <div class="sr-detail-title">Overall Assessment</div>
-                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--green)">★★★★★ Outstanding</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--green)">Well above peer group</span></div>
                   <div class="sr-detail-row"><span class="sr-detail-key">Next level</span><span class="sr-detail-val">Ready now</span></div>
                   <p class="sr-summary-text">"Outstanding at the death. Yorker to dismiss top-order batter on 38 was the best I've seen from a U21 bowler this season. Composure under pressure is elite for his age."</p>
                 </div>
@@ -2180,11 +2243,11 @@ button { font-family: var(--font); cursor: pointer; }
               <div>
                 <div class="sr-detail-section" style="margin-bottom:10px">
                   <div class="sr-detail-title">Technical Criteria</div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Action &amp; release point</span><span class="sr-crit-stars" style="color:var(--green)">★★★★★</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Control &amp; accuracy</span><span class="sr-crit-stars" style="color:var(--green)">★★★★★</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Variation &amp; pace changes</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Swing / seam movement</span><span class="sr-crit-stars" style="color:var(--green)">★★★★☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Physical capability</span><span class="sr-crit-stars" style="color:var(--green)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Action &amp; release point</span><span class="sr-crit-stars" style="color:var(--green)">Well above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Control &amp; accuracy</span><span class="sr-crit-stars" style="color:var(--green)">Well above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Variation &amp; pace changes</span><span class="sr-crit-stars" style="color:var(--amber)">Equal to peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Swing / seam movement</span><span class="sr-crit-stars" style="color:var(--green)">Above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Physical capability</span><span class="sr-crit-stars" style="color:var(--green)">Above peer group</span></div>
                 </div>
                 <div class="sr-detail-section">
                   <div class="sr-detail-title">Future Potential</div>
@@ -2203,7 +2266,7 @@ button { font-family: var(--font); cursor: pointer; }
             <div><div class="sr-scout-name">M. Davis</div><div class="sr-scout-region">Central</div></div>
             <div><div class="sr-match-name">Surrey vs Hampshire &middot; CC D1</div><div class="sr-match-date">The Oval &middot; 10 Jun 2026</div></div>
             <div><span class="sr-role-chip">Top-order Bat</span></div>
-            <div class="sr-stars" style="color:var(--teal)">★★★★☆</div>
+            <div class="sr-stars" style="color:var(--teal)">Above peer group</div>
             <div><span class="badge badge-green">&#8593; Promote</span></div>
             <div class="sr-date">10 Jun</div>
             <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -2219,7 +2282,7 @@ button { font-family: var(--font); cursor: pointer; }
                 </div>
                 <div class="sr-detail-section">
                   <div class="sr-detail-title">Overall Assessment</div>
-                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--teal)">★★★★☆ Excellent</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--teal)">Above peer group</span></div>
                   <div class="sr-detail-row"><span class="sr-detail-key">Next level</span><span class="sr-detail-val">6–12 months</span></div>
                   <p class="sr-summary-text">"Webb's footwork against seam movement in helpful conditions was impressive. Made 68 from 82 balls, showing real intent. Shot selection against the short ball still a development area."</p>
                 </div>
@@ -2227,11 +2290,11 @@ button { font-family: var(--font); cursor: pointer; }
               <div>
                 <div class="sr-detail-section" style="margin-bottom:10px">
                   <div class="sr-detail-title">Technical Criteria</div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Technique &amp; footwork</span><span class="sr-crit-stars" style="color:var(--green)">★★★★★</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Temperament &amp; composure</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Shot selection</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Running between wickets</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Attack vs defence balance</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Technique &amp; footwork</span><span class="sr-crit-stars" style="color:var(--green)">Well above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Temperament &amp; composure</span><span class="sr-crit-stars" style="color:var(--teal)">Above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Shot selection</span><span class="sr-crit-stars" style="color:var(--amber)">Equal to peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Running between wickets</span><span class="sr-crit-stars" style="color:var(--teal)">Above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Attack vs defence balance</span><span class="sr-crit-stars" style="color:var(--teal)">Above peer group</span></div>
                 </div>
                 <div class="sr-detail-section">
                   <div class="sr-detail-title">Future Potential</div>
@@ -2250,7 +2313,7 @@ button { font-family: var(--font); cursor: pointer; }
             <div><div class="sr-scout-name">A. Singh</div><div class="sr-scout-region">South East</div></div>
             <div><div class="sr-match-name">Kent vs Middlesex &middot; CC D1</div><div class="sr-match-date">Canterbury &middot; 9 Jun 2026</div></div>
             <div><span class="sr-role-chip">Top-order Bat</span></div>
-            <div class="sr-stars" style="color:var(--teal)">★★★★☆</div>
+            <div class="sr-stars" style="color:var(--teal)">Above peer group</div>
             <div><span class="badge badge-blue">Retain</span></div>
             <div class="sr-date">9 Jun</div>
             <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -2266,7 +2329,7 @@ button { font-family: var(--font); cursor: pointer; }
                 </div>
                 <div class="sr-detail-section">
                   <div class="sr-detail-title">Overall Assessment</div>
-                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--teal)">★★★★☆ Excellent</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--teal)">Above peer group</span></div>
                   <div class="sr-detail-row"><span class="sr-detail-key">Next level</span><span class="sr-detail-val">12–24 months</span></div>
                   <p class="sr-summary-text">"Solid performance, 54 runs, but didn't face the hostile spells. Technically strong but needs exposure to higher quality bowling before Lions selection."</p>
                 </div>
@@ -2274,11 +2337,11 @@ button { font-family: var(--font); cursor: pointer; }
               <div>
                 <div class="sr-detail-section" style="margin-bottom:10px">
                   <div class="sr-detail-title">Technical Criteria</div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Technique &amp; footwork</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Temperament &amp; composure</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Shot selection</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Running between wickets</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Attack vs defence balance</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Technique &amp; footwork</span><span class="sr-crit-stars" style="color:var(--teal)">Above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Temperament &amp; composure</span><span class="sr-crit-stars" style="color:var(--teal)">Above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Shot selection</span><span class="sr-crit-stars" style="color:var(--teal)">Above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Running between wickets</span><span class="sr-crit-stars" style="color:var(--amber)">Equal to peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Attack vs defence balance</span><span class="sr-crit-stars" style="color:var(--amber)">Equal to peer group</span></div>
                 </div>
                 <div class="sr-detail-section">
                   <div class="sr-detail-title">Future Potential</div>
@@ -2297,7 +2360,7 @@ button { font-family: var(--font); cursor: pointer; }
             <div><div class="sr-scout-name">M. Davis</div><div class="sr-scout-region">Central</div></div>
             <div><div class="sr-match-name">Yorkshire vs Durham &middot; T20 Blast</div><div class="sr-match-date">Headingley &middot; 8 Jun 2026</div></div>
             <div><span class="sr-role-chip">Death Seamer</span></div>
-            <div class="sr-stars" style="color:var(--amber)">★★★☆☆</div>
+            <div class="sr-stars" style="color:var(--amber)">Equal to peer group</div>
             <div><span class="badge badge-amber">Monitor</span></div>
             <div class="sr-date">8 Jun</div>
             <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -2313,7 +2376,7 @@ button { font-family: var(--font); cursor: pointer; }
                 </div>
                 <div class="sr-detail-section">
                   <div class="sr-detail-title">Overall Assessment</div>
-                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--amber)">★★★☆☆ Progressing</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--amber)">Equal to peer group</span></div>
                   <div class="sr-detail-row"><span class="sr-detail-key">Next level</span><span class="sr-detail-val">12–24 months</span></div>
                   <p class="sr-summary-text">"Below his usual standard. Economy of 9.8 in death overs, wide yorker cost 2 sixes. Clear off day but the slower ball is still being read early. Monitor."</p>
                 </div>
@@ -2321,11 +2384,11 @@ button { font-family: var(--font); cursor: pointer; }
               <div>
                 <div class="sr-detail-section" style="margin-bottom:10px">
                   <div class="sr-detail-title">Technical Criteria</div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Action &amp; release point</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Control &amp; accuracy</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Variation &amp; pace changes</span><span class="sr-crit-stars" style="color:var(--amber)">★★☆☆☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Swing / seam movement</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Physical capability</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Action &amp; release point</span><span class="sr-crit-stars" style="color:var(--teal)">Above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Control &amp; accuracy</span><span class="sr-crit-stars" style="color:var(--amber)">Equal to peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Variation &amp; pace changes</span><span class="sr-crit-stars" style="color:var(--amber)">Somewhat below</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Swing / seam movement</span><span class="sr-crit-stars" style="color:var(--amber)">Equal to peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Physical capability</span><span class="sr-crit-stars" style="color:var(--teal)">Above peer group</span></div>
                 </div>
                 <div class="sr-detail-section">
                   <div class="sr-detail-title">Future Potential</div>
@@ -2344,7 +2407,7 @@ button { font-family: var(--font); cursor: pointer; }
             <div><div class="sr-scout-name">R. Chen</div><div class="sr-scout-region">Central</div></div>
             <div><div class="sr-match-name">Middlesex vs Essex &middot; T20 Blast</div><div class="sr-match-date">Lord's &middot; 5 Jun 2026</div></div>
             <div><span class="sr-role-chip">Spin Bowler</span></div>
-            <div class="sr-stars" style="color:var(--amber)">★★★☆☆</div>
+            <div class="sr-stars" style="color:var(--amber)">Equal to peer group</div>
             <div><span class="badge badge-blue">Retain</span></div>
             <div class="sr-date">5 Jun</div>
             <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -2356,18 +2419,18 @@ button { font-family: var(--font); cursor: pointer; }
                   <div class="sr-detail-title">Match Context &amp; Assessment</div>
                   <div class="sr-detail-row"><span class="sr-detail-key">Innings</span><span class="sr-detail-val">1st Innings (Powerplay)</span></div>
                   <div class="sr-detail-row"><span class="sr-detail-key">Conditions</span><span class="sr-detail-val">Sunny, dry</span></div>
-                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--amber)">★★★☆☆ Progressing</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--amber)">Equal to peer group</span></div>
                   <p class="sr-summary-text">"Patel's powerplay numbers are elite — SR 14.2 is top 3% nationally. Needs to improve his length bowling at the death. Strong technical ceiling."</p>
                 </div>
               </div>
               <div>
                 <div class="sr-detail-section">
                   <div class="sr-detail-title">Technical Criteria</div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Action &amp; release</span><span class="sr-crit-stars" style="color:var(--green)">★★★★★</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Control &amp; accuracy</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Variation</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Flight &amp; turn</span><span class="sr-crit-stars" style="color:var(--teal)">★★★★☆</span></div>
-                  <div class="sr-crit-row"><span class="sr-crit-name">Physical capability</span><span class="sr-crit-stars" style="color:var(--amber)">★★★☆☆</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Action &amp; release</span><span class="sr-crit-stars" style="color:var(--green)">Well above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Control &amp; accuracy</span><span class="sr-crit-stars" style="color:var(--teal)">Above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Variation</span><span class="sr-crit-stars" style="color:var(--amber)">Equal to peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Flight &amp; turn</span><span class="sr-crit-stars" style="color:var(--teal)">Above peer group</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Physical capability</span><span class="sr-crit-stars" style="color:var(--amber)">Equal to peer group</span></div>
                 </div>
               </div>
             </div>
@@ -2381,7 +2444,7 @@ button { font-family: var(--font); cursor: pointer; }
             <div><div class="sr-scout-name">J. Clarke</div><div class="sr-scout-region">North Region</div></div>
             <div><div class="sr-match-name">Gloucestershire vs Somerset &middot; CC D1</div><div class="sr-match-date">Bristol &middot; 6 Jun 2026</div></div>
             <div><span class="sr-role-chip">WK Batter</span></div>
-            <div class="sr-stars" style="color:var(--amber)">★★★☆☆</div>
+            <div class="sr-stars" style="color:var(--amber)">Equal to peer group</div>
             <div><span class="badge badge-amber">Monitor</span></div>
             <div class="sr-date">6 Jun</div>
             <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -2393,7 +2456,7 @@ button { font-family: var(--font); cursor: pointer; }
                   <div class="sr-detail-title">Match Context &amp; Assessment</div>
                   <div class="sr-detail-row"><span class="sr-detail-key">Innings</span><span class="sr-detail-val">2nd Innings</span></div>
                   <div class="sr-detail-row"><span class="sr-detail-key">Conditions</span><span class="sr-detail-val">Overcast, dry</span></div>
-                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--amber)">★★★☆☆ Progressing</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--amber)">Equal to peer group</span></div>
                   <p class="sr-summary-text">"Reliable behind the stumps — zero byes, two sharp stumpings. Batting (34 from 41) showed good temperament but lack of power against pace at the death. Keeping up, batting still catching up."</p>
                 </div>
               </div>
@@ -2416,7 +2479,7 @@ button { font-family: var(--font); cursor: pointer; }
             <div><div class="sr-scout-name">R. Chen</div><div class="sr-scout-region">Central</div></div>
             <div><div class="sr-match-name">Kent vs Surrey &middot; CC D1</div><div class="sr-match-date">Canterbury &middot; 2 Jun 2026</div></div>
             <div><span class="sr-role-chip">Death Seamer</span></div>
-            <div class="sr-stars" style="color:var(--red)">★★☆☆☆</div>
+            <div class="sr-stars" style="color:var(--red)">Somewhat below</div>
             <div><span class="badge badge-amber">Monitor</span></div>
             <div class="sr-date">2 Jun</div>
             <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -2428,7 +2491,7 @@ button { font-family: var(--font); cursor: pointer; }
                   <div class="sr-detail-title">Match Context &amp; Assessment</div>
                   <div class="sr-detail-row"><span class="sr-detail-key">Innings</span><span class="sr-detail-val">2nd Innings</span></div>
                   <div class="sr-detail-row"><span class="sr-detail-key">Conditions</span><span class="sr-detail-val">Overcast, damp</span></div>
-                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--red)">★★☆☆☆ Developing</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--red)">Somewhat below peer group</span></div>
                   <p class="sr-summary-text">"Struggled with the seaming conditions — lost rhythm after the first over. Raw pace is evident (136 km/h) but release consistency at the crease is the primary development need."</p>
                 </div>
               </div>
@@ -2555,7 +2618,7 @@ button { font-family: var(--font); cursor: pointer; }
               <div class="ref-player-meta">Devon &middot; Age 18 &middot; Seamer</div>
               <div class="ref-by-line">Referred by <strong>S. Wells</strong> &middot; Exeter CC &middot; Club Coach &middot; 2 days ago</div>
             </div>
-            <div class="ref-stars" style="color:var(--green)">★★★★★</div>
+            <div class="ref-stars" style="color:var(--green)">Well above peer group</div>
           </div>
           <div class="ref-observation">"Genuine pace — consistent 88mph spells. Took a 5-fer vs the county 2nd XI. Best quick I've seen at club level in years. Would rival the best young seamers in the county system."</div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
@@ -2577,7 +2640,7 @@ button { font-family: var(--font); cursor: pointer; }
               <div class="ref-player-meta">Cornwall &middot; Age 17 &middot; Top-order Bat</div>
               <div class="ref-by-line">Referred by <strong>M. Hale</strong> &middot; Truro CC &middot; Head Coach &middot; 4 days ago</div>
             </div>
-            <div class="ref-stars" style="color:var(--teal)">★★★★☆</div>
+            <div class="ref-stars" style="color:var(--teal)">Above peer group</div>
           </div>
           <div class="ref-observation">"Scored 140* in the club final under real pressure. Exceptional temperament and shot range for his age. Moves beautifully to the ball — footwork against spin was especially striking."</div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
@@ -2599,7 +2662,7 @@ button { font-family: var(--font); cursor: pointer; }
               <div class="ref-player-meta">Berkshire &middot; Age 19 &middot; Leg-spin</div>
               <div class="ref-by-line">Referred by <strong>R. Owen</strong> &middot; Reading CC &middot; Academy Coach &middot; 5 days ago</div>
             </div>
-            <div class="ref-stars" style="color:var(--teal)">★★★★☆</div>
+            <div class="ref-stars" style="color:var(--teal)">Above peer group</div>
           </div>
           <div class="ref-observation">"Big-turning leg-spinner — took 6 wickets in a single session. Genuine wicket-taking threat with real control. Flight and turn are far above county academy standard."</div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
@@ -2747,11 +2810,11 @@ button { font-family: var(--font); cursor: pointer; }
 
             <div class="pa-card">
               <div class="pa-card-header">
-                <span class="pa-card-title">Scout Accuracy Leaderboard</span>
-                <span class="pa-card-sub">2026 season</span>
+                <span class="pa-card-title">Scout Engagement</span>
+                <span class="pa-card-sub">2026 season &middot; confirmation rate vs Central Staff</span>
               </div>
               <div class="scout-lb-row">
-                <div class="scout-lb-rank">1</div>
+                <div class="scout-lb-rank">&bull;</div>
                 <div class="scout-lb-init">JC</div>
                 <div class="scout-lb-info"><div class="scout-lb-name">J. Clarke</div><div class="scout-lb-meta">8 reports &middot; North Region</div></div>
                 <div class="scout-lb-right">
@@ -2760,7 +2823,7 @@ button { font-family: var(--font); cursor: pointer; }
                 </div>
               </div>
               <div class="scout-lb-row">
-                <div class="scout-lb-rank">2</div>
+                <div class="scout-lb-rank">&bull;</div>
                 <div class="scout-lb-init">MD</div>
                 <div class="scout-lb-info"><div class="scout-lb-name">M. Davis</div><div class="scout-lb-meta">7 reports &middot; Central</div></div>
                 <div class="scout-lb-right">
@@ -2769,7 +2832,7 @@ button { font-family: var(--font); cursor: pointer; }
                 </div>
               </div>
               <div class="scout-lb-row">
-                <div class="scout-lb-rank">3</div>
+                <div class="scout-lb-rank">&bull;</div>
                 <div class="scout-lb-init">AS</div>
                 <div class="scout-lb-info"><div class="scout-lb-name">A. Singh</div><div class="scout-lb-meta">6 reports &middot; South East</div></div>
                 <div class="scout-lb-right">
@@ -2778,7 +2841,7 @@ button { font-family: var(--font); cursor: pointer; }
                 </div>
               </div>
               <div class="scout-lb-row">
-                <div class="scout-lb-rank">4</div>
+                <div class="scout-lb-rank">&bull;</div>
                 <div class="scout-lb-init">RC</div>
                 <div class="scout-lb-info"><div class="scout-lb-name">R. Chen</div><div class="scout-lb-meta">5 reports &middot; Central</div></div>
                 <div class="scout-lb-right">
@@ -2787,7 +2850,7 @@ button { font-family: var(--font); cursor: pointer; }
                 </div>
               </div>
               <div class="scout-lb-row">
-                <div class="scout-lb-rank">5</div>
+                <div class="scout-lb-rank">&bull;</div>
                 <div class="scout-lb-init">PJ</div>
                 <div class="scout-lb-info"><div class="scout-lb-name">P. Jones</div><div class="scout-lb-meta">4 reports &middot; Midlands</div></div>
                 <div class="scout-lb-right">
@@ -2851,6 +2914,7 @@ button { font-family: var(--font); cursor: pointer; }
             <option>T20 Squad (15)</option>
             <option>Test Squad (13)</option>
             <option>50-over Squad (14)</option>
+            <option>The Hundred Squad (15)</option>
             <option>Custom</option>
           </select>
           <div style="margin-left:auto;display:flex;gap:8px">
@@ -3432,7 +3496,7 @@ button { font-family: var(--font); cursor: pointer; }
 <script>
 const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts','comparison','squad-selection','scout-reports','manage-scouts','coach-referrals','platform-analytics'];
 const TOPBAR = {
-  'dashboard':       ['Insight Manager',  'Good morning, Ed · Monday 16 June 2026'],
+  'dashboard':       ['Insight Manager',  'Good morning, Ed · Monday 15 June 2026'],
   'nl-search':       ['AI Search',        'Query players, video and report data conversationally'],
   'video':           ['Video Evidence',   'Sam Hartley · Left-arm seamer, death overs ≥135 km/h'],
   'profile':         ['Player Profile',   'Sam Hartley · Lancashire · Age 21'],
@@ -3804,6 +3868,22 @@ const DEPTH_DATA = {
       { id:'HM', name:'Harry Mills',   county:'Somerset',         age:16, readiness:32, status:'watch' },
     ]},
     { id:'spin',     label:'Spin Bowler',     players:[] },
+    { id:'wk',       label:'WK Batter',       players:[] },
+    { id:'allround', label:'All-Rounder',     players:[] },
+    { id:'middle',   label:'Middle-Order Bat', players:[] },
+  ]},
+  women: { cols: [
+    { id:'death-seamer', label:'Pace Bowler', players:[
+      { id:'GH', name:'Grace Harper',  county:'Surrey Women',     age:24, readiness:78, status:'short' },
+      { id:'SJ', name:'Sophie James',  county:'Middlesex Women',  age:22, readiness:61, status:'long'  },
+    ]},
+    { id:'top-order', label:'Top-Order Bat', players:[
+      { id:'IC', name:'Imani Clarke',  county:'Hampshire Women',  age:22, readiness:71, status:'short' },
+      { id:'RP2',name:'Rachel Park',   county:'Yorkshire Women',  age:23, readiness:58, status:'long'  },
+    ]},
+    { id:'spin', label:'Spin Bowler', players:[
+      { id:'AW', name:'Aisha Williams',county:'Lancashire Women', age:21, readiness:55, status:'long'  },
+    ]},
     { id:'wk',       label:'WK Batter',       players:[] },
     { id:'allround', label:'All-Rounder',     players:[] },
     { id:'middle',   label:'Middle-Order Bat', players:[] },
