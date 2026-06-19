@@ -137,6 +137,22 @@ body {
   width: 100%; margin-top: 12px; background: var(--teal); color: #fff; border: none;
   padding: 13px; font-size: 14px; font-weight: 700; font-family: var(--font); cursor: pointer; min-height: 48px;
 }
+.nl-mic {
+  width: 36px; height: 36px; flex-shrink: 0; border: none; padding: 0;
+  background: var(--teal-pale); color: var(--teal);
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; transition: all .2s;
+}
+.nl-mic svg { width: 17px; height: 17px; }
+.nl-mic:active { transform: scale(.92); }
+.nl-mic.listening {
+  background: var(--red); color: #fff;
+  animation: micPulse 1.2s ease-in-out infinite;
+}
+@keyframes micPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(228,0,43,.45); }
+  50%      { box-shadow: 0 0 0 7px rgba(228,0,43,0); }
+}
 #searchResults { display: none; }
 #searchResults.show { display: block; animation: fadeIn .3s ease-out both; }
 .nl-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 4px; }
@@ -524,7 +540,7 @@ body {
   <div class="topbar">
     <div>
       <div class="tb-greeting" id="tbTitle">Insight Manager</div>
-      <div class="tb-sub" id="tbSub">Good morning, Ed · Mon 15 June 2026</div>
+      <div class="tb-sub" id="tbSub">Good morning, Ed · Mon 22 June 2026</div>
     </div>
     <div class="tb-right">
       <div class="tb-icon" aria-label="Notifications"><span class="tb-dot"></span>
@@ -595,6 +611,9 @@ body {
         <div class="nl-input-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
           <input class="nl-input" id="nlInput" placeholder="Ask anything about your players, video or reports…" value="Left-arm seamers, death overs, 135 km/h+, under 23">
+          <button class="nl-mic" id="aiMicBtn" type="button" aria-label="Search by voice" onclick="startAIVoice(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
         </div>
         <div class="nl-examples">
           <span class="nl-eg" onclick="setQuery(this)">Left-arm seamers, death overs, 135 km/h+, under 23</span>
@@ -1210,7 +1229,7 @@ if ('serviceWorker' in navigator) {
 }
 
 const TITLES = {
-  insights:     ['Insight Manager', 'Good morning, Ed · Mon 15 June 2026'],
+  insights:     ['Insight Manager', 'Good morning, Ed · Mon 22 June 2026'],
   search:       ['AI Search', 'Natural-language player intelligence'],
   players:      ['Player Registry', '23 players on the national longlist'],
   reports:      ['Scout Reports', '7 reports this month · 2 recommend promotion'],
@@ -1266,6 +1285,38 @@ function go(tab) {
 function setQuery(el) { document.getElementById('nlInput').value = el.textContent; runSearch(); }
 function runSearch() {
   document.getElementById('searchResults').classList.add('show');
+}
+
+let aiVoiceRec = null;
+function startAIVoice(btn) {
+  const input = document.getElementById('nlInput');
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    input.placeholder = 'Voice search needs Chrome or Safari';
+    setTimeout(() => { input.placeholder = 'Ask anything about your players, video or reports…'; }, 2500);
+    return;
+  }
+  if (btn.classList.contains('listening')) {
+    try { aiVoiceRec && aiVoiceRec.stop(); } catch (e) {}
+    return;
+  }
+  aiVoiceRec = new SR();
+  aiVoiceRec.lang = 'en-GB';
+  aiVoiceRec.interimResults = true;
+  aiVoiceRec.maxAlternatives = 1;
+  btn.classList.add('listening');
+  input.placeholder = 'Listening…';
+  aiVoiceRec.onresult = (e) => {
+    let txt = '';
+    for (const r of e.results) txt += r[0].transcript;
+    input.value = txt;
+  };
+  aiVoiceRec.onerror = () => { input.placeholder = 'Ask anything about your players, video or reports…'; };
+  aiVoiceRec.onend = () => {
+    btn.classList.remove('listening');
+    if (input.placeholder === 'Listening…') input.placeholder = 'Ask anything about your players, video or reports…';
+  };
+  try { aiVoiceRec.start(); } catch (e) { btn.classList.remove('listening'); }
 }
 
 // ── Player registry (faithful to desktop longlist) ──

@@ -233,6 +233,18 @@ button { font-family: var(--font); cursor: pointer; }
   font-size: 10px; color: var(--teal); background: var(--teal-pale);
   padding: 3px 8px; white-space: nowrap; font-weight: 700;
 }
+.nl-mic-btn {
+  width: 30px; height: 30px; flex-shrink: 0; border: none; padding: 0;
+  background: var(--teal-pale); color: var(--teal);
+  display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .2s;
+}
+.nl-mic-btn svg { width: 14px; height: 14px; }
+.nl-mic-btn:hover { background: var(--teal); color: #fff; }
+.nl-mic-btn.listening { background: var(--red); color: #fff; animation: micPulseDsk 1.2s ease-in-out infinite; }
+@keyframes micPulseDsk {
+  0%,100% { box-shadow: 0 0 0 0 rgba(228,0,43,.4); }
+  50%      { box-shadow: 0 0 0 5px rgba(228,0,43,0); }
+}
 
 .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .section-title  { font-size: 13px; font-weight: 700; color: var(--text-primary); }
@@ -1326,7 +1338,7 @@ button { font-family: var(--font); cursor: pointer; }
     <div class="topbar">
       <div>
         <div class="topbar-title" id="topbar-title">Insight Manager</div>
-        <div class="topbar-sub" id="topbar-sub">Good morning, Ed &middot; Monday 15 June 2026</div>
+        <div class="topbar-sub" id="topbar-sub">Good morning, Ed &middot; Monday 22 June 2026</div>
       </div>
       <div class="topbar-actions">
         <div class="icon-btn" onclick="showPanel('nl-search'); startNLDemo()" title="AI Search">
@@ -1410,6 +1422,9 @@ button { font-family: var(--font); cursor: pointer; }
         <div class="nl-search-bar" onclick="showPanel('nl-search'); startNLDemo()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
           <span class="nl-placeholder">Ask anything about your players, video or reports&hellip; e.g. &ldquo;Left-arm seamers, death overs, 135 km/h+, under 23&rdquo;</span>
+          <button class="nl-mic-btn" id="deskMicBtn" type="button" aria-label="Search by voice" onclick="event.stopPropagation(); startDeskVoice(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
           <span class="nl-hint">AI Search</span>
         </div>
 
@@ -3496,7 +3511,7 @@ button { font-family: var(--font); cursor: pointer; }
 <script>
 const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts','comparison','squad-selection','scout-reports','manage-scouts','coach-referrals','platform-analytics'];
 const TOPBAR = {
-  'dashboard':       ['Insight Manager',  'Good morning, Ed · Monday 15 June 2026'],
+  'dashboard':       ['Insight Manager',  'Good morning, Ed · Monday 22 June 2026'],
   'nl-search':       ['AI Search',        'Query players, video and report data conversationally'],
   'video':           ['Video Evidence',   'Sam Hartley · Left-arm seamer, death overs ≥135 km/h'],
   'profile':         ['Player Profile',   'Sam Hartley · Lancashire · Age 21'],
@@ -3527,6 +3542,33 @@ function showPanel(name) {
 
 let nlTimer = null;
 const NL_QUERY = 'Left-arm seamers, death overs, 135 km/h+, under 23';
+
+let deskVoiceRec = null;
+function startDeskVoice(btn) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { showPanel('nl-search'); startNLDemo(); return; }
+  if (btn.classList.contains('listening')) {
+    try { deskVoiceRec && deskVoiceRec.stop(); } catch(e) {}
+    return;
+  }
+  deskVoiceRec = new SR();
+  deskVoiceRec.lang = 'en-GB';
+  deskVoiceRec.interimResults = true;
+  btn.classList.add('listening');
+  deskVoiceRec.onresult = (e) => {
+    let txt = '';
+    for (const r of e.results) txt += r[0].transcript;
+    // Populate the typing demo with spoken text
+    const typingEl = document.getElementById('nl-typing-text');
+    if (typingEl) typingEl.innerHTML = txt;
+  };
+  deskVoiceRec.onend = () => {
+    btn.classList.remove('listening');
+    showPanel('nl-search');
+    startNLDemo();
+  };
+  try { deskVoiceRec.start(); } catch(e) { btn.classList.remove('listening'); }
+}
 
 function startNLDemo() {
   const typingEl = document.getElementById('nl-typing-text');
