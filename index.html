@@ -2,7 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-title" content="ECB Scout">
+<style>
+/* ── Native app shell: edge-to-edge, real safe-areas, no webpage tells ── */
+@view-transition { navigation: auto; }
+html { background: #0A1B3D; }
+body { overscroll-behavior: none; }
+@media all and (display-mode: standalone), all and (display-mode: fullscreen) {
+  .status-bar { height: env(safe-area-inset-top); min-height: env(safe-area-inset-top);
+                padding-top: 0 !important; padding-bottom: 0 !important; overflow: hidden; }
+  .status-bar > * { display: none !important; }
+  .app-shell { width: 100% !important; min-height: 100dvh; border-radius: 0 !important; box-shadow: none !important; }
+  body { padding-bottom: env(safe-area-inset-bottom); }
+}
+</style>
 <title>ECB — Sign In</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0A1B3D">

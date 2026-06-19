@@ -1,10 +1,16 @@
 {
+  "id": "./index.html",
   "name": "ECB Scouting Platform",
   "short_name": "ECB Scout",
   "description": "England & Wales Cricket Board — Scouting & Performance Platform",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait",
+  "lang": "en-GB",
+  "dir": "ltr",
+  "categories": ["sports", "productivity"],
   "background_color": "#0A1B3D",
   "theme_color": "#0A1B3D",
   "icons": [
@@ -12,13 +18,39 @@
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Today's Assignments",
+      "short_name": "Assignments",
+      "description": "Jump to today's scouting list",
+      "url": "./scout/home.html"
+    },
+    {
+      "name": "Refer a Player",
+      "short_name": "Refer",
+      "description": "Submit a talent referral",
+      "url": "./coach/index.html"
     }
   ]
 }

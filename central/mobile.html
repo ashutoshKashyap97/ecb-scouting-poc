@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>ECB — Central Staff</title>
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#0A1B3D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ECB Scout">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0A1B3D; --navy-mid: #102A52; --navy-light: #1B3A68;
+  --teal: #0072CE; --teal-light: #00A3E0; --teal-pale: #E4EFFA;
+  --red: #E4002B; --amber: #E8A100; --green: #1F9D55;
+  --surface: #ECEAE4; --card: #FFFFFF; --border: #D7D2CB; --border-light: #E7E3DC;
+  --text-primary: #0A1B3D; --text-secondary: #3F4A5A; --text-muted: #6B7580;
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; background: #0A1B3D; }
+body {
+  font-family: var(--font); background: var(--surface); color: var(--text-primary);
+  -webkit-font-smoothing: antialiased; min-height: 100vh; min-height: 100dvh;
+  overflow-x: hidden; overscroll-behavior: none;
+}
+*:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+@view-transition { navigation: auto; }
+
+/* ── Status bar (mock; collapses to a safe-area strip once installed) ── */
+.status-bar {
+  background: var(--navy); padding: 8px 20px; display: flex; align-items: center;
+  justify-content: space-between; font-size: 13px; font-weight: 600; color: #fff;
+  position: sticky; top: 0; z-index: 60;
+}
+.status-bar-right { display: flex; align-items: center; gap: 6px; }
+.status-bar-right svg { width: 16px; height: 16px; }
+
+/* ── Topbar ── */
+.topbar {
+  background: var(--navy); padding: 14px 18px 18px;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  position: sticky; top: 33px; z-index: 50;
+}
+.tb-greeting { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -.4px; }
+.tb-sub { font-size: 12px; font-weight: 500; color: rgba(255,255,255,.5); margin-top: 3px; }
+.tb-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.tb-icon {
+  width: 38px; height: 38px; background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.07); display: flex; align-items: center;
+  justify-content: center; color: rgba(255,255,255,.85); position: relative; cursor: pointer;
+}
+.tb-icon svg { width: 18px; height: 18px; }
+.tb-dot { position: absolute; top: 8px; right: 9px; width: 7px; height: 7px; background: var(--red); border-radius: 50%; }
+.tb-avatar {
+  width: 38px; height: 38px; background: var(--teal); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;
+}
+
+/* ── Views ── */
+.view { display: none; }
+.view.active { display: block; animation: fadeIn .25s ease-out both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none; } }
+.scroll { padding: 14px 14px calc(86px + env(safe-area-inset-bottom)); }
+
+/* ── Section header ── */
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; margin: 18px 2px 10px; }
+.sec-title { font-size: 15px; font-weight: 800; color: var(--text-primary); letter-spacing: -.2px; }
+.sec-count { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+.sec-link { font-size: 12px; font-weight: 700; color: var(--teal); text-decoration: none; }
+
+/* ── AI hero ── */
+.ai-hero {
+  background: var(--navy); border-left: 4px solid var(--teal-light);
+  padding: 18px 18px 16px; position: relative; overflow: hidden;
+}
+.ai-hero-label {
+  display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800;
+  color: var(--teal-light); letter-spacing: .6px; text-transform: uppercase; margin-bottom: 8px;
+}
+.ai-hero-label svg { width: 15px; height: 15px; }
+.ai-hero h3 { font-size: 18px; font-weight: 800; color: #fff; line-height: 1.3; letter-spacing: -.3px; }
+.ai-hero p { font-size: 12px; font-weight: 500; color: rgba(255,255,255,.55); line-height: 1.5; margin-top: 7px; }
+.ai-hero-btn {
+  margin-top: 14px; width: 100%; background: var(--teal); color: #fff; border: none;
+  padding: 13px; font-size: 14px; font-weight: 700; font-family: var(--font);
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px;
+}
+.ai-hero-btn:active { transform: scale(.98); }
+.ai-hero-btn svg { width: 18px; height: 18px; }
+
+/* ── Insight cards ── */
+.insight-card {
+  background: var(--card); border: 1px solid var(--border-light); border-left: 4px solid var(--border);
+  padding: 14px 15px; margin-bottom: 10px; cursor: pointer; transition: box-shadow .2s;
+}
+.insight-card:active { box-shadow: 0 2px 10px rgba(10,27,61,.1); }
+.insight-card.green { border-left-color: var(--green); }
+.insight-card.amber { border-left-color: var(--amber); }
+.insight-card.blue  { border-left-color: var(--teal); }
+.ic-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.ic-scouts { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+.ic-player { font-size: 16px; font-weight: 800; color: var(--text-primary); margin-bottom: 5px; }
+.ic-body { font-size: 12.5px; font-weight: 500; color: var(--text-secondary); line-height: 1.5; }
+.ic-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+.ic-metric { font-size: 12px; font-weight: 800; }
+.ic-metric.green { color: var(--green); } .ic-metric.amber { color: var(--amber); } .ic-metric.blue { color: var(--teal); }
+.ic-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--teal); }
+.ic-link svg { width: 13px; height: 13px; }
+
+/* ── Badges ── */
+.badge { font-size: 10.5px; font-weight: 700; padding: 4px 9px; letter-spacing: .2px; white-space: nowrap; }
+.badge-green { background: rgba(31,157,85,.13); color: var(--green); }
+.badge-amber { background: rgba(232,161,0,.14); color: #B97e00; }
+.badge-blue  { background: var(--teal-pale); color: var(--teal); }
+
+/* ── NL search ── */
+.nl-box { background: var(--card); border: 1.5px solid var(--border); padding: 14px; }
+.nl-input-wrap { display: flex; align-items: center; gap: 10px; }
+.nl-input-wrap svg { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
+.nl-input {
+  flex: 1; border: none; outline: none; font-family: var(--font); font-size: 14px;
+  font-weight: 500; color: var(--text-primary); background: transparent; min-height: 28px;
+}
+.nl-input::placeholder { color: var(--text-muted); font-weight: 400; }
+.nl-examples { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+.nl-eg {
+  font-size: 12px; font-weight: 600; color: var(--text-secondary); background: var(--surface);
+  border: 1px solid var(--border-light); padding: 7px 11px; cursor: pointer;
+}
+.nl-eg:active { background: var(--teal-pale); border-color: var(--teal); color: var(--teal); }
+.nl-run {
+  width: 100%; margin-top: 12px; background: var(--teal); color: #fff; border: none;
+  padding: 13px; font-size: 14px; font-weight: 700; font-family: var(--font); cursor: pointer; min-height: 48px;
+}
+#searchResults { display: none; }
+#searchResults.show { display: block; animation: fadeIn .3s ease-out both; }
+.nl-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 4px; }
+.fchip {
+  font-size: 11px; font-weight: 600; color: var(--text-secondary); background: var(--teal-pale);
+  border: 1px solid rgba(0,114,206,.2); padding: 5px 9px; display: inline-flex; gap: 4px;
+}
+.fchip span { color: var(--teal); font-weight: 700; }
+.result-meta { font-size: 12px; font-weight: 600; color: var(--text-muted); margin: 14px 2px 8px; }
+.result-meta strong { color: var(--text-primary); }
+.prc {
+  background: var(--card); border: 1px solid var(--border-light); padding: 14px; margin-bottom: 9px;
+}
+.prc-top { display: flex; align-items: center; gap: 11px; margin-bottom: 11px; }
+.prc-avatar { width: 40px; height: 40px; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+.prc-name { font-size: 15px; font-weight: 800; color: var(--text-primary); }
+.prc-meta { font-size: 11.5px; font-weight: 500; color: var(--text-muted); margin-top: 2px; }
+.prc-clips { margin-left: auto; text-align: center; flex-shrink: 0; }
+.prc-clips .num { font-size: 18px; font-weight: 800; color: var(--teal); }
+.prc-clips .lbl { font-size: 9px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .3px; }
+.prc-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; border-top: 1px solid var(--border-light); padding-top: 11px; }
+.prc-stat-val { font-size: 14px; font-weight: 800; color: var(--text-primary); }
+.prc-stat-val.hl { color: var(--teal); }
+.prc-stat-label { font-size: 9px; font-weight: 600; color: var(--text-muted); margin-top: 1px; line-height: 1.2; }
+.ai-summary { background: var(--navy); padding: 16px; margin-top: 8px; }
+.ai-sum-head { display: flex; align-items: center; gap: 7px; color: #fff; font-size: 12px; font-weight: 700; margin-bottom: 13px; flex-wrap: wrap; }
+.ai-sum-head svg { width: 15px; height: 15px; color: var(--teal-light); }
+.ai-sum-badge { font-size: 9px; font-weight: 800; background: rgba(0,163,224,.2); color: var(--teal-light); padding: 3px 7px; letter-spacing: .4px; }
+.ai-sum-row { display: flex; gap: 9px; margin-bottom: 12px; }
+.ai-sum-row:last-child { margin-bottom: 0; }
+.ai-sum-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.ai-sum-title { font-size: 12px; font-weight: 800; margin-bottom: 2px; }
+.ai-sum-body { font-size: 11.5px; font-weight: 500; color: rgba(255,255,255,.6); line-height: 1.5; }
+
+/* ── Filter chips ── */
+.filters { display: flex; gap: 7px; overflow-x: auto; padding: 2px 0 4px; -webkit-overflow-scrolling: touch; }
+.filters::-webkit-scrollbar { display: none; }
+.fil-chip {
+  font-size: 12px; font-weight: 700; color: var(--text-muted); background: var(--card);
+  border: 1px solid var(--border); padding: 8px 13px; white-space: nowrap; cursor: pointer; flex-shrink: 0;
+}
+.fil-chip.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+/* ── Player rows (registry) ── */
+.p-row {
+  background: var(--card); border: 1px solid var(--border-light); padding: 13px 14px;
+  margin-bottom: 8px; display: flex; align-items: center; gap: 12px; cursor: pointer;
+}
+.p-row:active { background: #fafafa; }
+.p-init { width: 42px; height: 42px; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+.p-main { flex: 1; min-width: 0; }
+.p-name-row { display: flex; align-items: center; gap: 8px; }
+.p-name { font-size: 15px; font-weight: 800; color: var(--text-primary); }
+.p-meta { font-size: 11.5px; font-weight: 500; color: var(--text-muted); margin-top: 1px; }
+.arch-tag { font-size: 10px; font-weight: 700; color: var(--text-secondary); background: var(--surface); border: 1px solid var(--border-light); padding: 3px 7px; }
+.p-readiness { display: flex; align-items: center; gap: 7px; margin-top: 8px; }
+.r-bar { flex: 1; height: 5px; background: var(--border-light); overflow: hidden; }
+.r-fill { height: 100%; }
+.r-val { font-size: 11px; font-weight: 800; min-width: 30px; }
+.p-right { text-align: right; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.p-pot { font-size: 13px; font-weight: 800; color: var(--teal); }
+.p-pot-lbl { font-size: 8.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+
+/* ── Reports ── */
+.sr-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 4px; }
+.sr-stat { background: var(--card); border: 1px solid var(--border-light); padding: 11px 6px; text-align: center; }
+.sr-stat-val { font-size: 18px; font-weight: 800; color: var(--text-primary); }
+.sr-stat-val.blue { color: var(--teal); } .sr-stat-val.green { color: var(--green); }
+.sr-stat-label { font-size: 8.5px; font-weight: 600; color: var(--text-muted); margin-top: 2px; line-height: 1.2; }
+.sr-card { background: var(--card); border: 1px solid var(--border-light); margin-bottom: 8px; overflow: hidden; }
+.sr-head { display: flex; align-items: center; gap: 11px; padding: 13px 14px; cursor: pointer; }
+.sr-init { width: 40px; height: 40px; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+.sr-info { flex: 1; min-width: 0; }
+.sr-name { font-size: 14px; font-weight: 800; color: var(--text-primary); }
+.sr-sub { font-size: 11px; font-weight: 500; color: var(--text-muted); margin-top: 2px; }
+.sr-stars { font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
+.sr-right { text-align: right; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+.sr-chev { width: 18px; height: 18px; color: var(--text-muted); transition: transform .25s; flex-shrink: 0; }
+.sr-card.open .sr-chev { transform: rotate(180deg); }
+.sr-detail { display: none; padding: 0 14px 14px; border-top: 1px solid var(--border-light); }
+.sr-card.open .sr-detail { display: block; animation: fadeIn .25s ease-out both; }
+.sr-d-title { font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin: 13px 0 7px; }
+.sr-d-row { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; font-size: 12.5px; }
+.sr-d-key { color: var(--text-muted); font-weight: 500; }
+.sr-d-val { color: var(--text-primary); font-weight: 700; text-align: right; }
+.sr-quote { font-size: 12.5px; font-weight: 500; font-style: italic; color: var(--text-secondary); line-height: 1.55; background: var(--surface); padding: 11px 13px; margin-top: 9px; border-left: 3px solid var(--teal); }
+.role-chip { font-size: 10px; font-weight: 700; color: var(--teal); background: var(--teal-pale); padding: 3px 8px; }
+
+/* ── More (desk-only) ── */
+.more-note { font-size: 12px; font-weight: 500; color: var(--text-muted); line-height: 1.5; margin: 4px 2px 14px; }
+.more-row { background: var(--card); border: 1px solid var(--border-light); padding: 15px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 13px; text-decoration: none; cursor: pointer; }
+.more-row:active { background: #fafafa; }
+.more-ic { width: 38px; height: 38px; background: var(--surface); display: flex; align-items: center; justify-content: center; color: var(--navy); flex-shrink: 0; }
+.more-ic svg { width: 19px; height: 19px; }
+.more-main { flex: 1; }
+.more-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+.more-desc { font-size: 11.5px; font-weight: 500; color: var(--text-muted); margin-top: 2px; }
+.more-tag { font-size: 9.5px; font-weight: 800; color: var(--text-muted); background: var(--surface); border: 1px solid var(--border-light); padding: 4px 8px; text-transform: uppercase; letter-spacing: .3px; flex-shrink: 0; }
+.desktop-btn { width: 100%; margin: 16px 0 8px; background: var(--navy); color: #fff; border: none; padding: 16px; font-size: 14px; font-weight: 700; font-family: var(--font); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px; text-decoration: none; min-height: 54px; }
+.desktop-btn svg { width: 18px; height: 18px; }
+.signout-btn { width: 100%; background: transparent; color: var(--red); border: 1.5px solid var(--border); padding: 13px; font-size: 13px; font-weight: 700; font-family: var(--font); cursor: pointer; text-decoration: none; display: block; text-align: center; min-height: 48px; line-height: 22px; }
+
+/* ── Bottom tab bar ── */
+.tabbar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 70;
+  background: var(--card); border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tab { position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 9px 2px 8px; background: none; border: none; font-family: var(--font); cursor: pointer; color: var(--text-muted); }
+.tab svg { width: 22px; height: 22px; }
+.tab span { font-size: 10px; font-weight: 600; }
+.tab.active { color: var(--teal); }
+.tab .tab-badge { position: absolute; }
+.tab-wrap { position: relative; display: flex; }
+.tab-count { position: absolute; top: 4px; left: 50%; transform: translateX(2px); background: var(--red); color: #fff; font-size: 9px; font-weight: 800; min-width: 16px; height: 16px; padding: 0 4px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+
+/* ── Phone frame on desktop preview ── */
+@media (min-width: 480px) {
+  body { display: flex; align-items: flex-start; justify-content: center; padding: 28px 20px; }
+  .app-shell {
+    width: 390px; min-height: 100vh; background: var(--surface); position: relative;
+    border-radius: 40px; overflow: hidden;
+    box-shadow: 0 0 0 8px #1E293B, 0 0 0 10px #334155, 0 32px 80px rgba(0,0,0,.5);
+  }
+  .tabbar { position: sticky; border-radius: 0 0 40px 40px; }
+  .scroll { padding-bottom: 20px; }
+  .status-bar, .topbar { position: static; }
+}
+
+/* ── Native app shell (installed standalone) ── */
+@media all and (display-mode: standalone), all and (display-mode: fullscreen) {
+  .status-bar { height: env(safe-area-inset-top); min-height: env(safe-area-inset-top); padding-top: 0 !important; padding-bottom: 0 !important; overflow: hidden; }
+  .status-bar > * { display: none !important; }
+  .topbar { top: env(safe-area-inset-top); }
+  .app-shell { width: 100% !important; min-height: 100dvh; border-radius: 0 !important; box-shadow: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-bar-right">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 9l4-4 4 4"/><path d="M5 5v14"/><path d="M9 5h2"/><path d="M9 9h4"/><path d="M9 13h6"/><path d="M9 17h8"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="10" x2="23" y2="14"/></svg>
+    </div>
+  </div>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div>
+      <div class="tb-greeting" id="tbTitle">Insight Manager</div>
+      <div class="tb-sub" id="tbSub">Good morning, Ed · Mon 16 June 2026</div>
+    </div>
+    <div class="tb-right">
+      <div class="tb-icon" aria-label="Notifications"><span class="tb-dot"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+      </div>
+      <div class="tb-avatar">ET</div>
+    </div>
+  </div>
+
+  <!-- ════════ INSIGHTS ════════ -->
+  <section class="view active" id="view-insights">
+    <div class="scroll">
+      <div class="ai-hero">
+        <div class="ai-hero-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>
+          AI Intelligence · Overnight
+        </div>
+        <h3>3 players crossed readiness thresholds since your last session</h3>
+        <p>Backed by scout reports, ball-by-ball data and video from the ECB Performance Data Warehouse.</p>
+        <button class="ai-hero-btn" onclick="go('search'); runSearch()">
+          Open NL Search
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div class="sec-head"><span class="sec-title">Overnight Movers</span><span class="sec-count">3 flagged</span></div>
+
+      <div class="insight-card green" onclick="go('players')">
+        <div class="ic-header"><span class="badge badge-green">↑ Readiness Uplift</span><span class="ic-scouts">3 scouts</span></div>
+        <div class="ic-player">Sam Hartley</div>
+        <div class="ic-body">Death-over economy improved from 9.4 → 7.2 across last 6 matches. Consistent 135 km/h+ at the death. 3 scouts corroborate independently.</div>
+        <div class="ic-footer"><span class="ic-metric green">Econ 7.2 ↑</span><span class="ic-link">View evidence</span></div>
+      </div>
+      <div class="insight-card amber" onclick="go('players')">
+        <div class="ic-header"><span class="badge badge-amber">⇧ List Movement</span><span class="ic-scouts">2 scouts</span></div>
+        <div class="ic-player">Oliver Webb</div>
+        <div class="ic-body">Independently moved from Long-list to Short-list by 2 scouts this week. Top-order batter, Surrey. AI sentiment: high ceiling, strong under pressure.</div>
+        <div class="ic-footer"><span class="ic-metric amber">Future: 88%</span><span class="ic-link">View profile</span></div>
+      </div>
+      <div class="insight-card blue" onclick="go('players')">
+        <div class="ic-header"><span class="badge badge-blue">★ AI Sentiment</span><span class="ic-scouts">5 reports</span></div>
+        <div class="ic-player">Ravi Patel</div>
+        <div class="ic-body">Off-spin strike rate in powerplay: 14.2 — top 3% nationally. Aggregated sentiment across 5 reports flags high technical ceiling and improving match awareness.</div>
+        <div class="ic-footer"><span class="ic-metric blue">SR 14.2 ↑</span><span class="ic-link">View analysis</span></div>
+      </div>
+
+      <div class="sec-head"><span class="sec-title">Jump to</span></div>
+      <div class="more-row" onclick="go('search')">
+        <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+        <div class="more-main"><div class="more-name">Natural-language Search</div><div class="more-desc">Ask anything about your players or video</div></div>
+        <span class="more-tag">AI</span>
+      </div>
+      <div class="more-row" onclick="go('reports')">
+        <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></div>
+        <div class="more-main"><div class="more-name">Scout Reports</div><div class="more-desc">7 new this month · 2 recommend promotion</div></div>
+        <span class="more-tag" style="color:var(--red)">7 new</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SEARCH ════════ -->
+  <section class="view" id="view-search">
+    <div class="scroll">
+      <div class="nl-box">
+        <div class="nl-input-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input class="nl-input" id="nlInput" placeholder="Ask anything about your players, video or reports…" value="Left-arm seamers, death overs, 135 km/h+, under 23">
+        </div>
+        <div class="nl-examples">
+          <span class="nl-eg" onclick="setQuery(this)">Left-arm seamers, death overs, 135 km/h+, under 23</span>
+          <span class="nl-eg" onclick="setQuery(this)">Top-order batters strong vs spin, U23</span>
+          <span class="nl-eg" onclick="setQuery(this)">Off-spinners, powerplay wickets, top 5%</span>
+        </div>
+        <button class="nl-run" onclick="runSearch()">Search with AI</button>
+      </div>
+
+      <div id="searchResults">
+        <div class="nl-chips">
+          <div class="fchip">Arm: <span>Left-arm</span></div>
+          <div class="fchip">Phase: <span>Death (17–20)</span></div>
+          <div class="fchip">Speed: <span>≥ 135 km/h</span></div>
+          <div class="fchip">Age: <span>Under 23</span></div>
+        </div>
+        <div class="result-meta"><strong>3 players</strong> matched · <strong>11 clips</strong> from ECB Performance Data Warehouse</div>
+
+        <div class="prc">
+          <div class="prc-top">
+            <div class="prc-avatar">SH</div>
+            <div class="prc-info" style="flex:1"><div class="prc-name">Sam Hartley</div><div class="prc-meta">Left-arm seamer · Age 21 · Lancashire · Short-list</div></div>
+            <div class="prc-clips"><div class="num">5</div><div class="lbl">clips</div></div>
+          </div>
+          <div class="prc-stats">
+            <div><div class="prc-stat-val hl">137</div><div class="prc-stat-label">Avg km/h death</div></div>
+            <div><div class="prc-stat-val">7.2</div><div class="prc-stat-label">Death econ</div></div>
+            <div><div class="prc-stat-val">74%</div><div class="prc-stat-label">Readiness</div></div>
+            <div><div class="prc-stat-val">12</div><div class="prc-stat-label">Wkts death</div></div>
+          </div>
+        </div>
+        <div class="prc">
+          <div class="prc-top">
+            <div class="prc-avatar">JM</div>
+            <div class="prc-info" style="flex:1"><div class="prc-name">Jake Morrison</div><div class="prc-meta">Left-arm seamer · Age 22 · Yorkshire · Long-list</div></div>
+            <div class="prc-clips"><div class="num">4</div><div class="lbl">clips</div></div>
+          </div>
+          <div class="prc-stats">
+            <div><div class="prc-stat-val hl">135</div><div class="prc-stat-label">Avg km/h death</div></div>
+            <div><div class="prc-stat-val">8.1</div><div class="prc-stat-label">Death econ</div></div>
+            <div><div class="prc-stat-val">58%</div><div class="prc-stat-label">Readiness</div></div>
+            <div><div class="prc-stat-val">8</div><div class="prc-stat-label">Wkts death</div></div>
+          </div>
+        </div>
+        <div class="prc">
+          <div class="prc-top">
+            <div class="prc-avatar">CP</div>
+            <div class="prc-info" style="flex:1"><div class="prc-name">Callum Price</div><div class="prc-meta">Left-arm seamer · Age 20 · Kent · Long-list</div></div>
+            <div class="prc-clips"><div class="num">2</div><div class="lbl">clips</div></div>
+          </div>
+          <div class="prc-stats">
+            <div><div class="prc-stat-val hl">136</div><div class="prc-stat-label">Avg km/h death</div></div>
+            <div><div class="prc-stat-val">8.6</div><div class="prc-stat-label">Death econ</div></div>
+            <div><div class="prc-stat-val">51%</div><div class="prc-stat-label">Readiness</div></div>
+            <div><div class="prc-stat-val">6</div><div class="prc-stat-label">Wkts death</div></div>
+          </div>
+        </div>
+
+        <div class="ai-summary">
+          <div class="ai-sum-head">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>
+            <span>AI Analysis — Death Bowling, 135 km/h+, U23</span>
+            <span class="ai-sum-badge">Gemini</span>
+          </div>
+          <div class="ai-sum-row"><div class="ai-sum-dot" style="background:var(--green)"></div><div><div class="ai-sum-title" style="color:var(--green)">Common strengths</div><div class="ai-sum-body">High pace consistency in death overs. Effective yorker at pace. Strong work rate and composure with runs to defend.</div></div></div>
+          <div class="ai-sum-row"><div class="ai-sum-dot" style="background:var(--amber)"></div><div><div class="ai-sum-title" style="color:var(--amber)">Development areas</div><div class="ai-sum-body">Slower-ball variation inconsistency flagged across 3 of 5 scouts. Powerplay economy lags behind death-over numbers.</div></div></div>
+          <div class="ai-sum-row"><div class="ai-sum-dot" style="background:var(--teal-light)"></div><div><div class="ai-sum-title" style="color:var(--teal-light)">Scout consensus</div><div class="ai-sum-body">4 of 5 matching scouts rate these players Shortlist-ready or above. Based on 23 reports, 2024–2026 data.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PLAYERS ════════ -->
+  <section class="view" id="view-players">
+    <div class="scroll">
+      <div class="sec-head" style="margin-top:6px"><div><span class="sec-title">Player Longlist</span> <span class="sec-count">23 players</span></div></div>
+      <div class="filters">
+        <div class="fil-chip active" onclick="filterP(this,'all')">All</div>
+        <div class="fil-chip" onclick="filterP(this,'Death Bowler')">Death Bowler</div>
+        <div class="fil-chip" onclick="filterP(this,'Top-order')">Top-order</div>
+        <div class="fil-chip" onclick="filterP(this,'Spin Bowler')">Spin</div>
+        <div class="fil-chip" onclick="filterP(this,'WK Batter')">WK Batter</div>
+      </div>
+      <div id="playerList" style="margin-top:10px"></div>
+    </div>
+  </section>
+
+  <!-- ════════ REPORTS ════════ -->
+  <section class="view" id="view-reports">
+    <div class="scroll">
+      <div class="sr-stats" style="margin-top:6px">
+        <div class="sr-stat"><div class="sr-stat-val">47</div><div class="sr-stat-label">This season</div></div>
+        <div class="sr-stat"><div class="sr-stat-val blue">7</div><div class="sr-stat-label">This month</div></div>
+        <div class="sr-stat"><div class="sr-stat-val">4</div><div class="sr-stat-label">This week</div></div>
+        <div class="sr-stat"><div class="sr-stat-val green">91%</div><div class="sr-stat-label">Accuracy</div></div>
+      </div>
+
+      <div class="sec-head"><span class="sec-title">Scout Reports</span><span class="sec-count">7 this month</span></div>
+
+      <div class="sr-card open">
+        <div class="sr-head" onclick="toggleSr(this)">
+          <div class="sr-init">SH</div>
+          <div class="sr-info">
+            <div class="sr-name">Sam Hartley</div>
+            <div class="sr-sub">J. Clarke · Lancashire vs Surrey · 12 Jun</div>
+            <div class="sr-stars" style="color:var(--green)">★★★★★</div>
+          </div>
+          <div class="sr-right"><span class="badge badge-green">↑ Promote</span><span class="role-chip">Death Seamer</span></div>
+          <svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="sr-detail">
+          <div class="sr-d-title">Overall Assessment</div>
+          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--green)">★★★★★ Outstanding</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Next level</span><span class="sr-d-val">Ready now</span></div>
+          <div class="sr-quote">"Outstanding at the death. Yorker to dismiss top-order batter on 38 was the best I've seen from a U21 bowler this season. Composure under pressure is elite for his age."</div>
+          <div class="sr-d-title">Technical Criteria</div>
+          <div class="sr-d-row"><span class="sr-d-key">Action &amp; release</span><span class="sr-d-val" style="color:var(--green)">★★★★★</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Control &amp; accuracy</span><span class="sr-d-val" style="color:var(--green)">★★★★★</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Variation &amp; pace changes</span><span class="sr-d-val" style="color:var(--amber)">★★★☆☆</span></div>
+        </div>
+      </div>
+
+      <div class="sr-card">
+        <div class="sr-head" onclick="toggleSr(this)">
+          <div class="sr-init">OW</div>
+          <div class="sr-info">
+            <div class="sr-name">Oliver Webb</div>
+            <div class="sr-sub">M. Davis · Surrey vs Hampshire · 10 Jun</div>
+            <div class="sr-stars" style="color:var(--teal)">★★★★☆</div>
+          </div>
+          <div class="sr-right"><span class="badge badge-green">↑ Promote</span><span class="role-chip">Top-order Bat</span></div>
+          <svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="sr-detail">
+          <div class="sr-d-title">Overall Assessment</div>
+          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--teal)">★★★★☆ Excellent</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Next level</span><span class="sr-d-val">6–12 months</span></div>
+          <div class="sr-quote">"Webb's footwork against seam movement in helpful conditions was impressive. Made 68 from 82 balls, showing real intent. Shot selection against the short ball still a development area."</div>
+        </div>
+      </div>
+
+      <div class="sr-card">
+        <div class="sr-head" onclick="toggleSr(this)">
+          <div class="sr-init">RP</div>
+          <div class="sr-info">
+            <div class="sr-name">Ravi Patel</div>
+            <div class="sr-sub">A. Singh · Middlesex vs Essex · 8 Jun</div>
+            <div class="sr-stars" style="color:var(--teal)">★★★★☆</div>
+          </div>
+          <div class="sr-right"><span class="badge badge-amber">Monitor</span><span class="role-chip">Off-spin</span></div>
+          <svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="sr-detail">
+          <div class="sr-d-title">Overall Assessment</div>
+          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--teal)">★★★★☆ Excellent</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Next level</span><span class="sr-d-val">12–18 months</span></div>
+          <div class="sr-quote">"Outstanding powerplay control for a spinner — 14.2 strike rate is exceptional. Flight and dip are genuine wicket-taking weapons. Needs a reliable arm-ball to round out his attack."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ MORE ════════ -->
+  <section class="view" id="view-more">
+    <div class="scroll">
+      <p class="more-note">These tools are data-dense and built for the desktop platform. Open them on a larger screen for the full experience.</p>
+
+      <a class="more-row" href="index.html?desktop=1&view=squad-selection">
+        <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="more-main"><div class="more-name">Squad Selection</div><div class="more-desc">Build and publish squads</div></div>
+        <span class="more-tag">Desktop</span>
+      </a>
+      <a class="more-row" href="index.html?desktop=1&view=depth-charts">
+        <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="20" x2="6" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="14"/></svg></div>
+        <div class="more-main"><div class="more-name">Depth Charts</div><div class="more-desc">Positional depth by archetype</div></div>
+        <span class="more-tag">Desktop</span>
+      </a>
+      <a class="more-row" href="index.html?desktop=1&view=comparison">
+        <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="more-main"><div class="more-name">Player Comparison</div><div class="more-desc">Side-by-side metrics &amp; radar</div></div>
+        <span class="more-tag">Desktop</span>
+      </a>
+      <a class="more-row" href="index.html?desktop=1&view=platform-analytics">
+        <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <div class="more-main"><div class="more-name">Platform Analytics</div><div class="more-desc">Pipeline &amp; scout performance</div></div>
+        <span class="more-tag">Desktop</span>
+      </a>
+      <a class="more-row" href="index.html?desktop=1&view=manage-scouts">
+        <div class="more-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></div>
+        <div class="more-main"><div class="more-name">Manage Scouts</div><div class="more-desc">Network &amp; coverage</div></div>
+        <span class="more-tag">Desktop</span>
+      </a>
+
+      <a class="desktop-btn" href="index.html?desktop=1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Open full desktop platform
+      </a>
+      <a class="signout-btn" href="../index.html">Sign out</a>
+    </div>
+  </section>
+
+  <!-- Bottom tab bar -->
+  <nav class="tabbar">
+    <button class="tab active" data-tab="insights" onclick="go('insights')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>
+      <span>Insights</span>
+    </button>
+    <button class="tab" data-tab="search" onclick="go('search')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <span>Search</span>
+    </button>
+    <button class="tab" data-tab="players" onclick="go('players')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg>
+      <span>Players</span>
+    </button>
+    <button class="tab" data-tab="reports" onclick="go('reports')">
+      <span class="tab-count">7</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+      <span>Reports</span>
+    </button>
+    <button class="tab" data-tab="more" onclick="go('more')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <span>More</span>
+    </button>
+  </nav>
+
+</div>
+
+<script>
+// ── Service worker (same as the rest of the mobile app) ──
+if ('serviceWorker' in navigator) {
+  const had = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.register('../sw.js', { updateViaCache: 'none' });
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!had || reloaded) return; reloaded = true; location.reload();
+  });
+}
+
+const TITLES = {
+  insights: ['Insight Manager', 'Good morning, Ed · Mon 16 June 2026'],
+  search:   ['NL Search', 'Natural-language player intelligence'],
+  players:  ['Player Registry', '23 players on the national longlist'],
+  reports:  ['Scout Reports', '7 reports this month · 2 recommend promotion'],
+  more:     ['More Tools', 'Desk-based selection & analytics']
+};
+
+function go(tab) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + tab).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.getElementById('tbTitle').textContent = TITLES[tab][0];
+  document.getElementById('tbSub').textContent = TITLES[tab][1];
+  document.querySelector('.app-shell').scrollTo ? window.scrollTo(0,0) : null;
+  window.scrollTo(0, 0);
+}
+
+// ── NL Search ──
+function setQuery(el) { document.getElementById('nlInput').value = el.textContent; runSearch(); }
+function runSearch() {
+  document.getElementById('searchResults').classList.add('show');
+}
+
+// ── Player registry (faithful to desktop longlist) ──
+const PLAYERS = [
+  { in:'SH', name:'Sam Hartley',   county:'Lancashire',      age:21, arch:'Death Bowler', ready:74, pot:91, status:'Short-list', sCls:'green' },
+  { in:'OW', name:'Oliver Webb',   county:'Surrey',          age:20, arch:'Top-order',    ready:66, pot:88, status:'Short-list', sCls:'green' },
+  { in:'RP', name:'Ravi Patel',    county:'Middlesex',       age:22, arch:'Spin Bowler',  ready:61, pot:84, status:'Long-list',  sCls:'blue'  },
+  { in:'JM', name:'Jake Morrison', county:'Yorkshire',       age:22, arch:'Death Bowler', ready:58, pot:79, status:'Long-list',  sCls:'blue'  },
+  { in:'TA', name:'Tom Ashworth',  county:'Nottinghamshire', age:23, arch:'WK Batter',    ready:54, pot:76, status:'Watch',      sCls:'amber' }
+];
+function readyColor(v) { return v >= 70 ? 'var(--green)' : v >= 55 ? 'var(--amber)' : 'var(--red)'; }
+function renderPlayers(arch) {
+  const list = document.getElementById('playerList');
+  const rows = PLAYERS.filter(p => arch === 'all' || p.arch === arch).map(p => `
+    <div class="p-row">
+      <div class="p-init">${p.in}</div>
+      <div class="p-main">
+        <div class="p-name-row"><span class="p-name">${p.name}</span><span class="arch-tag">${p.arch}</span></div>
+        <div class="p-meta">${p.county} · Age ${p.age} · <span class="badge badge-${p.sCls}" style="padding:1px 6px">${p.status}</span></div>
+        <div class="p-readiness"><div class="r-bar"><div class="r-fill" style="width:${p.ready}%;background:${readyColor(p.ready)}"></div></div><span class="r-val" style="color:${readyColor(p.ready)}">${p.ready}%</span></div>
+      </div>
+      <div class="p-right"><span class="p-pot">${p.pot}%</span><span class="p-pot-lbl">Potential</span></div>
+    </div>`).join('');
+  list.innerHTML = rows || '<p style="font-size:13px;color:var(--text-muted);padding:20px 4px">No players match this archetype.</p>';
+}
+function filterP(el, arch) {
+  document.querySelectorAll('#view-players .fil-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderPlayers(arch);
+}
+
+// ── Reports expand/collapse ──
+function toggleSr(head) { head.closest('.sr-card').classList.toggle('open'); }
+
+renderPlayers('all');
+</script>
+</body>
+</html>

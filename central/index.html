@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ECB — Central Staff Platform</title>
+<script>
+  // Phone users get the dedicated mobile app; ?desktop=1 forces the full desktop platform.
+  (function () {
+    if (!/[?&]desktop=1/.test(location.search) && window.matchMedia('(max-width: 767px)').matches) {
+      location.replace('./mobile.html' + location.search);
+    }
+  })();
+</script>
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#0A1B3D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ECB Scout">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
