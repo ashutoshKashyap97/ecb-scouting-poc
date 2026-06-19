@@ -342,6 +342,10 @@ body {
 .publish-bar { position: sticky; bottom: 0; padding: 12px 0 calc(4px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--surface) 30%); }
 .publish-btn { width: 100%; background: var(--teal); color: #fff; border: none; padding: 15px; font-size: 14px; font-weight: 700; font-family: var(--font); min-height: 52px; cursor: pointer; }
 .publish-btn:disabled { opacity: .5; }
+.slot { justify-content: space-between; }
+.slot-x { width: 30px; height: 30px; border: none; background: var(--surface); color: var(--text-muted); font-size: 13px; cursor: pointer; flex-shrink: 0; }
+.slot-x:active { background: var(--border-light); color: var(--red); }
+.pick-add { color: var(--teal) !important; border-color: var(--teal) !important; font-size: 16px; font-weight: 700; }
 
 /* ── Player Comparison (C-6) ── */
 .cmp-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border-light); background: var(--card); }
@@ -890,33 +894,10 @@ body {
       <div class="subhead"><button class="back-link" onclick="go('more')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg> More</button></div>
       <div class="squad-bar">
         <div class="squad-name">England Lions T20 — 20 Jun 2026</div>
-        <div class="squad-meta"><span class="badge badge-amber">Draft</span><span class="squad-tmpl">T20 template · 6 of 15 slots filled</span></div>
+        <div class="squad-meta"><span class="badge badge-amber" id="squadStatus">Draft</span><span class="squad-tmpl" id="squadCount">T20 template · 6 of 15 selected</span></div>
       </div>
-
-      <div class="squad-group-head">Openers (2)</div>
-      <div class="slot"><div class="slot-init">OW</div><div><div class="slot-name">Oliver Webb</div><div class="slot-meta">Surrey · Top-order · 66% ready</div></div></div>
-      <div class="slot empty" onclick="toast('Opens player pool — Shortlisted openers')">+ Add opener</div>
-
-      <div class="squad-group-head">Middle Order (4)</div>
-      <div class="slot"><div class="slot-init">JH</div><div><div class="slot-name">Jack Harrison</div><div class="slot-meta">Kent · Top-order · 62% ready</div></div></div>
-      <div class="slot empty" onclick="toast('Opens player pool — Middle order')">+ Add 3 more</div>
-
-      <div class="squad-group-head">All-rounders (2)</div>
-      <div class="slot empty" onclick="toast('Opens player pool — All-rounders')">+ Add 2 all-rounders</div>
-
-      <div class="squad-group-head">Seamers (4)</div>
-      <div class="slot"><div class="slot-init">SH</div><div><div class="slot-name">Sam Hartley</div><div class="slot-meta">Lancashire · Death Seamer · 74% ready</div></div></div>
-      <div class="slot"><div class="slot-init">JM</div><div><div class="slot-name">Jake Morrison</div><div class="slot-meta">Yorkshire · Death Seamer · 58% ready</div></div></div>
-      <div class="slot empty" onclick="toast('Opens player pool — Seamers')">+ Add 2 more</div>
-
-      <div class="squad-group-head">Spinners (2)</div>
-      <div class="slot"><div class="slot-init">RP</div><div><div class="slot-name">Ravi Patel</div><div class="slot-meta">Middlesex · Spin · 61% ready</div></div></div>
-      <div class="slot empty" onclick="toast('Opens player pool — Spinners')">+ Add 1 more</div>
-
-      <div class="squad-group-head">Wicketkeeper (1)</div>
-      <div class="slot"><div class="slot-init">TA</div><div><div class="slot-name">Tom Ashworth</div><div class="slot-meta">Nottinghamshire · WK Batter · 54% ready</div></div></div>
-
-      <div class="publish-bar"><button class="publish-btn" disabled>Publish squad · 9 slots remaining</button></div>
+      <div id="squadGroups"></div>
+      <div class="publish-bar"><button class="publish-btn" id="squadPublish" onclick="publishSquad()" disabled>Publish squad · 9 to select</button></div>
     </div>
   </section>
 
@@ -1136,6 +1117,19 @@ body {
         <label class="alloc-oe"><input type="checkbox" id="allocOpen" checked onchange="document.getElementById('allocTo').disabled=this.checked"> Open-ended</label>
       </div>
       <button class="sheet-save" id="allocSave" onclick="saveAllocation()" disabled>Save allocation</button>
+    </div>
+  </div>
+
+  <!-- Squad player-pick bottom sheet -->
+  <div class="sheet-overlay" id="squadOverlay" onclick="closeSquadPick()">
+    <div class="sheet" onclick="event.stopPropagation()">
+      <div class="sheet-head">
+        <div class="sheet-title">Add to <span id="squadSlotLabel">Openers</span></div>
+        <button class="sheet-x" onclick="closeSquadPick()" aria-label="Close">&#x2715;</button>
+      </div>
+      <div class="sheet-sub">Eligible shortlisted players not already in the squad. Tap to add.</div>
+      <input class="sheet-search" id="squadSearch" placeholder="Search players…" oninput="filterSquadPick(this.value)">
+      <div class="alloc-list" id="squadPickList"></div>
     </div>
   </div>
 
@@ -1407,9 +1401,100 @@ function actRef(btn, outcome) {
   toast(name + (outcome === 'approved' ? ' approved → Longlist' : ' referral rejected'));
 }
 
+// ── Squad Selection (C-7): tap-to-pick player selection ──
+const SQUAD_GROUPS = [
+  { key:'open', label:'Openers',      count:2, roles:['bat'] },
+  { key:'mid',  label:'Middle Order', count:4, roles:['bat','ar'] },
+  { key:'ar',   label:'All-rounders', count:2, roles:['ar'] },
+  { key:'seam', label:'Seamers',      count:4, roles:['seam'] },
+  { key:'spin', label:'Spinners',     count:2, roles:['spin'] },
+  { key:'wk',   label:'Wicketkeeper', count:1, roles:['wk'] }
+];
+const SQUAD_POOL = [
+  { id:'OW', name:'Oliver Webb',     meta:'Surrey · Top-order · 66% ready',          role:'bat'  },
+  { id:'JH', name:'Jack Harrison',   meta:'Kent · Top-order · 62% ready',            role:'bat'  },
+  { id:'MR', name:'Maya Richardson', meta:'Middlesex Women · Top-order · 69% ready',  role:'bat'  },
+  { id:'TC', name:'Tom Carver',      meta:'Essex · Opener · 60% ready',              role:'bat'  },
+  { id:'AF', name:'Adam Frost',      meta:'Durham · Top-order · 57% ready',          role:'bat'  },
+  { id:'BL', name:'Ben Lawson',      meta:'Hampshire · All-rounder · 64% ready',     role:'ar'   },
+  { id:'SK', name:'Sai Kumar',       meta:'Warwickshire · All-rounder · 58% ready',  role:'ar'   },
+  { id:'WH', name:'Will Hartman',    meta:'Somerset · All-rounder · 53% ready',      role:'ar'   },
+  { id:'SH', name:'Sam Hartley',     meta:'Lancashire · Death Seamer · 74% ready',   role:'seam' },
+  { id:'JM', name:'Jake Morrison',   meta:'Yorkshire · Death Seamer · 58% ready',    role:'seam' },
+  { id:'CP', name:'Callum Price',    meta:'Kent · Death Seamer · 51% ready',         role:'seam' },
+  { id:'HB', name:'Harry Boyd',      meta:'Durham · Seamer · 55% ready',             role:'seam' },
+  { id:'DC', name:'Dan Cole',        meta:'Sussex · Swing Seamer · 50% ready',       role:'seam' },
+  { id:'RP', name:'Ravi Patel',      meta:'Middlesex · Spin · 61% ready',            role:'spin' },
+  { id:'EW', name:'Ella Watts',      meta:'Lancashire Women · Spin · 55% ready',     role:'spin' },
+  { id:'FN', name:'Finlay Nash',     meta:'Somerset · Spin · 52% ready',             role:'spin' },
+  { id:'TA', name:'Tom Ashworth',    meta:'Nottinghamshire · WK Batter · 54% ready', role:'wk'   },
+  { id:'NB', name:'Nick Booth',      meta:'Gloucestershire · WK Batter · 49% ready', role:'wk'   }
+];
+let squad = { open:['OW'], mid:['JH'], ar:[], seam:['SH','JM'], spin:['RP'], wk:['TA'] };
+let squadPickKey = null;
+const poolById = id => SQUAD_POOL.find(p => p.id === id);
+const inSquad  = id => Object.values(squad).some(a => a.includes(id));
+
+function renderSquad() {
+  let sel = 0, total = 0;
+  document.getElementById('squadGroups').innerHTML = SQUAD_GROUPS.map(g => {
+    total += g.count;
+    const filled = squad[g.key] || [];
+    sel += filled.length;
+    let rows = filled.map(id => {
+      const p = poolById(id);
+      return `<div class="slot"><div class="slot-init">${p.id}</div><div style="flex:1"><div class="slot-name">${p.name}</div><div class="slot-meta">${p.meta}</div></div><button class="slot-x" onclick="removeFromSquad('${g.key}','${id}')" aria-label="Remove ${p.name}">&#x2715;</button></div>`;
+    }).join('');
+    for (let i = filled.length; i < g.count; i++) {
+      rows += `<div class="slot empty" onclick="openSquadPick('${g.key}')">+ Add ${g.label.replace(/s$/, '').toLowerCase()}</div>`;
+    }
+    return `<div class="squad-group-head">${g.label} (${g.count})</div>${rows}`;
+  }).join('');
+  const remaining = total - sel;
+  document.getElementById('squadCount').textContent = `T20 template · ${sel} of ${total} selected`;
+  const btn = document.getElementById('squadPublish');
+  btn.disabled = remaining > 0;
+  btn.textContent = remaining > 0 ? `Publish squad · ${remaining} to select` : 'Publish squad · ready ✓';
+}
+function openSquadPick(key) {
+  squadPickKey = key;
+  document.getElementById('squadSlotLabel').textContent = SQUAD_GROUPS.find(g => g.key === key).label;
+  document.getElementById('squadSearch').value = '';
+  renderSquadPick('');
+  document.getElementById('squadOverlay').classList.add('show');
+}
+function renderSquadPick(q) {
+  const g = SQUAD_GROUPS.find(x => x.key === squadPickKey);
+  q = (q || '').toLowerCase();
+  const elig = SQUAD_POOL.filter(p => g.roles.includes(p.role) && !inSquad(p.id) && p.name.toLowerCase().includes(q));
+  document.getElementById('squadPickList').innerHTML = elig.length ? elig.map(p => `
+    <div class="alloc-row" onclick="addToSquad('${p.id}')">
+      <div class="alloc-init">${p.id}</div>
+      <div style="flex:1"><div class="alloc-name">${p.name}</div><div class="alloc-meta">${p.meta}</div></div>
+      <div class="alloc-check pick-add">+</div>
+    </div>`).join('') : '<p style="font-size:13px;color:var(--text-muted);padding:18px 4px;text-align:center">No eligible players left for this position.</p>';
+}
+function filterSquadPick(q) { renderSquadPick(q); }
+function addToSquad(id) {
+  const g = SQUAD_GROUPS.find(x => x.key === squadPickKey);
+  if ((squad[squadPickKey] || []).length >= g.count) { toast(g.label + ' is full'); return; }
+  squad[squadPickKey] = (squad[squadPickKey] || []).concat(id);
+  closeSquadPick();
+  renderSquad();
+  toast(poolById(id).name + ' added to ' + g.label);
+}
+function removeFromSquad(key, id) { squad[key] = (squad[key] || []).filter(x => x !== id); renderSquad(); }
+function closeSquadPick() { document.getElementById('squadOverlay').classList.remove('show'); }
+function publishSquad() {
+  const s = document.getElementById('squadStatus');
+  s.textContent = 'Published'; s.className = 'badge badge-green';
+  toast('England Lions T20 squad published to all Central Staff');
+}
+
 renderScouts();
 renderPlayers('all');
 renderDepth('England Men');
+renderSquad();
 </script>
 </body>
 </html>
