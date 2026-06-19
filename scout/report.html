@@ -303,26 +303,27 @@ body {
 .rating-pill.r4.sel { background: var(--teal-pale); border-color: var(--teal); color: var(--teal); }
 .rating-pill.r5.sel { background: #DCFCE7; border-color: var(--green); color: var(--green); }
 
-/* Criteria rows with star ratings */
+/* Criteria rows with peer-relative assessment */
 .criteria-row {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 0;
+  padding: 11px 0; gap: 10px;
   border-bottom: 1px solid var(--border-light);
 }
 .criteria-row:last-child { border-bottom: none; }
 .criteria-name {
   font-size: 13px; font-weight: 500; color: var(--text-primary); flex: 1;
 }
-.criteria-stars { display: flex; gap: 5px; }
-.star {
-  width: 28px; height: 28px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 0; transition: background .15s;
+.peer-opts { display: flex; gap: 5px; flex-shrink: 0; }
+.peer-opt {
+  font-size: 10px; font-weight: 700; padding: 6px 9px;
+  border: 1.5px solid var(--border); background: var(--card);
+  color: var(--text-muted); cursor: pointer; transition: all .15s;
+  white-space: nowrap; font-family: var(--font);
 }
-.star svg { width: 18px; height: 18px; }
-.star:hover { background: var(--border-light); }
-.star svg .star-fill { fill: var(--border); stroke: none; }
-.star.filled svg .star-fill { fill: var(--amber); }
+.peer-opt:hover { border-color: var(--text-sec); color: var(--text-sec); }
+.peer-opt.sel-below { background: #FEE2E2; border-color: var(--red);   color: var(--red); }
+.peer-opt.sel-equal { background: #FEF9C3; border-color: #EAB308;      color: #854D0E; }
+.peer-opt.sel-above { background: #DCFCE7; border-color: var(--green);  color: var(--green); }
 
 /* Attachment row */
 .attach-row { display: flex; gap: 8px; }
@@ -698,35 +699,48 @@ const criteriaSet = (playerType.includes('all') || isAllRounder(playerName)) ? A
                   : (playerType.includes('bowl') || isBowler(playerName))    ? BOWLING_CRITERIA
                   : BATTING_CRITERIA;
 
+const PEER_OPTS = [
+  { val: 1, label: 'Below peer',    cls: 'sel-below' },
+  { val: 3, label: 'Equal to peer', cls: 'sel-equal' },
+  { val: 5, label: 'Well above',    cls: 'sel-above' },
+];
+
 const criteriaList = document.getElementById('criteriaList');
 criteriaSet.forEach((c, i) => {
   criteriaList.innerHTML += `
     <div class="criteria-row" id="crit${i}">
       <div class="criteria-name">${c}</div>
-      <div class="criteria-stars" data-idx="${i}">
-        ${[1,2,3,4,5].map(s => `
-          <div class="star" onclick="setStar(${i},${s})" tabindex="0" aria-label="${s} stars for ${c}">
-            <svg viewBox="0 0 24 24"><polygon class="star-fill" points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
-          </div>`).join('')}
+      <div class="peer-opts" data-idx="${i}" role="radiogroup" aria-label="Assessment for ${c}">
+        ${PEER_OPTS.map(o => `
+          <button class="peer-opt" type="button" data-val="${o.val}" data-cls="${o.cls}"
+            onclick="setPeer(${i},${o.val},'${o.cls}',this)"
+            aria-label="${o.label} peer group for ${c}">${o.label}</button>`).join('')}
       </div>
     </div>`;
 });
 
-// If draft, pre-fill a couple of stars as "60% done"
+// If draft, pre-fill peer assessments
 if (isDraft) {
-  setStar(0,4); setStar(1,3); setStar(2,4);
-  document.getElementById('summary').value = 'Strong showing in the first session. Excellent judgment on line and length.';
-  document.getElementById('innings').value = '1st Innings';
-  document.getElementById('conditions').value = 'Overcast, damp';
-  setTimeout(updateProgress, 100);
+  // Run after DOM is ready
+  setTimeout(() => {
+    [[0,5,'sel-above'],[1,3,'sel-equal'],[2,5,'sel-above']].forEach(([i,v,cls]) => {
+      const btn = document.querySelector(`.peer-opts[data-idx="${i}"] [data-val="${v}"]`);
+      if (btn) setPeer(i, v, cls, btn);
+    });
+    document.getElementById('summary').value = 'Strong showing in the first session. Excellent judgment on line and length.';
+    document.getElementById('innings').value = '1st Innings';
+    document.getElementById('conditions').value = 'Overcast, damp';
+    updateProgress();
+  }, 0);
 }
 
-// ── Star ratings ──
+// ── Peer-relative criteria ratings ──
 const starRatings = {};
-function setStar(criteriaIdx, stars) {
-  starRatings[criteriaIdx] = stars;
-  const row = document.querySelector(`.criteria-stars[data-idx="${criteriaIdx}"]`);
-  row.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('filled', i < stars));
+function setPeer(idx, val, cls, el) {
+  starRatings[idx] = val;
+  const row = document.querySelector(`.peer-opts[data-idx="${idx}"]`);
+  row.querySelectorAll('.peer-opt').forEach(b => b.classList.remove('sel-below','sel-equal','sel-above'));
+  el.classList.add(cls);
   updateProgress();
 }
 
