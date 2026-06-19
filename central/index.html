@@ -506,6 +506,66 @@ button { font-family: var(--font); cursor: pointer; }
 .fix-comp  { font-size: 11px; color: var(--text-sec); }
 
 /* ══════════════════════════════════════
+   MANAGE SCOUTS
+══════════════════════════════════════ */
+.ms-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px; }
+.ms-sum-card { background:var(--card); border:1px solid var(--border-light); box-shadow:var(--shadow-card); padding:13px 16px; }
+.ms-sum-val { font-size:26px; font-weight:800; color:var(--text-primary); line-height:1; }
+.ms-sum-val.green { color:var(--green); }
+.ms-sum-val.blue  { color:var(--teal); }
+.ms-sum-lbl { font-size:11px; color:var(--text-muted); margin-top:4px; font-weight:500; }
+
+.ms-table { width:100%; border-collapse:collapse; background:var(--card); box-shadow:var(--shadow-card); }
+.ms-table thead th {
+  font-size:10px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.4px;
+  padding:8px 14px; text-align:left; background:var(--surface); border-bottom:1px solid var(--border);
+}
+.ms-table tbody tr { border-bottom:1px solid var(--border-light); transition:background .15s; }
+.ms-table tbody tr:hover { background:var(--surface); }
+.ms-table tbody td { padding:11px 14px; }
+.ms-acc { font-size:12px; font-weight:700; }
+.ms-acc.green { color:var(--green); }
+.ms-acc.amber { color:var(--amber); }
+.ms-acc.red   { color:var(--red); }
+.ms-acc-bar { height:3px; background:var(--border); margin-top:3px; width:64px; }
+.ms-acc-fill { height:100%; }
+.ms-note {
+  display:flex; align-items:flex-start; gap:9px; margin-top:12px;
+  background:var(--teal-pale); border:1px solid rgba(0,114,206,.15); padding:11px 13px;
+  font-size:12px; color:var(--text-sec); line-height:1.55;
+}
+.ms-note svg { width:15px; height:15px; color:var(--teal); flex-shrink:0; margin-top:1px; }
+
+/* ══════════════════════════════════════
+   COACH REFERRALS
+══════════════════════════════════════ */
+.ref-controls { display:flex; align-items:center; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+.ref-status-chips { display:flex; gap:5px; }
+.ref-status-chip {
+  font-size:10px; font-weight:700; padding:5px 11px; border:1px solid var(--border);
+  background:var(--card); color:var(--text-muted); cursor:pointer; transition:all .15s;
+}
+.ref-status-chip.active { background:var(--navy); border-color:var(--navy); color:#fff; }
+
+.ref-card { background:var(--card); border:1px solid var(--border-light); box-shadow:var(--shadow-card); padding:16px 18px; margin-bottom:10px; }
+.ref-card-top { display:flex; align-items:flex-start; gap:14px; margin-bottom:12px; }
+.ref-init { width:36px; height:36px; background:var(--teal-pale); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:var(--teal); flex-shrink:0; }
+.ref-player-name { font-size:14px; font-weight:700; color:var(--text-primary); margin-bottom:2px; }
+.ref-player-meta { font-size:12px; color:var(--text-muted); }
+.ref-by-line { font-size:11px; color:var(--text-sec); margin-top:4px; }
+.ref-stars { font-size:14px; margin-left:auto; }
+.ref-scorecard { font-size:11px; color:var(--teal); font-weight:600; }
+.ref-observation { font-size:13px; color:var(--text-sec); line-height:1.6; margin-bottom:14px; font-style:italic; border-left:3px solid var(--border); padding-left:12px; }
+.ref-actions-row { display:flex; gap:8px; align-items:center; }
+.ref-approve { background:var(--green); color:#fff; border:none; padding:9px 16px; font-size:12px; font-weight:700; cursor:pointer; font-family:var(--font); transition:opacity .2s; }
+.ref-approve:hover { opacity:.85; }
+.ref-reject { background:var(--surface); color:var(--text-sec); border:1.5px solid var(--border); padding:8px 14px; font-size:12px; font-weight:600; cursor:pointer; font-family:var(--font); transition:all .15s; }
+.ref-reject:hover { border-color:var(--red); color:var(--red); }
+.ref-actioned { font-size:11px; font-weight:700; padding:6px 12px; }
+.ref-actioned.approved { background:rgba(31,157,85,.1); color:var(--green); }
+.ref-actioned.rejected { background:var(--surface); color:var(--text-muted); }
+
+/* ══════════════════════════════════════
    PLATFORM ANALYTICS
 ══════════════════════════════════════ */
 .pa-controls { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
@@ -1239,9 +1299,14 @@ button { font-family: var(--font); cursor: pointer; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         Platform Analytics
       </div>
-      <div class="nav-item">
+      <div class="nav-item" id="nav-manage-scouts" onclick="showPanel('manage-scouts')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
         Manage Scouts
+      </div>
+      <div class="nav-item" id="nav-coach-referrals" onclick="showPanel('coach-referrals')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><path d="M9 13l2 2 4-4"/></svg>
+        Coach Referrals
+        <span class="nav-badge">3</span>
       </div>
     </div>
 
@@ -2381,6 +2446,175 @@ button { font-family: var(--font); cursor: pointer; }
 
       </div>
 
+      <!-- ══ MANAGE SCOUTS ══ -->
+      <div class="content-panel" id="panel-manage-scouts">
+
+        <div class="ms-summary">
+          <div class="ms-sum-card"><div class="ms-sum-val blue">18</div><div class="ms-sum-lbl">Active scouts</div></div>
+          <div class="ms-sum-card"><div class="ms-sum-val green">71%</div><div class="ms-sum-lbl">Avg accuracy</div></div>
+          <div class="ms-sum-card"><div class="ms-sum-val">47</div><div class="ms-sum-lbl">Reports YTD</div></div>
+          <div class="ms-sum-card"><div class="ms-sum-val">6</div><div class="ms-sum-lbl">Unassigned players</div></div>
+        </div>
+
+        <table class="ms-table">
+          <thead>
+            <tr>
+              <th>Scout</th><th>Region</th><th>Reports (YTD)</th>
+              <th>Accuracy</th><th>Confirmation rate</th><th>Disagreement rate</th>
+              <th>Assigned players</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="player-name-cell"><div class="p-init">JC</div><div><div class="p-name">J. Clarke</div><div class="p-county">North Region</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">North</td>
+              <td style="font-size:13px;font-weight:700;color:var(--text-primary)">8</td>
+              <td><div class="ms-acc green">92%</div><div class="ms-acc-bar"><div class="ms-acc-fill" style="width:92%;background:var(--green)"></div></div></td>
+              <td style="font-size:12px;color:var(--green);font-weight:700">78%</td>
+              <td style="font-size:12px;color:var(--text-muted);font-weight:600">8%</td>
+              <td><span class="badge badge-blue" style="font-size:11px">5 players</span></td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item">View submissions</button><button class="action-dropdown-item">Allocate player</button><button class="action-dropdown-item">Edit profile</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="player-name-cell"><div class="p-init">MD</div><div><div class="p-name">M. Davis</div><div class="p-county">Central</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">Central</td>
+              <td style="font-size:13px;font-weight:700;color:var(--text-primary)">7</td>
+              <td><div class="ms-acc green">88%</div><div class="ms-acc-bar"><div class="ms-acc-fill" style="width:88%;background:var(--green)"></div></div></td>
+              <td style="font-size:12px;color:var(--green);font-weight:700">74%</td>
+              <td style="font-size:12px;color:var(--text-muted);font-weight:600">12%</td>
+              <td><span class="badge badge-blue" style="font-size:11px">4 players</span></td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item">View submissions</button><button class="action-dropdown-item">Allocate player</button><button class="action-dropdown-item">Edit profile</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="player-name-cell"><div class="p-init">AS</div><div><div class="p-name">A. Singh</div><div class="p-county">South East</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">South East</td>
+              <td style="font-size:13px;font-weight:700;color:var(--text-primary)">6</td>
+              <td><div class="ms-acc green">85%</div><div class="ms-acc-bar"><div class="ms-acc-fill" style="width:85%;background:var(--green)"></div></div></td>
+              <td style="font-size:12px;color:var(--green);font-weight:700">71%</td>
+              <td style="font-size:12px;color:var(--text-muted);font-weight:600">15%</td>
+              <td><span class="badge badge-blue" style="font-size:11px">4 players</span></td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item">View submissions</button><button class="action-dropdown-item">Allocate player</button><button class="action-dropdown-item">Edit profile</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="player-name-cell"><div class="p-init">RC</div><div><div class="p-name">R. Chen</div><div class="p-county">Central</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">Central</td>
+              <td style="font-size:13px;font-weight:700;color:var(--text-primary)">5</td>
+              <td><div class="ms-acc amber">79%</div><div class="ms-acc-bar"><div class="ms-acc-fill" style="width:79%;background:var(--amber)"></div></div></td>
+              <td style="font-size:12px;color:var(--amber);font-weight:700">63%</td>
+              <td style="font-size:12px;color:var(--text-muted);font-weight:600">21%</td>
+              <td><span class="badge badge-blue" style="font-size:11px">3 players</span></td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item">View submissions</button><button class="action-dropdown-item">Allocate player</button><button class="action-dropdown-item">Edit profile</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="player-name-cell"><div class="p-init">PJ</div><div><div class="p-name">P. Jones</div><div class="p-county">Midlands</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">Midlands</td>
+              <td style="font-size:13px;font-weight:700;color:var(--text-primary)">4</td>
+              <td><div class="ms-acc amber">71%</div><div class="ms-acc-bar"><div class="ms-acc-fill" style="width:71%;background:var(--amber)"></div></div></td>
+              <td style="font-size:12px;color:var(--amber);font-weight:700">58%</td>
+              <td style="font-size:12px;color:var(--text-muted);font-weight:600">27%</td>
+              <td><span class="badge badge-blue" style="font-size:11px">3 players</span></td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item">View submissions</button><button class="action-dropdown-item">Allocate player</button><button class="action-dropdown-item">Edit profile</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="player-name-cell"><div class="p-init">SB</div><div><div class="p-name">S. Barnes</div><div class="p-county">South West</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">South West</td>
+              <td style="font-size:13px;font-weight:700;color:var(--text-primary)">3</td>
+              <td><div class="ms-acc amber">68%</div><div class="ms-acc-bar"><div class="ms-acc-fill" style="width:68%;background:var(--amber)"></div></div></td>
+              <td style="font-size:12px;color:var(--amber);font-weight:700">55%</td>
+              <td style="font-size:12px;color:var(--text-muted);font-weight:600">32%</td>
+              <td><span class="badge badge-amber" style="font-size:11px">2 players</span></td>
+              <td class="action-cell" onclick="event.stopPropagation()"><button class="action-menu-btn" onclick="toggleMenu(this)">&#8942;</button><div class="action-dropdown"><button class="action-dropdown-item">View submissions</button><button class="action-dropdown-item">Allocate player</button><button class="action-dropdown-item">Edit profile</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="ms-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Accuracy scores are annual, computed weekly. A high confirmation rate means a scout's recommendations are consistently validated by Central Staff. A low score is a coaching opportunity, not a disciplinary action.
+        </div>
+      </div>
+
+      <!-- ══ COACH REFERRALS ══ -->
+      <div class="content-panel" id="panel-coach-referrals">
+
+        <div class="ref-controls">
+          <div class="ref-status-chips">
+            <div class="ref-status-chip active">All (3)</div>
+            <div class="ref-status-chip">Pending (3)</div>
+            <div class="ref-status-chip">Approved (7)</div>
+            <div class="ref-status-chip">Rejected (2)</div>
+          </div>
+          <span style="font-size:12px;color:var(--text-muted);margin-left:auto">Last 30 days &middot; 12 referrals total</span>
+        </div>
+
+        <div class="ref-card">
+          <div class="ref-card-top">
+            <div class="ref-init">TF</div>
+            <div style="flex:1">
+              <div class="ref-player-name">Tom Fletcher</div>
+              <div class="ref-player-meta">Devon &middot; Age 18 &middot; Seamer</div>
+              <div class="ref-by-line">Referred by <strong>S. Wells</strong> &middot; Exeter CC &middot; Club Coach &middot; 2 days ago</div>
+            </div>
+            <div class="ref-stars" style="color:var(--green)">★★★★★</div>
+          </div>
+          <div class="ref-observation">"Genuine pace — consistent 88mph spells. Took a 5-fer vs the county 2nd XI. Best quick I've seen at club level in years. Would rival the best young seamers in the county system."</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <span style="font-size:11px;color:var(--text-muted)">Match: Devon vs Somerset 2nd XI &middot; 13 Jun 2026</span>
+            <span class="ref-scorecard">Scorecard link &rarr;</span>
+          </div>
+          <div class="ref-actions-row">
+            <button class="ref-approve" onclick="actRef(this,'approved')">Approve &rarr; Longlist</button>
+            <button class="ref-reject" onclick="actRef(this,'rejected')">Reject</button>
+            <span style="font-size:11px;color:var(--text-muted);margin-left:auto">No scout assigned yet</span>
+          </div>
+        </div>
+
+        <div class="ref-card">
+          <div class="ref-card-top">
+            <div class="ref-init">AC</div>
+            <div style="flex:1">
+              <div class="ref-player-name">Aiden Cross</div>
+              <div class="ref-player-meta">Cornwall &middot; Age 17 &middot; Top-order Bat</div>
+              <div class="ref-by-line">Referred by <strong>M. Hale</strong> &middot; Truro CC &middot; Head Coach &middot; 4 days ago</div>
+            </div>
+            <div class="ref-stars" style="color:var(--teal)">★★★★☆</div>
+          </div>
+          <div class="ref-observation">"Scored 140* in the club final under real pressure. Exceptional temperament and shot range for his age. Moves beautifully to the ball — footwork against spin was especially striking."</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <span style="font-size:11px;color:var(--text-muted)">Match: Cornwall Club Final &middot; 11 Jun 2026</span>
+            <span class="ref-scorecard">Scorecard link &rarr;</span>
+          </div>
+          <div class="ref-actions-row">
+            <button class="ref-approve" onclick="actRef(this,'approved')">Approve &rarr; Longlist</button>
+            <button class="ref-reject" onclick="actRef(this,'rejected')">Reject</button>
+            <span style="font-size:11px;color:var(--text-muted);margin-left:auto">No scout assigned yet</span>
+          </div>
+        </div>
+
+        <div class="ref-card">
+          <div class="ref-card-top">
+            <div class="ref-init">PS</div>
+            <div style="flex:1">
+              <div class="ref-player-name">Priya Sharma</div>
+              <div class="ref-player-meta">Berkshire &middot; Age 19 &middot; Leg-spin</div>
+              <div class="ref-by-line">Referred by <strong>R. Owen</strong> &middot; Reading CC &middot; Academy Coach &middot; 5 days ago</div>
+            </div>
+            <div class="ref-stars" style="color:var(--teal)">★★★★☆</div>
+          </div>
+          <div class="ref-observation">"Big-turning leg-spinner — took 6 wickets in a single session. Genuine wicket-taking threat with real control. Flight and turn are far above county academy standard."</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <span style="font-size:11px;color:var(--text-muted)">Match: Berkshire vs Hampshire Women &middot; 10 Jun 2026</span>
+            <span style="font-size:11px;color:var(--text-muted)">No scorecard provided</span>
+          </div>
+          <div class="ref-actions-row">
+            <button class="ref-approve" onclick="actRef(this,'approved')">Approve &rarr; Longlist</button>
+            <button class="ref-reject" onclick="actRef(this,'rejected')">Reject</button>
+            <span style="font-size:11px;color:var(--text-muted);margin-left:auto">No scout assigned yet</span>
+          </div>
+        </div>
+
+      </div>
+
       <!-- ══ PLATFORM ANALYTICS ══ -->
       <div class="content-panel" id="panel-platform-analytics">
 
@@ -3196,7 +3430,7 @@ button { font-family: var(--font); cursor: pointer; }
 </div>
 
 <script>
-const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts','comparison','squad-selection','scout-reports','platform-analytics'];
+const PANELS = ['dashboard','nl-search','video','profile','player-registry','depth-charts','comparison','squad-selection','scout-reports','manage-scouts','coach-referrals','platform-analytics'];
 const TOPBAR = {
   'dashboard':       ['Insight Manager',  'Good morning, Ed · Monday 16 June 2026'],
   'nl-search':       ['NL Search',        'Query players, video and report data conversationally'],
@@ -3207,6 +3441,8 @@ const TOPBAR = {
   'comparison':      ['Player Comparison',  'Side-by-side analysis · Sam Hartley, Oliver Webb, Jack Harrison'],
   'squad-selection': ['Squad Selection',    'England Lions T20 — 20 Jun 2026 · Draft · 4 / 15 filled'],
   'scout-reports':      ['Scout Reports',      '7 reports this month · 47 this season · 91% accuracy'],
+  'manage-scouts':      ['Manage Scouts',      '18 active scouts · 71% avg accuracy · 6 unassigned players'],
+  'coach-referrals':    ['Coach Referrals',    '3 pending · 7 approved · 2 rejected this month'],
   'platform-analytics': ['Platform Analytics', '47 reports · 18 active scouts · 156 logins this week'],
 };
 
@@ -3269,6 +3505,14 @@ document.querySelectorAll('.arch-chip').forEach(chip => {
     chip.classList.add('active');
   });
 });
+
+// ── Coach Referrals ────────────────────────────────────────────────────────
+function actRef(btn, action) {
+  const row = btn.closest('.ref-actions-row');
+  row.innerHTML = action === 'approved'
+    ? '<span class="ref-actioned approved">&#10003; Approved — added to Longlist</span>'
+    : '<span class="ref-actioned rejected">Rejected — coach will be notified</span>';
+}
 
 // ── Scout Reports ─────────────────────────────────────────────────────────
 function toggleReport(id) {
