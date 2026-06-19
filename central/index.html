@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ECB — Central Staff Platform</title>
 <script>
-  // Phone users get the dedicated mobile app; ?desktop=1 forces the full desktop platform.
+  // Central Staff use the mobile app by default. ?desktop=1 opens the full desktop platform.
   (function () {
-    if (!/[?&]desktop=1/.test(location.search) && window.matchMedia('(max-width: 767px)').matches) {
+    if (!/[?&]desktop=1/.test(location.search)) {
       location.replace('./mobile.html' + location.search);
     }
   })();
