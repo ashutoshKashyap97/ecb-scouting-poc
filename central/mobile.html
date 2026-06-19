@@ -578,16 +578,16 @@ body {
         <div class="ic-footer"><span class="ic-metric green">Econ 7.2 ↑</span><span class="ic-link" onclick="event.stopPropagation();goVideo('insights')">&#9654; View evidence</span></div>
       </div>
       <div class="insight-card amber" onclick="goProfile('insights')">
-        <div class="ic-header"><span class="badge badge-amber">⇧ List Movement</span><span class="ic-scouts">2 scouts</span></div>
-        <div class="ic-player">Oliver Webb</div>
-        <div class="ic-body">Independently moved from Long-list to Short-list by 2 scouts this week. Top-order batter, Surrey. AI sentiment: high ceiling, strong under pressure.</div>
-        <div class="ic-footer"><span class="ic-metric amber">Future: 88%</span><span class="ic-link">View profile</span></div>
+        <div class="ic-header"><span class="badge badge-amber">⇧ List Movement</span><span class="ic-scouts">3 scouts · Women's</span></div>
+        <div class="ic-player">Grace Harper <span style="font-size:11px;font-weight:600;color:var(--red);background:rgba(228,0,43,.08);padding:1px 6px;margin-left:4px">W</span></div>
+        <div class="ic-body">Moved to Short-list by 3 scouts after back-to-back 5-wicket hauls in the Vitality T20 Women's County Cup. ECB's fastest women's bowler on the Longlist — avg 78 mph in death overs.</div>
+        <div class="ic-footer"><span class="ic-metric amber">Econ 6.8 ↑</span><span class="ic-link">View profile</span></div>
       </div>
       <div class="insight-card blue" onclick="goProfile('insights')">
-        <div class="ic-header"><span class="badge badge-blue">★ AI Sentiment</span><span class="ic-scouts">5 reports</span></div>
-        <div class="ic-player">Ravi Patel</div>
-        <div class="ic-body">Off-spin strike rate in powerplay: 14.2 — top 3% nationally. Aggregated sentiment across 5 reports flags high technical ceiling and improving match awareness.</div>
-        <div class="ic-footer"><span class="ic-metric blue">SR 14.2 ↑</span><span class="ic-link">View analysis</span></div>
+        <div class="ic-header"><span class="badge badge-blue">★ AI Sentiment</span><span class="ic-scouts">4 reports · U17</span></div>
+        <div class="ic-player">Arjun Sharma <span style="font-size:11px;font-weight:600;color:var(--teal);background:var(--teal-pale);padding:1px 6px;margin-left:4px">U17</span></div>
+        <div class="ic-body">Aggregated sentiment across 4 reports flags exceptional all-round ceiling for his age. Batting avg 34.2, economy 5.1 across last 6 U17 fixtures. Youngest player on the national Longlist.</div>
+        <div class="ic-footer"><span class="ic-metric blue">Avg 34.2 ↑</span><span class="ic-link">View analysis</span></div>
       </div>
 
       <div class="sec-head"><span class="sec-title">Jump to</span></div>
@@ -617,6 +617,7 @@ body {
         </div>
         <div class="nl-examples">
           <span class="nl-eg" onclick="setQuery(this)">Left-arm seamers, death overs, 135 km/h+, under 23</span>
+          <span class="nl-eg" onclick="setQuery(this)">Women's top-order batters, The Hundred, SR 130+</span>
           <span class="nl-eg" onclick="setQuery(this)">Top-order batters strong vs spin, U23</span>
           <span class="nl-eg" onclick="setQuery(this)">Off-spinners, powerplay wickets, top 5%</span>
         </div>
@@ -734,6 +735,29 @@ body {
           <div class="sr-d-row"><span class="sr-d-key">Action &amp; release</span><span class="sr-d-val" style="color:var(--green)">Very good vs peers</span></div>
           <div class="sr-d-row"><span class="sr-d-key">Control &amp; accuracy</span><span class="sr-d-val" style="color:var(--green)">Very good vs peers</span></div>
           <div class="sr-d-row"><span class="sr-d-key">Variation &amp; pace changes</span><span class="sr-d-val" style="color:var(--amber)">Equal to peer group</span></div>
+        </div>
+      </div>
+
+      <div class="sr-card">
+        <div class="sr-head" onclick="toggleSr(this)">
+          <div class="sr-init" style="background:rgba(228,0,43,.08);color:var(--red)">GH</div>
+          <div class="sr-info">
+            <div class="sr-name">Grace Harper <span style="font-size:10px;font-weight:700;color:var(--red);background:rgba(228,0,43,.07);padding:1px 5px;margin-left:4px">W</span></div>
+            <div class="sr-sub">M. Davis · Surrey W vs Lancashire W · 11 Jun</div>
+            <div class="sr-stars" style="color:var(--green)">Very good vs peer group</div>
+          </div>
+          <div class="sr-right"><span class="badge badge-green">&#8593; Promote</span><span class="role-chip">Pace Bowler</span></div>
+          <svg class="sr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="sr-detail">
+          <div class="sr-d-title">Overall Assessment</div>
+          <div class="sr-d-row"><span class="sr-d-key">Rating</span><span class="sr-d-val" style="color:var(--green)">Very good vs peer group</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Next level</span><span class="sr-d-val">Ready now (T20 &amp; The Hundred)</span></div>
+          <div class="sr-quote">"Exceptional pace — consistent 78 mph+ death overs. 5-fer in 10 balls in the final stages put the match beyond doubt. Best women's death bowler I've scouted this season."</div>
+          <div class="sr-d-title">Technical Criteria</div>
+          <div class="sr-d-row"><span class="sr-d-key">Action &amp; release</span><span class="sr-d-val" style="color:var(--green)">Well above</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Control &amp; accuracy</span><span class="sr-d-val" style="color:var(--green)">Well above</span></div>
+          <div class="sr-d-row"><span class="sr-d-key">Variation &amp; pace changes</span><span class="sr-d-val" style="color:var(--teal)">Above peers</span></div>
         </div>
       </div>
 
@@ -1323,6 +1347,8 @@ function startAIVoice(btn) {
 const PLAYERS = [
   { in:'SH', name:'Sam Hartley',     county:'Lancashire',      age:21, arch:'Death Bowler', ready:74, pot:91, status:'Short-list', sCls:'green', rn:6, rt:8 },
   { in:'OW', name:'Oliver Webb',     county:'Surrey',          age:20, arch:'Top-order',    ready:66, pot:88, status:'Short-list', sCls:'green', rn:5, rt:8 },
+  { in:'GH', name:'Grace Harper',    county:'Surrey Women',    age:24, arch:'Death Bowler', ready:78, pot:88, status:'Short-list', sCls:'green', rn:6, rt:8, women:true },
+  { in:'IC', name:'Imani Clarke',    county:'Hampshire Women', age:22, arch:'Top-order',    ready:71, pot:85, status:'Short-list', sCls:'green', rn:5, rt:7, women:true },
   { in:'MR', name:'Maya Richardson', county:'Middlesex Women', age:20, arch:'Top-order',    ready:69, pot:86, status:'Short-list', sCls:'green', rn:6, rt:9, women:true },
   { in:'RP', name:'Ravi Patel',      county:'Middlesex',       age:22, arch:'Spin Bowler',  ready:61, pot:84, status:'Long-list',  sCls:'blue',  rn:5, rt:8 },
   { in:'JM', name:'Jake Morrison',   county:'Yorkshire',       age:22, arch:'Death Bowler', ready:58, pot:79, status:'Long-list',  sCls:'blue',  rn:5, rt:8 },

@@ -1390,12 +1390,12 @@ button { font-family: var(--font); cursor: pointer; }
           <div class="insight-card amber">
             <div class="ic-header">
               <span class="badge badge-amber">&#8679; List Movement</span>
-              <span class="ic-scouts">2 scouts</span>
+              <span class="ic-scouts">3 scouts &middot; Women's</span>
             </div>
-            <div class="ic-player">Oliver Webb</div>
-            <div class="ic-body">Independently moved from Long-list to Short-list by 2 scouts this week. Top-order batter, Surrey. AI sentiment: high ceiling, strong under pressure.</div>
+            <div class="ic-player">Grace Harper <span style="font-size:10px;font-weight:700;color:var(--red);background:rgba(228,0,43,.08);padding:1px 6px;margin-left:6px;vertical-align:middle">W</span></div>
+            <div class="ic-body">Moved to Short-list by 3 scouts after back-to-back 5-wicket hauls in the Vitality T20 Women's County Cup. ECB&rsquo;s fastest women&rsquo;s bowler on the Longlist &mdash; avg 78 mph in death overs.</div>
             <div class="ic-footer">
-              <span class="ic-metric amber">Future: 88%</span>
+              <span class="ic-metric amber">Econ 6.8 &#8593;</span>
               <span class="ic-link" onclick="showPanel('profile')">
                 <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
                 View profile
@@ -1405,12 +1405,12 @@ button { font-family: var(--font); cursor: pointer; }
           <div class="insight-card blue">
             <div class="ic-header">
               <span class="badge badge-blue">&#9733; AI Sentiment</span>
-              <span class="ic-scouts">5 reports</span>
+              <span class="ic-scouts">4 reports &middot; U17</span>
             </div>
-            <div class="ic-player">Ravi Patel</div>
-            <div class="ic-body">Off-spin strike rate in powerplay: 14.2 &mdash; top 3% nationally. Aggregated sentiment across 5 reports flags high technical ceiling and improving match awareness.</div>
+            <div class="ic-player">Arjun Sharma <span style="font-size:10px;font-weight:700;color:var(--teal);background:var(--teal-pale);padding:1px 6px;margin-left:6px;vertical-align:middle">U17</span></div>
+            <div class="ic-body">Aggregated sentiment across 4 reports flags exceptional all-round ceiling for his age. Batting avg 34.2, economy 5.1 across last 6 U17 fixtures. Youngest player on the national Longlist.</div>
             <div class="ic-footer">
-              <span class="ic-metric blue">SR 14.2 &#8593;</span>
+              <span class="ic-metric blue">Avg 34.2 &#8593;</span>
               <span class="ic-link">
                 <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
                 View analysis
@@ -1421,7 +1421,7 @@ button { font-family: var(--font); cursor: pointer; }
 
         <div class="nl-search-bar" onclick="showPanel('nl-search'); startNLDemo()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-          <span class="nl-placeholder">Ask anything about your players, video or reports&hellip; e.g. &ldquo;Left-arm seamers, death overs, 135 km/h+, under 23&rdquo;</span>
+          <span class="nl-placeholder">Ask anything about your players, video or reports&hellip; e.g. &ldquo;Women&rsquo;s top-order batters, The Hundred, SR 130+&rdquo;</span>
           <button class="nl-mic-btn" id="deskMicBtn" type="button" aria-label="Search by voice" onclick="event.stopPropagation(); startDeskVoice(this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
           </button>
@@ -1431,7 +1431,7 @@ button { font-family: var(--font); cursor: pointer; }
         <div class="section-header">
           <div>
             <span class="section-title">Player Longlist</span>
-            <span class="section-count">23 players</span>
+            <span class="section-count">26 players</span>
           </div>
           <div class="arch-filters">
             <div class="arch-chip active">All</div>
@@ -1439,6 +1439,7 @@ button { font-family: var(--font); cursor: pointer; }
             <div class="arch-chip">Top-order</div>
             <div class="arch-chip">All-rounder</div>
             <div class="arch-chip">Spin</div>
+            <div class="arch-chip" style="color:var(--red);border-color:rgba(228,0,43,.3)">Women&rsquo;s</div>
           </div>
         </div>
         <table class="player-table">
@@ -1494,6 +1495,33 @@ button { font-family: var(--font); cursor: pointer; }
               <td><span class="r-val" style="color:var(--teal)">76%</span></td>
               <td><span class="badge badge-amber">Watch</span></td>
               <td style="font-size:11px;color:var(--text-muted)">3 reports</td>
+            </tr>
+            <tr onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init" style="background:rgba(228,0,43,.08);color:var(--red)">GH</div><div><div class="p-name">Grace Harper <span style="font-size:9px;font-weight:700;color:var(--red);background:rgba(228,0,43,.07);padding:1px 4px;margin-left:3px">W</span></div><div class="p-county">Surrey Women</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">24</td>
+              <td><span class="arch-tag">Pace Bowler</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:78%;background:var(--green)"></div></div><span class="r-val" style="color:var(--green)">78%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">88%</span></td>
+              <td><span class="badge badge-green">Short-list</span></td>
+              <td style="font-size:11px;color:var(--text-muted)">6 reports</td>
+            </tr>
+            <tr onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init" style="background:rgba(228,0,43,.08);color:var(--red)">IC</div><div><div class="p-name">Imani Clarke <span style="font-size:9px;font-weight:700;color:var(--red);background:rgba(228,0,43,.07);padding:1px 4px;margin-left:3px">W</span></div><div class="p-county">Hampshire Women</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">22</td>
+              <td><span class="arch-tag">Top-Order Bat</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:71%;background:var(--green)"></div></div><span class="r-val" style="color:var(--green)">71%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">85%</span></td>
+              <td><span class="badge badge-green">Short-list</span></td>
+              <td style="font-size:11px;color:var(--text-muted)">4 reports</td>
+            </tr>
+            <tr onclick="showPanel('profile')">
+              <td><div class="player-name-cell"><div class="p-init" style="background:var(--teal-pale);color:var(--teal)">AS</div><div><div class="p-name">Arjun Sharma <span style="font-size:9px;font-weight:700;color:var(--teal);background:var(--teal-pale);padding:1px 4px;margin-left:3px">U17</span></div><div class="p-county">England U17</div></div></div></td>
+              <td style="font-size:12px;color:var(--text-muted)">16</td>
+              <td><span class="arch-tag">All-Rounder</span></td>
+              <td><div class="r-bar-wrap"><div class="r-bar"><div class="r-fill" style="width:61%;background:var(--amber)"></div></div><span class="r-val" style="color:var(--amber)">61%</span></div></td>
+              <td><span class="r-val" style="color:var(--teal)">82%</span></td>
+              <td><span class="badge badge-blue">Long-list</span></td>
+              <td style="font-size:11px;color:var(--text-muted)">4 reports</td>
             </tr>
           </tbody>
         </table>
@@ -2199,8 +2227,8 @@ button { font-family: var(--font); cursor: pointer; }
             <input class="sr-search" id="srSearch" type="search" placeholder="Search by player or scout…" oninput="filterReports()">
           </div>
           <div class="sr-rec-chips">
-            <button class="sr-rec-chip active" data-rec="all"     onclick="setSrFilter(this)">All (7)</button>
-            <button class="sr-rec-chip"        data-rec="promote" onclick="setSrFilter(this)">&#8593; Promote (2)</button>
+            <button class="sr-rec-chip active" data-rec="all"     onclick="setSrFilter(this)">All (8)</button>
+            <button class="sr-rec-chip"        data-rec="promote" onclick="setSrFilter(this)">&#8593; Promote (3)</button>
             <button class="sr-rec-chip"        data-rec="retain"  onclick="setSrFilter(this)">Retain (2)</button>
             <button class="sr-rec-chip"        data-rec="monitor" onclick="setSrFilter(this)">Monitor (3)</button>
           </div>
@@ -2274,7 +2302,54 @@ button { font-family: var(--font); cursor: pointer; }
           </div>
         </div>
 
-        <!-- Report 2: Oliver Webb -->
+        <!-- Report 2: Grace Harper (Women's) -->
+        <div class="sr-item" id="sri-gh" data-player="grace harper" data-scout="m. davis" data-rec="promote">
+          <div class="sr-item-header" onclick="toggleReport('sri-gh')">
+            <div class="sr-player"><div class="sr-player-init" style="background:rgba(228,0,43,.08);color:var(--red)">GH</div><div><div class="sr-player-name">Grace Harper <span style="font-size:9px;font-weight:700;color:var(--red);background:rgba(228,0,43,.07);padding:1px 4px;margin-left:3px">W</span></div><div class="sr-player-meta">Surrey Women</div></div></div>
+            <div><div class="sr-scout-name">M. Davis</div><div class="sr-scout-region">Central</div></div>
+            <div><div class="sr-match-name">Surrey W vs Lancashire W &middot; Vitality T20 Women's</div><div class="sr-match-date">The Oval &middot; 11 Jun 2026</div></div>
+            <div><span class="sr-role-chip">Pace Bowler</span></div>
+            <div class="sr-stars" style="color:var(--green)">Very good vs peer group</div>
+            <div><span class="badge badge-green">&#8593; Promote</span></div>
+            <div class="sr-date">11 Jun</div>
+            <svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="sr-item-detail">
+            <div class="sr-detail-grid">
+              <div>
+                <div class="sr-detail-section" style="margin-bottom:10px">
+                  <div class="sr-detail-title">Match Context</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Innings</span><span class="sr-detail-val">2nd Innings (Death)</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Conditions</span><span class="sr-detail-val">Sunny, dry</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Competition</span><span class="sr-detail-val">Vitality T20 Women&rsquo;s County Cup</span></div>
+                </div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Overall Assessment</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Rating</span><span class="sr-detail-val" style="color:var(--green)">Very good vs peer group</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Next level</span><span class="sr-detail-val">Ready now &mdash; T20 &amp; The Hundred</span></div>
+                  <p class="sr-summary-text">"Exceptional pace for the women's game &mdash; consistent 78 mph+ in death overs. Took 5 wickets in 10 balls at the death to win the match. Best women's death bowler I have scouted this season."</p>
+                </div>
+              </div>
+              <div>
+                <div class="sr-detail-section" style="margin-bottom:10px">
+                  <div class="sr-detail-title">Technical Criteria</div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Action &amp; release point</span><span class="sr-crit-stars" style="color:var(--green)">Very good vs peers</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Control &amp; accuracy</span><span class="sr-crit-stars" style="color:var(--green)">Very good vs peers</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Variation &amp; pace changes</span><span class="sr-crit-stars" style="color:var(--teal)">Above peers</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Swing / seam movement</span><span class="sr-crit-stars" style="color:var(--green)">Very good vs peers</span></div>
+                  <div class="sr-crit-row"><span class="sr-crit-name">Physical capability</span><span class="sr-crit-stars" style="color:var(--teal)">Above peers</span></div>
+                </div>
+                <div class="sr-detail-section">
+                  <div class="sr-detail-title">Future Potential</div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Recommendation</span><span class="sr-detail-val" style="color:var(--green)">Recommend for squad consideration</span></div>
+                  <div class="sr-detail-row"><span class="sr-detail-key">Attachments</span><span class="sr-detail-val">1 voice note</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report 3: Oliver Webb -->
         <div class="sr-item" id="sri-2" data-player="oliver webb" data-scout="m. davis" data-rec="promote">
           <div class="sr-item-header" onclick="toggleReport('sri-2')">
             <div class="sr-player"><div class="sr-player-init">OW</div><div><div class="sr-player-name">Oliver Webb</div><div class="sr-player-meta">Surrey</div></div></div>
