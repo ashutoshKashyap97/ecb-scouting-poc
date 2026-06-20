@@ -1090,7 +1090,7 @@ button:focus-visible, a:focus-visible {
   }
   .app-shell {
     width: 390px;
-    min-height: 100vh;
+    height: 844px;         /* fixed phone height — content scrolls inside */
     background: var(--surface);
     border-radius: 40px;
     overflow: hidden;
@@ -1098,10 +1098,16 @@ button:focus-visible, a:focus-visible {
       0 0 0 8px #1E293B,
       0 0 0 10px #334155,
       0 32px 80px rgba(0,0,0,.5);
-    position: relative;
+    display: flex;
+    flex-direction: column;
   }
+  /* Content fills remaining height and scrolls internally */
+  .content  { flex: 1; overflow-y: auto; padding-bottom: 16px; }
+  .tab-view { flex: 1; overflow-y: auto; padding-bottom: 16px; }
+  /* Nav is always the last flex item — always at the bottom */
   .bottom-nav {
-    position: sticky;
+    position: relative;
+    flex-shrink: 0;
     border-radius: 0 0 40px 40px;
   }
 }
