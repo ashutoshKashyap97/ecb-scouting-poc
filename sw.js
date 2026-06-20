@@ -1,7 +1,7 @@
 ﻿// ECB Scouting POC — Service Worker
 // Pages: network-first (always fresh when online, cache fallback offline).
 // Assets (images/fonts): cache-first for speed.
-const CACHE = 'ecb-poc-v23';
+const CACHE = 'ecb-poc-v24';
 const ASSETS = [
   './install.html',
   './index.html',
@@ -16,6 +16,9 @@ const ASSETS = [
   './coach/success.html',
   './central/mobile.html',
   './assets/video-poster.jpg',
+  './assets/image1.jpg',
+  './assets/image2.jpg',
+  './assets/image3.jpg',
   './assets/avatar-bc.png',
   './assets/avatar-women.png',
   './assets/avatar-women2.png',
