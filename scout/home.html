@@ -1019,6 +1019,53 @@ button:focus-visible, a:focus-visible {
   border: 2px solid var(--card);
 }
 
+/* ── Tab views ── */
+.tab-view { display: none; padding: 0 16px 110px; animation: fadeInUp .25s ease-out both; }
+.tab-view.active { display: block; }
+
+/* My Reports */
+.mr-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin: 12px 0; }
+.mr-stat { background: var(--card); border: 1px solid var(--border-light); box-shadow: var(--shadow-card); padding: 10px 8px; text-align: center; }
+.mr-stat-num { font-size: 22px; font-weight: 800; color: var(--text-primary); line-height: 1; }
+.mr-stat-num.green { color: var(--green); }
+.mr-stat-num.blue  { color: var(--teal); }
+.mr-stat-lbl { font-size: 10px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+.mr-card { background: var(--card); border: 1px solid var(--border-light); box-shadow: var(--shadow-card); padding: 11px 14px; margin-bottom: 8px; }
+.mr-top { display: flex; align-items: center; gap: 10px; }
+.mr-init { width: 34px; height: 34px; background: var(--teal-pale); color: var(--teal); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.mr-info { flex: 1; min-width: 0; }
+.mr-name { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.mr-match { font-size: 11px; color: var(--text-muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mr-right { text-align: right; flex-shrink: 0; }
+.mr-date { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+.mr-progress-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-light); }
+.mr-progress { flex: 1; height: 4px; background: var(--border); }
+.mr-progress-fill { height: 100%; background: var(--amber); }
+.mr-continue { font-size: 12px; font-weight: 700; color: var(--teal); background: var(--teal-pale); padding: 5px 12px; border: none; cursor: pointer; font-family: var(--font); white-space: nowrap; }
+
+/* Assigned Players list */
+.ap-card { background: var(--card); border: 1px solid var(--border-light); box-shadow: var(--shadow-card); padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+.ap-avatar { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; overflow: hidden; }
+.ap-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.ap-info { flex: 1; min-width: 0; }
+.ap-name { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.ap-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.ap-next { font-size: 10px; color: var(--text-sec); margin-top: 4px; }
+.ap-action { font-size: 11px; font-weight: 700; color: var(--teal); background: var(--teal-pale); padding: 6px 12px; border: none; cursor: pointer; font-family: var(--font); flex-shrink: 0; white-space: nowrap; }
+
+/* Profile view */
+.prof-hero-card { background: var(--navy); padding: 24px 16px 20px; text-align: center; border-left: 4px solid var(--teal); }
+.prof-avatar-lg { width: 64px; height: 64px; background: var(--teal); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; margin: 0 auto 12px; }
+.prof-name-lg { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+.prof-role-lg { font-size: 13px; color: rgba(255,255,255,.5); }
+.prof-stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border-light); margin: 12px 0; }
+.prof-stat-cell { background: var(--card); padding: 14px 8px; text-align: center; }
+.prof-stat-n { font-size: 24px; font-weight: 800; color: var(--text-primary); line-height: 1; }
+.prof-stat-n.green { color: var(--green); }
+.prof-stat-l { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+.prof-signout { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: var(--navy); color: rgba(255,255,255,.7); border: none; padding: 14px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font); margin-top: 8px; }
+.prof-signout svg { width: 18px; height: 18px; }
+
 /* ── Animations ── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(12px); }
@@ -1128,7 +1175,7 @@ button:focus-visible, a:focus-visible {
   </header>
 
   <!-- Content -->
-  <main class="content">
+  <main class="content" id="view-home">
 
     <!-- Pull-to-refresh hint -->
     <div class="pull-hint animate-in delay-1" aria-hidden="true">
@@ -1530,23 +1577,147 @@ button:focus-visible, a:focus-visible {
 
   </main>
 
+  <!-- ── Reports view ── -->
+  <div class="tab-view" id="view-reports">
+    <div class="mr-stats">
+      <div class="mr-stat"><div class="mr-stat-num">24</div><div class="mr-stat-lbl">Season</div></div>
+      <div class="mr-stat"><div class="mr-stat-num blue">3</div><div class="mr-stat-lbl">This month</div></div>
+      <div class="mr-stat"><div class="mr-stat-num">1</div><div class="mr-stat-lbl">Draft</div></div>
+      <div class="mr-stat"><div class="mr-stat-num green">91%</div><div class="mr-stat-lbl">Accuracy</div></div>
+    </div>
+
+    <div class="mr-card">
+      <div class="mr-top">
+        <div class="mr-init">SH</div>
+        <div class="mr-info"><div class="mr-name">Sam Hartley</div><div class="mr-match">Lancashire vs Surrey &middot; T20 Blast</div></div>
+        <div class="mr-right"><span class="badge badge-green" style="font-size:10px">Submitted</span><div class="mr-date">12 Jun</div></div>
+      </div>
+    </div>
+    <div class="mr-card">
+      <div class="mr-top">
+        <div class="mr-init" style="background:rgba(228,0,43,.08);color:var(--red)">GH</div>
+        <div class="mr-info"><div class="mr-name">Grace Harper <span style="font-size:9px;font-weight:700;color:var(--red);background:rgba(228,0,43,.07);padding:1px 4px;margin-left:3px">W</span></div><div class="mr-match">Surrey W vs Sussex &middot; RHF</div></div>
+        <div class="mr-right"><span class="badge badge-green" style="font-size:10px">Submitted</span><div class="mr-date">11 Jun</div></div>
+      </div>
+    </div>
+    <div class="mr-card">
+      <div class="mr-top">
+        <div class="mr-init" style="background:var(--teal-pale);color:var(--teal)">AS</div>
+        <div class="mr-info"><div class="mr-name">Arjun Sharma <span style="font-size:9px;font-weight:700;color:var(--teal);background:var(--teal-pale);padding:1px 4px;margin-left:3px">U17</span></div><div class="mr-match">England U17 vs India &middot; Youth ODI</div></div>
+        <div class="mr-right"><span class="badge badge-green" style="font-size:10px">Submitted</span><div class="mr-date">7 Jun</div></div>
+      </div>
+    </div>
+    <div class="mr-card">
+      <div class="mr-top">
+        <div class="mr-init" style="background:rgba(228,0,43,.08);color:var(--red)">IC</div>
+        <div class="mr-info"><div class="mr-name">Imani Clarke <span style="font-size:9px;font-weight:700;color:var(--red);background:rgba(228,0,43,.07);padding:1px 4px;margin-left:3px">W</span></div><div class="mr-match">Oval Invincibles vs Manchester &middot; The Hundred</div></div>
+        <div class="mr-right"><span class="badge badge-amber" style="font-size:10px">Pending sync</span><div class="mr-date">Today</div></div>
+      </div>
+    </div>
+    <div class="mr-card">
+      <div class="mr-top">
+        <div class="mr-init">BC</div>
+        <div class="mr-info"><div class="mr-name">Ben Carter</div><div class="mr-match">Yorkshire vs Lancashire &middot; CC D1</div></div>
+        <div class="mr-right"><span class="badge badge-blue" style="font-size:10px">Draft</span><div class="mr-date">Saved 08:12</div></div>
+      </div>
+      <div class="mr-progress-row">
+        <div class="mr-progress"><div class="mr-progress-fill" style="width:60%"></div></div>
+        <span style="font-size:11px;font-weight:700;color:var(--amber)">60%</span>
+        <button class="mr-continue" onclick="startReport('Ben Carter','Yorkshire vs Lancashire','Old Trafford','CC D1','Today 2pm','batsman')">Continue &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Players view ── -->
+  <div class="tab-view" id="view-players">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin:12px 2px 10px">
+      <span style="font-size:15px;font-weight:800;color:var(--text-primary)">My Assigned Players</span>
+      <span style="font-size:12px;font-weight:600;color:var(--text-muted)">4 players</span>
+    </div>
+
+    <div class="ap-card">
+      <div class="ap-avatar blue"><img src="../assets/avatar-bc.png" alt="Ben Carter"></div>
+      <div class="ap-info">
+        <div class="ap-name">Ben Carter</div>
+        <div class="ap-meta">Yorkshire &middot; Age 23 &middot; RHB &middot; Men&rsquo;s</div>
+        <div class="ap-next">&#128197; Today &mdash; Yorkshire vs Lancashire, CC D1</div>
+      </div>
+      <button class="ap-action" onclick="startReport('Ben Carter','Yorkshire vs Lancashire','Old Trafford','CC D1','Today 2pm','batsman')">Report</button>
+    </div>
+
+    <div class="ap-card">
+      <div class="ap-avatar" style="background:var(--navy)"><img src="../assets/avatar-women.png" alt="Grace Harper"></div>
+      <div class="ap-info">
+        <div class="ap-name">Grace Harper <span style="font-size:9px;font-weight:700;color:var(--red);background:rgba(228,0,43,.07);padding:1px 4px;margin-left:3px">W</span></div>
+        <div class="ap-meta">Surrey Women &middot; Age 24 &middot; Right-arm fast</div>
+        <div class="ap-next">&#128197; Tomorrow &mdash; Surrey Women vs Sussex, RHF</div>
+      </div>
+      <button class="ap-action" onclick="startReport('Grace Harper','Surrey Women vs Sussex','The Oval','RHF','Tue 10:30','bowler')">Report</button>
+    </div>
+
+    <div class="ap-card">
+      <div class="ap-avatar" style="background:var(--red)"><img src="../assets/avatar-teen.png" alt="Arjun Sharma"></div>
+      <div class="ap-info">
+        <div class="ap-name">Arjun Sharma <span style="font-size:9px;font-weight:700;color:var(--teal);background:var(--teal-pale);padding:1px 4px;margin-left:3px">U17</span></div>
+        <div class="ap-meta">England U17 &middot; Age 16 &middot; All-rounder</div>
+        <div class="ap-next">&#128197; Wed 24 Jun &mdash; England U17 vs India, Youth ODI</div>
+      </div>
+      <button class="ap-action" onclick="startReport('Arjun Sharma','England U17 vs India','Trent Bridge','Youth ODI','Wed 10:00','allround')">Report</button>
+    </div>
+
+    <div class="ap-card">
+      <div class="ap-avatar" style="background:var(--teal)"><img src="../assets/avatar-women2.png" alt="Imani Clarke"></div>
+      <div class="ap-info">
+        <div class="ap-name">Imani Clarke <span style="font-size:9px;font-weight:700;color:var(--red);background:rgba(228,0,43,.07);padding:1px 4px;margin-left:3px">W</span></div>
+        <div class="ap-meta">Hampshire Women &middot; Age 22 &middot; RHB</div>
+        <div class="ap-next">&#128197; Fri 26 Jun &mdash; Oval Invincibles vs Manchester, The Hundred</div>
+      </div>
+      <button class="ap-action" onclick="startReport('Imani Clarke','Oval Invincibles vs Manchester Originals','The Oval','The Hundred','Fri 14:00','batsman')">Report</button>
+    </div>
+  </div>
+
+  <!-- ── Profile view ── -->
+  <div class="tab-view" id="view-profile">
+    <div class="prof-hero-card">
+      <div class="prof-avatar-lg">JM</div>
+      <div class="prof-name-lg">James Mitchell</div>
+      <div class="prof-role-lg">Scout &middot; North Region &middot; ECB</div>
+    </div>
+
+    <div class="prof-stats-grid">
+      <div class="prof-stat-cell"><div class="prof-stat-n">3</div><div class="prof-stat-l">Today</div></div>
+      <div class="prof-stat-cell"><div class="prof-stat-n">24</div><div class="prof-stat-l">This season</div></div>
+      <div class="prof-stat-cell"><div class="prof-stat-n green">91%</div><div class="prof-stat-l">Accuracy</div></div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border-light);padding:14px 16px;margin-bottom:8px">
+      <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Account</div>
+      <div style="font-size:13px;font-weight:500;color:var(--text-sec);margin-bottom:6px">james.mitchell@ecb.co.uk</div>
+      <div style="font-size:12px;color:var(--text-muted)">Session expires in 2h 41m &middot; Role: Scout</div>
+    </div>
+
+    <button class="prof-signout" onclick="location.href='../index.html'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign out
+    </button>
+  </div>
+
   <!-- Bottom Navigation -->
   <nav class="bottom-nav" aria-label="Main navigation">
-    <a class="nav-item active" href="#" aria-label="Home" aria-current="page">
+    <a class="nav-item active" id="nav-home" href="#" aria-label="Home" aria-current="page" onclick="switchTab('home');return false;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
       <span class="nav-label">Home</span>
-      <!-- Sync status dot on Home nav icon -->
       <div class="nav-sync-dot" aria-label="Sync pending"></div>
     </a>
-    <a class="nav-item inactive" href="#" aria-label="Reports">
+    <a class="nav-item inactive" id="nav-reports" href="#" aria-label="Reports" onclick="switchTab('reports');return false;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       <span class="nav-label">Reports</span>
     </a>
-    <a class="nav-item inactive" href="#" aria-label="Players">
+    <a class="nav-item inactive" id="nav-players" href="#" aria-label="Players" onclick="switchTab('players');return false;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
       <span class="nav-label">Players</span>
     </a>
-    <a class="nav-item inactive" href="#" aria-label="Profile">
+    <a class="nav-item inactive" id="nav-profile" href="#" aria-label="Profile" onclick="switchTab('profile');return false;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       <span class="nav-label">Profile</span>
     </a>
@@ -1566,6 +1737,17 @@ if ('serviceWorker' in navigator) {
     location.reload();
   });
 }
+function switchTab(tab) {
+  const tabs = ['home','reports','players','profile'];
+  tabs.forEach(t => {
+    const view = document.getElementById('view-' + t);
+    const nav  = document.getElementById('nav-' + t);
+    if (view) view.style.display = (t === tab) ? 'block' : 'none';
+    if (nav)  { nav.classList.toggle('active', t === tab); nav.classList.toggle('inactive', t !== tab); }
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function togglePerf(btn) {
   const panel = document.getElementById('perfPanel');
   const expanded = btn.getAttribute('aria-expanded') === 'true';
